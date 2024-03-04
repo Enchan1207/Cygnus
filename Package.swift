@@ -22,9 +22,13 @@ let package = Package(
             exclude: ["lua.c", "luac.c"],
             cSettings: [
                 .define("LUA_COMPAT_5_3"),
+                .define("LUA_USE_JUMPTABLE", to: "0"),
                 .define("LUA_USE_MACOSX", to: nil, .when(platforms: [.macOS])),
                 .define("LUA_USE_READLINE", to: nil, .when(platforms: [.macOS])),
                 .define("LUA_USE_IOS", to: nil, .when(platforms: [.iOS]))
-            ])
+            ]),
+        .testTarget(
+            name: "LuaSwiftTests",
+            dependencies: ["LuaSwift"]),
     ]
 )

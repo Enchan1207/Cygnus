@@ -28,10 +28,11 @@ fi
 
 cd "$LUA_DIR/src"
 
-# ソースとヘッダをSPMのソースディレクトリに移動
+# ソースとヘッダをSPMのソースディレクトリに移動 この時 ljumptab.h を除外する
 LUA_SOURCE_DIR="../../../Sources/LuaSwift"
 LUA_INCLUDE_DIR="${LUA_SOURCE_DIR}/include"
 echo "Move files to source directory..."
 mkdir -p "$LUA_INCLUDE_DIR"
+rm ljumptab.h
 mv *.c "$LUA_SOURCE_DIR"
 mv *.h "$LUA_INCLUDE_DIR"
