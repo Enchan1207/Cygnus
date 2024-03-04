@@ -1,7 +1,10 @@
 #
 # パッケージのソースを準備してテストを行う
 #
+name: Test swift package
+
 on: push
+
 jobs:
   test:
     runs-on: macos-latest

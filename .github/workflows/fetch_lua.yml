@@ -1,9 +1,12 @@
 #
 # リリースブランチにLuaのソースをねじ込む
 #
+name: Fetch and add sources of Lua
+
 on:
   workflow_run:
-    workflows: ["test_package.yml"]
+    workflows:
+      - Test swift package
     branches:
       - master
     types:
