@@ -6,8 +6,7 @@ import PackageDescription
 let package = Package(
     name: "LuaSwift",
     platforms: [
-        .macOS(.v10_13),
-        // .iOS(.v12)
+        .macOS(.v10_13), .iOS(.v12)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
@@ -20,9 +19,12 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "LuaSwift",
+            exclude: ["lua.c", "luac.c"],
             cSettings: [
                 .define("LUA_COMPAT_5_3"),
-                .define("LUA_USE_MACOSX"),
+                .define("LUA_USE_MACOSX", to: nil, .when(platforms: [.macOS])),
+                .define("LUA_USE_READLINE", to: nil, .when(platforms: [.macOS])),
+                .define("LUA_USE_IOS", to: nil, .when(platforms: [.iOS]))
             ])
     ]
 )
