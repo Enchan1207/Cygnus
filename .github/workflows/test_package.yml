@@ -1,0 +1,19 @@
+#
+# パッケージのソースを準備してテストを行う
+#
+on: push
+jobs:
+  test:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: fetch and add Lua sources
+        run: ./startup.sh
+
+      - name: build
+        run: swift build
+
+      - name: test
+        run: swift test
