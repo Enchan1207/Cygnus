@@ -2,9 +2,12 @@
 # リリースブランチにLuaのソースをねじ込む
 #
 on:
-  push:
+  workflow_run:
+    workflows: ["test_package.yml"]
     branches:
       - master
+    types:
+      - completed
 
 jobs:
   fetch_lua_source:
@@ -14,6 +17,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Git setup
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
 
       - name: fetch and add Lua sources, then commit and push to release branch
         run: ./release.sh
