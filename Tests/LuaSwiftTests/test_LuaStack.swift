@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Lua
+@testable import LuaSwift
 
 /// Luaスタックのテスト
 final class testLuaStack: XCTestCase {

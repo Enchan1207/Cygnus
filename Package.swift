@@ -10,18 +10,18 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Lua",
-            targets: ["Lua"]),
+            name: "LuaSwift",
+            targets: ["LuaSwift"]),
     ],
     targets: [
         // ライブラリ
         .target(
-            name: "Lua",
-            dependencies: ["LuaCore"]),
+            name: "LuaSwift",
+            dependencies: ["LuaSwiftCore"]),
         
         // Luaコア
         .target(
-            name: "LuaCore",
+            name: "LuaSwiftCore",
             cSettings: [
                 .define("LUA_COMPAT_5_3"),
                 .define("LUA_USE_JUMPTABLE", to: "0"),
@@ -37,6 +37,6 @@ let package = Package(
         // テストターゲット
         .testTarget(
             name: "LuaSwiftTests",
-            dependencies: ["Lua", "LuaCore"]),
+            dependencies: ["LuaSwift", "LuaSwiftCore"]),
     ]
 )

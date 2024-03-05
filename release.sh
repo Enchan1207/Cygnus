@@ -20,7 +20,7 @@ fi
 git pull origin $RELEASE_BRANCH 2>/dev/null || echo "remote branch not found"
 
 # Luaコアのソースを強制的にaddしてcommit
-git add -f Sources/LuaCore/**/*
+git add -f Sources/LuaSwiftCore/**/*
 git commit -m "[Add] add source files of Lua (automated) [no ci]"
 
 # push

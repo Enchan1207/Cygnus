@@ -6,8 +6,8 @@
 //
 
 import XCTest
-@testable import Lua
-@testable import LuaCore
+@testable import LuaSwift
+@testable import LuaSwiftCore
 
 /// Luaコードの実行テスト
 final class testLuaExec: XCTestCase {
