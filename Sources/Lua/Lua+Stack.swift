@@ -95,4 +95,41 @@ public extension Lua {
         lua_pop(state, count)
     }
     
+    /// Luaスタックの特定位置にある要素の型を返す
+    /// - Parameter index: 位置 (デフォルト: 先頭)
+    /// - Returns: 型
+    func getType(at index: Int32 = -1) throws -> LuaType {
+        let type = LuaType(rawValue: lua_type(state, index))!
+        guard type != .None else {throw LuaError.IndexError}
+        return type
+    }
+    
+    /// 指定位置の値を取り出す
+    /// - Parameter index: 位置
+    /// - Returns: 取り出された値
+    func get<T>(at index: Int32 = -1) throws -> T {
+        switch (T.self, try getType(at: index)) {
+            
+            // TODO: 他のLuaTypeにも対応する
+            
+        case (is Int64.Type, .Number):
+            return try lua_tointeger(state, index) as! T
+            
+        case (is Int.Type, .Number):
+            return Int(try lua_tointeger(state, index)) as! T
+            
+        case (is Double.Type, .Number):
+            return try lua_tonumber(state, index) as! T
+        
+        case (is String.Type, .String):
+            guard let stringPtr = lua_tostring(state, index) else {throw LuaError.TypeError}
+            return String(cString: stringPtr) as! T
+            
+        case (is Bool.Type, .Boolean):
+            return (lua_toboolean(state, index) != 0) as! T
+            
+        default:
+            throw LuaError.TypeError
+        }
+    }
 }

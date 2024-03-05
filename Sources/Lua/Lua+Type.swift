@@ -117,14 +117,3 @@ public enum LuaType: Int32 {
         }
     }
 }
-
-public extension Lua {
-    
-    /// Luaスタックの特定位置にある要素の型を返す
-    /// - Parameter index: 位置 (デフォルト: 先頭)
-    /// - Returns: 型
-    func type(at index: Int32 = -1) -> LuaType {
-        .init(rawValue: lua_type(state, index))!
-    }
-    
-}
