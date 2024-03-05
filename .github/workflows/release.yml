@@ -1,0 +1,43 @@
+#
+# Luaソースを含む完全版をリリースブランチにpushし、ドラフトを作成
+#
+name: Fetch and add sources of Lua
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - Test swift package
+    branches:
+      - master
+    types:
+      - completed
+
+jobs:
+  fetch_lua_source:
+    name: Fetch Lua source files
+    runs-on: macos-latest
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[Release]')
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Git setup
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+
+      - name: Fetch and inject Lua sources, then commit and push to release branch
+        id: inject_lua_sources
+        run: |
+          ./release.sh
+          echo "latest_commit=$(git log -1 --format=%H)" >> "$GITHUB_OUTPUT"
+
+      - name: Create release draft
+        uses: ncipollo/release-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          commit: ${{ steps.inject_lua_sources.outputs.latest_commit }}
+          draft: true
