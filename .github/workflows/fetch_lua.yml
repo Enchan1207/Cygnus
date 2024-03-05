@@ -4,6 +4,7 @@
 name: Fetch and add sources of Lua
 
 on:
+  workflow_dispatch:
   workflow_run:
     workflows:
       - Test swift package
