@@ -43,7 +43,7 @@ rm -f lua/ljumptab.h lua/lua.c lua/onelua.c lua/ltests.*
 
 # ソースとヘッダをSPMのソースディレクトリに移動
 echo "Moving source files to package directory..."
-LUA_SOURCE_DIR="../Sources/LuaCore"
+LUA_SOURCE_DIR="../Sources/LuaSwiftCore"
 LUA_INCLUDE_DIR="${LUA_SOURCE_DIR}/include"
 mkdir -p "$LUA_INCLUDE_DIR"
 mv lua/*.c "$LUA_SOURCE_DIR"

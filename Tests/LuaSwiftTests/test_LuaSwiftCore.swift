@@ -1,17 +1,17 @@
 //
-//  test_LuaCore.swift
+//  test_LuaSwiftCore.swift
 //
 //
 //  Created by EnchantCode on 2024/03/04.
 //
 
 import XCTest
-@testable import LuaCore
+@testable import LuaSwiftCore
 
 typealias LuaState = UnsafeMutablePointer<lua_State>
 
 /// コアのテスト
-final class testLuaCore: XCTestCase {
+final class testLuaSwiftCore: XCTestCase {
     
     /// 基本的なLuaのハンドリング
     func testBasicOperation() throws {
