@@ -10,10 +10,15 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "LuaSwift",
-            targets: ["LuaCore"]),
+            name: "Lua",
+            targets: ["Lua"]),
     ],
     targets: [
+        // ライブラリ
+        .target(
+            name: "Lua",
+            dependencies: ["LuaCore"]),
+        
         // Luaコア
         .target(
             name: "LuaCore",
@@ -32,6 +37,6 @@ let package = Package(
         // テストターゲット
         .testTarget(
             name: "LuaSwiftTests",
-            dependencies: ["LuaCore"]),
+            dependencies: ["Lua", "LuaCore"]),
     ]
 )
