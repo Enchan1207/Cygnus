@@ -23,6 +23,10 @@ let package = Package(
                 .define("LUA_USE_MACOSX", to: nil, .when(platforms: [.macOS])),
                 .define("LUA_USE_READLINE", to: nil, .when(platforms: [.macOS])),
                 .define("LUA_USE_IOS", to: nil, .when(platforms: [.iOS]))
+            ],
+            linkerSettings: [
+                .linkedLibrary("dl", .when(platforms: [.macOS])),
+                .linkedLibrary("readline", .when(platforms: [.macOS]))
             ]),
         
         // テストターゲット
