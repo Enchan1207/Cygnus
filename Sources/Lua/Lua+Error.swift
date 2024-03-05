@@ -4,6 +4,7 @@
 //
 //  Created by EnchantCode on 2024/03/05.
 //
+import LuaCore
 
 /// Lua VMのエラー
 public enum LuaError: Error {
@@ -28,4 +29,26 @@ public enum LuaError: Error {
     
     /// 不正インデックスエラー
     case IndexError
+    
+    /// 不正な関数呼び出し
+    case IllegalFunctionCall
+    
+    /// Luaのステータスコードから初期化
+    /// - Parameter statusCode: ステータスコード
+    init?(statusCode: Int32) {
+        switch statusCode {
+        case LUA_ERRRUN:
+            self = .RuntimeError
+        case LUA_ERRSYNTAX:
+            self = .SyntaxError
+        case LUA_ERRMEM:
+            self = .MemoryError
+        case LUA_ERRERR:
+            self = .MessageHandlingError
+        case LUA_ERRFILE:
+            self = .FileError
+        default:
+            return nil
+        }
+    }
 }

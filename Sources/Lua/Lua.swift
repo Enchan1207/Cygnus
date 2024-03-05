@@ -7,10 +7,10 @@
 
 import LuaCore
 
-internal typealias LuaState = UnsafeMutablePointer<lua_State>
+public typealias LuaState = UnsafeMutablePointer<lua_State>
 
 /// Lua
-public class Lua {
+open class Lua {
     
     /// Luaステート
     internal let state: LuaState

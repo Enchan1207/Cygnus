@@ -60,7 +60,7 @@ final class testLuaStack: XCTestCase {
         
         // コピーする
         // これにより s b n ? n s となる
-        lua.push(valueAt: 1)
+        lua.pushValue(at: 1)
         XCTAssertEqual(try! lua.getType(), .String)
         
         // 3番目に1番目の要素を挿入
