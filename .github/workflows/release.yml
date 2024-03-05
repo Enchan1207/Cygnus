@@ -33,11 +33,3 @@ jobs:
         run: |
           ./release.sh
           echo "latest_commit=$(git log -1 --format=%H)" >> "$GITHUB_OUTPUT"
-
-      - name: Create release draft
-        uses: ncipollo/release-action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          commit: ${{ steps.inject_lua_sources.outputs.latest_commit }}
-          draft: true
