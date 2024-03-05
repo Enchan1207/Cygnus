@@ -1,38 +1,57 @@
 #!/bin/bash
 #
-# download Lua and extract to source directory
+# Download Latest version of Lua and extract to source directory
 #
-LUA_VERSION="5.4.6"
+# @2024 Enchan1207.
+#
 
-# 作業ディレクトリを生成
-mkdir -p work && cd work
-
-# ソースファイルを取得
-LUA_DIR="lua-${LUA_VERSION}"
-LUR_ARCHIVE="${LUA_DIR}.tar.gz"
-if [ ! -e "$LUR_ARCHIVE" ]; then
-    LUA_SOURCE_URL="https://www.lua.org/ftp/${LUR_ARCHIVE}"
-    echo "Download Lua ${LUA_VERSION} from ${LUA_SOURCE_URL}..."
-    wget "$LUA_SOURCE_URL"
-else
-    echo "Lua source archive are already downloaded"
+# GitHub APIを使って最新リリースの情報を取得
+# (lua/luaはミラーなので本来はlua.orgからダウンロードすべきだが、ここにバージョン情報を直書きするよりはマシ)
+echo "Fetching latess release information of Lua from GitHub (lua/lua)..."
+LUR_RELEASE_INFO="$(wget -q -O - https://api.github.com/repos/lua/lua/releases/latest)"
+if [ $? -ne 0 ]; then
+    echo "GitHub API invocation failed."
+    exit 1
 fi
 
-# 展開
-if [ ! -e "$LUA_DIR" ]; then
-    echo "Extracting..."
-    tar xzf "$LUR_ARCHIVE"
+# ソースファイルアーカイブへのリンクを取り出す
+echo "Looking for URL to source file archive..."
+JQ="$(which jq)"
+if [ $? -eq 0 ]; then
+    LUA_SOURCE_URL="$(echo $LUR_RELEASE_INFO | $JQ -r '.tarball_url')"
 else
-    echo "Lua sources are already deployed"
+    LUA_SOURCE_URL="$(echo $LUR_RELEASE_INFO | grep tarball_url | sed -r 's/.*(https:\/\/.+)\",$/\1/')"
 fi
 
-cd "$LUA_DIR/src"
+# 作業ディレクトリを生成、移動
+echo "Making work directory..."
+rm -rf work && mkdir -p work && cd work
 
-# ソースとヘッダをSPMのソースディレクトリに移動 この時 ljumptab.h を除外する
-LUA_SOURCE_DIR="../../../Sources/LuaSwift"
+# ソースファイルを取得・展開し、簡単のためディレクトリ名を変更
+echo "Downloading Lua source..."
+wget -q -O "lua.tar.gz" "$LUA_SOURCE_URL"
+if [ $? -ne 0 ]; then
+    echo "Failed to download source file archive."
+    exit 1
+fi
+tar xzf lua.tar.gz
+mv lua-lua-* lua
+
+# ビルドにあたり不要なファイルを削除
+echo "Removing unnecessary files..."
+rm -f lua/ljumptab.h lua/lua.c lua/onelua.c lua/ltests.*
+
+# ソースとヘッダをSPMのソースディレクトリに移動
+echo "Moving source files to package directory..."
+LUA_SOURCE_DIR="../Sources/LuaCore"
 LUA_INCLUDE_DIR="${LUA_SOURCE_DIR}/include"
-echo "Move files to source directory..."
 mkdir -p "$LUA_INCLUDE_DIR"
-rm ljumptab.h
-mv *.c "$LUA_SOURCE_DIR"
-mv *.h "$LUA_INCLUDE_DIR"
+mv lua/*.c "$LUA_SOURCE_DIR"
+mv lua/*.h "$LUA_INCLUDE_DIR"
+
+# 作業ディレクトリを削除
+echo "Removing work directory..."
+cd ..
+rm -rf work
+
+echo "Finished."

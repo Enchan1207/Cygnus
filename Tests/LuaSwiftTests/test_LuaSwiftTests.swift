@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import LuaSwift
+@testable import LuaCore
 
 typealias LuaState = UnsafeMutablePointer<lua_State>
 

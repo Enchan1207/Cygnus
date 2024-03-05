@@ -9,17 +9,14 @@ let package = Package(
         .macOS(.v10_13), .iOS(.v12)
     ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "LuaSwift",
-            targets: ["LuaSwift"]),
+            targets: ["LuaCore"]),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
+        // Luaコア
         .target(
-            name: "LuaSwift",
-            exclude: ["lua.c", "luac.c"],
+            name: "LuaCore",
             cSettings: [
                 .define("LUA_COMPAT_5_3"),
                 .define("LUA_USE_JUMPTABLE", to: "0"),
@@ -27,8 +24,10 @@ let package = Package(
                 .define("LUA_USE_READLINE", to: nil, .when(platforms: [.macOS])),
                 .define("LUA_USE_IOS", to: nil, .when(platforms: [.iOS]))
             ]),
+        
+        // テストターゲット
         .testTarget(
             name: "LuaSwiftTests",
-            dependencies: ["LuaSwift"]),
+            dependencies: ["LuaCore"]),
     ]
 )

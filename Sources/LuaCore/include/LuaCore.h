@@ -1,11 +1,11 @@
 //
-//  LuaSwift.h - Umbrella header for Lua
+//  LuaCore.h - Umbrella header for Lua
 //  LuaSwift
 //
 //  Created by EnchantCode on 2024/03/04.
 //
-#ifndef LuaSwift_h
-#define LuaSwift_h
+#ifndef LuaCore_h
+#define LuaCore_h
 
 // import all header files of Lua, but following files are excluded:
 //  - lua.hpp: it is for C++, not C.
@@ -38,4 +38,4 @@
 #import "lvm.h"
 #import "lzio.h"
 
-#endif /* LuaSwift_h */
+#endif /* LuaCore_h */
