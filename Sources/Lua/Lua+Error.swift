@@ -26,4 +26,6 @@ public enum LuaError: Error {
     /// 型エラー
     case TypeError
     
+    /// 不正インデックスエラー
+    case IndexError
 }
