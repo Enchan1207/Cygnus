@@ -2,9 +2,9 @@
 # .gitignore
 #
 work
-Sources/LuaSwift/*.c
-Sources/LuaSwift/include/*.h
-!Sources/LuaSwift/include/LuaSwift.h
+Sources/LuaCore/*.c
+Sources/LuaCore/include/*.h
+!Sources/LuaCore/include/LuaCore.h
 
 # Created by https://www.toptal.com/developers/gitignore/api/macos,xcode,swiftpm
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,xcode,swiftpm
