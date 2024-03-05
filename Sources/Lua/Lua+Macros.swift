@@ -10,13 +10,19 @@ import LuaCore
 // MARK: - lua.h
 
 /// #define lua_tonumber(L,i)    lua_tonumberx(L,(i),NULL)
-@inline(__always) internal func lua_tonumber(_ L: LuaState, _ idx: Int32) -> lua_Number {
-    lua_tonumberx(L, idx, nil)
+@inline(__always) internal func lua_tonumber(_ L: LuaState, _ idx: Int32) throws -> lua_Number {
+    var succeeded: Int32 = 0
+    let result = lua_tonumberx(L, idx, &succeeded)
+    guard succeeded != 0 else {throw LuaError.TypeError}
+    return result
 }
 
 /// #define lua_tointeger(L,i)    lua_tointegerx(L,(i),NULL)
-@inline(__always) internal func lua_tointeger(_ L: LuaState, _ idx: Int32) -> lua_Integer {
-    lua_tointegerx(L, idx, nil)
+@inline(__always) internal func lua_tointeger(_ L: LuaState, _ idx: Int32) throws -> lua_Integer {
+    var succeeded: Int32 = 0
+    let result = lua_tointegerx(L, idx, &succeeded)
+    guard succeeded != 0 else {throw LuaError.TypeError}
+    return result
 }
 
 /// #define lua_pop(L,n)        lua_settop(L, -(n)-1)
@@ -91,7 +97,7 @@ import LuaCore
 }
 
 /// #define lua_tostring(L,i)    lua_tolstring(L, (i), NULL)
-@inline(__always) internal func lua_tostring(_ L: LuaState, _ i: Int32) -> UnsafePointer<CChar> {
+@inline(__always) internal func lua_tostring(_ L: LuaState, _ i: Int32) -> UnsafePointer<CChar>! {
     lua_tolstring(L, i, nil)
 }
 
