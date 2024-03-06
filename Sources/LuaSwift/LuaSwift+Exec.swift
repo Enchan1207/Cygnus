@@ -19,8 +19,13 @@ public extension Lua {
     /// 式を評価する
     /// - Parameter statement: 式
     func eval(_ statement: String) throws {
-        let result = luaL_dostring(state, s: statement)
-        guard result == 0 else { throw LuaError(statusCode: result)! }
+        // luaL_dostring マクロを使うとloadstringのエラーが握り潰されてしまうため、2段階に分割
+        
+        let loadResult = luaL_loadstring(state, statement)
+        guard loadResult == 0 else { throw LuaError(statusCode: loadResult)! }
+        
+        let callResult = lua_pcall(state, 0, LUA_MULTRET, 0)
+        guard callResult == 0 else { throw LuaError(statusCode: callResult)! }
     }
     
 }
