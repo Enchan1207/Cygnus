@@ -7,8 +7,8 @@
 
 # GitHub APIを使って最新リリースの情報を取得
 # (lua/luaはミラーなので本来はlua.orgからダウンロードすべきだが、ここにバージョン情報を直書きするよりはマシ)
-echo "Fetching latess release information of Lua from GitHub (lua/lua)..."
-LUR_RELEASE_INFO="$(wget -q -O - https://api.github.com/repos/lua/lua/releases/latest)"
+echo "Fetching latest release information of Lua from GitHub (lua/lua)..."
+LUR_RELEASE_INFO="$(wget -O - https://api.github.com/repos/lua/lua/releases/latest)"
 if [ $? -ne 0 ]; then
     echo "GitHub API invocation failed."
     exit 1
