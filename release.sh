@@ -8,20 +8,17 @@
 # スタートアップスクリプトを呼び出してLuaコアのソースを取得・配置
 ./startup.sh
 
+# リモートの変更を取得
+git fetch
+
 # リリースブランチに切り替え
 RELEASE_BRANCH=release
-if [ `git rev-parse --verify $RELEASE_BRANCH 2>/dev/null` ]; then
-    git switch $RELEASE_BRANCH
-else
-    git switch -c $RELEASE_BRANCH
-fi
-
-# リモートからpull
-git pull origin $RELEASE_BRANCH 2>/dev/null || echo "remote branch not found"
+git switch $RELEASE_BRANCH || git switch -c $RELEASE_BRANCH
 
 # Luaコアのソースを強制的にaddしてcommit
+git add --all
 git add -f Sources/LuaSwiftCore/**/*
 git commit -m "[Add] add source files of Lua (automated) [no ci]"
 
 # push
-git push origin $RELEASE_BRANCH
+git push -f origin $RELEASE_BRANCH

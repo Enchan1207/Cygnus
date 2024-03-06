@@ -18,10 +18,13 @@ fi
 echo "Looking for URL to source file archive..."
 JQ="$(which jq)"
 if [ $? -eq 0 ]; then
+    echo "Use jq to parse release info."
     LUA_SOURCE_URL="$(echo $LUR_RELEASE_INFO | $JQ -r '.tarball_url')"
 else
+    echo "Use generic commands to parse release info."
     LUA_SOURCE_URL="$(echo $LUR_RELEASE_INFO | grep tarball_url | sed -r 's/.*(https:\/\/.+)\",$/\1/')"
 fi
+echo "Source file URL: ${LUA_SOURCE_URL}"
 
 # 作業ディレクトリを生成、移動
 echo "Making work directory..."
@@ -29,7 +32,7 @@ rm -rf work && mkdir -p work && cd work
 
 # ソースファイルを取得・展開し、簡単のためディレクトリ名を変更
 echo "Downloading Lua source..."
-wget -q -O "lua.tar.gz" "$LUA_SOURCE_URL"
+wget -O "lua.tar.gz" "$LUA_SOURCE_URL"
 if [ $? -ne 0 ]; then
     echo "Failed to download source file archive."
     exit 1

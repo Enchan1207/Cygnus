@@ -30,6 +30,4 @@ jobs:
 
       - name: Fetch and inject Lua sources, then commit and push to release branch
         id: inject_lua_sources
-        run: |
-          ./release.sh
-          echo "latest_commit=$(git log -1 --format=%H)" >> "$GITHUB_OUTPUT"
+        run: ./release.sh
