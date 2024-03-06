@@ -44,10 +44,10 @@ final class testLuaExec: XCTestCase {
         --
         -- FizzBuzz
         --
-
+        
         -- 最大値を設定
         local limit = \(limit)
-
+        
         --カウントアップ
         for n = 1, limit do
             if n % 3 == 0 and n % 5 == 0 then
@@ -79,6 +79,22 @@ final class testLuaExec: XCTestCase {
         
         // 同じ結果が得られるはず
         XCTAssertEqual(expected, outputStream)
+    }
+    
+    /// yieldのテスト
+    func testYield() throws {
+        let lua = Lua()
+        
+        // これは通る
+        let value = 123
+        try lua.eval("a = \(value)")
+        
+        // これは通らない となるとREPLは一体どんな仕組みになっているのか…?
+        do {
+            try lua.eval("a")
+        } catch LuaError.SyntaxError {
+            print("Syntax error: \(try lua.get() as String)")
+        }
     }
     
 }

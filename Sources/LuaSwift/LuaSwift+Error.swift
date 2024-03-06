@@ -9,6 +9,9 @@ import LuaSwiftCore
 /// Lua VMのエラー
 public enum LuaError: Error {
     
+    /// Yield (LUA\_YIELD)
+    case Yield
+    
     /// ランタイムエラー (LUA\_ERRRUN)
     case RuntimeError
     
@@ -37,6 +40,8 @@ public enum LuaError: Error {
     /// - Parameter statusCode: ステータスコード
     init?(statusCode: Int32) {
         switch statusCode {
+        case LUA_YIELD:
+            self = .Yield
         case LUA_ERRRUN:
             self = .RuntimeError
         case LUA_ERRSYNTAX:

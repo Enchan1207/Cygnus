@@ -190,6 +190,7 @@ internal let LUAL_NUMSIZES = MemoryLayout<lua_Integer>.size * 16 + MemoryLayout<
 }
 
 /// #define luaL_dofile(L, fn) (luaL_loadfile(L, fn) || lua_pcall(L, 0, LUA_MULTRET, 0))
+@available(*, deprecated, message: "This macros return value is incompliant to rawValue of LuaError.")
 @inline(__always) internal func luaL_dofile(_ L: LuaState, _ fn: UnsafePointer<CChar>!) -> Int32 {
     guard luaL_loadfile(L, fn) == 0 else {return 1}
     return lua_pcall(L, 0, LUA_MULTRET, 0)
@@ -197,6 +198,7 @@ internal let LUAL_NUMSIZES = MemoryLayout<lua_Integer>.size * 16 + MemoryLayout<
 
 
 /// #define luaL_dostring(L, s) (luaL_loadstring(L, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
+@available(*, deprecated, message: "This macros return value is incompliant to rawValue of LuaError.")
 @inline(__always) internal func luaL_dostring(_ L: LuaState, s: UnsafePointer<CChar>!) -> Int32 {
     guard luaL_loadstring(L, s) == 0 else {return 1}
     return lua_pcall(L, 0, LUA_MULTRET, 0)
