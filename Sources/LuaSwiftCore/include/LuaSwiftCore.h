@@ -7,35 +7,37 @@
 #ifndef LuaSwiftCore_h
 #define LuaSwiftCore_h
 
-// import all header files of Lua, but following files are excluded:
-//  - lua.hpp: it is for C++, not C.
-//  - ljumptab.h: it is included at lvm.c, but only in GCC.
+/**
+    At umbrella header, you should import all header files of Lua, but following files must be excluded:
+     - ljumptab.h: it is used by lvm.c, but it contain codes depends on GCC extension features. clang cannot build such file.
+     - ltests.h: it is for unit testing of Lua.
+*/
 
-#import "lapi.h"
-#import "lauxlib.h"
-#import "lcode.h"
-#import "lctype.h"
-#import "ldebug.h"
-#import "ldo.h"
-#import "lfunc.h"
-#import "lgc.h"
-#import "llex.h"
-#import "llimits.h"
-#import "lmem.h"
-#import "lobject.h"
-#import "lopcodes.h"
-#import "lopnames.h"
-#import "lparser.h"
-#import "lprefix.h"
-#import "lstate.h"
-#import "lstring.h"
-#import "ltable.h"
-#import "ltm.h"
-#import "lua.h"
-#import "luaconf.h"
-#import "lualib.h"
-#import "lundump.h"
-#import "lvm.h"
-#import "lzio.h"
+#import "../lua/lapi.h"
+#import "../lua/lauxlib.h"
+#import "../lua/lcode.h"
+#import "../lua/lctype.h"
+#import "../lua/ldebug.h"
+#import "../lua/ldo.h"
+#import "../lua/lfunc.h"
+#import "../lua/lgc.h"
+#import "../lua/llex.h"
+#import "../lua/llimits.h"
+#import "../lua/lmem.h"
+#import "../lua/lobject.h"
+#import "../lua/lopcodes.h"
+#import "../lua/lopnames.h"
+#import "../lua/lparser.h"
+#import "../lua/lprefix.h"
+#import "../lua/lstate.h"
+#import "../lua/lstring.h"
+#import "../lua/ltable.h"
+#import "../lua/ltm.h"
+#import "../lua/lua.h"
+#import "../lua/luaconf.h"
+#import "../lua/lualib.h"
+#import "../lua/lundump.h"
+#import "../lua/lvm.h"
+#import "../lua/lzio.h"
 
 #endif /* LuaSwiftCore_h */

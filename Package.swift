@@ -22,6 +22,14 @@ let package = Package(
         // Luaコア
         .target(
             name: "LuaSwiftCore",
+            exclude: [
+                "lua/ljumptab.h",
+                "lua/lua.c",
+                "lua/onelua.c",
+                "lua/ltests.c",
+                "lua/ltests.h",
+                "lua/testes"
+            ],
             cSettings: [
                 .define("LUA_COMPAT_5_3"),
                 .define("LUA_USE_JUMPTABLE", to: "0"),
