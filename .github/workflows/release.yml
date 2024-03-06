@@ -17,17 +17,23 @@ jobs:
   fetch_lua_source:
     name: Fetch Lua source files
     runs-on: macos-latest
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[Release]')
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Check if latest commit message contains "[Release]"
+        id: check_commit_message
+        if: github.event_name != 'workflow_dispatch'
+        run: git log -1 --pretty=%B | tr "[A-Z]" "[a-z]" | grep "\[release\]"
+        continue-on-error: true
+
       - name: Git setup
+        if: steps.check_commit_message.outcome != 'failure'
         run: |
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
 
-      - name: Fetch and inject Lua sources, then commit and push to release branch
-        id: inject_lua_sources
+      - name: fetch and add Lua sources, then commit and push to release branch
+        if: steps.check_commit_message.outcome != 'failure'
         run: ./release.sh
