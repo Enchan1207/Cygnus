@@ -1,7 +1,7 @@
 #
 # Luaソースを含む完全版をリリースブランチにpushし、ドラフトを作成
 #
-name: Fetch and add sources of Lua
+name: Release preparation
 
 on:
   workflow_dispatch:
@@ -33,6 +33,12 @@ jobs:
         run: |
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
+
+      - name: Cache lua working directory
+        uses: actions/cache@v4
+        with:
+          path: work
+          key: lua-workdir
 
       - name: fetch and add Lua sources, then commit and push to release branch
         if: steps.check_commit_message.outcome != 'failure'
