@@ -10,14 +10,22 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - uses: swift-actions/setup-swift@v1
+      - name: Cache Lua working directory
+        uses: actions/cache@v4
+        with:
+          path: work
+          key: lua-workdir
+
+      - name: Fetch and add Lua sources
+        run: ./startup.sh
+
+      - name: Setup Swift 5
+        uses: swift-actions/setup-swift@v1
         with:
           swift-version: "5"
-
-      - name: fetch and add Lua sources
-        run: ./startup.sh
 
       - name: build
         run: swift build
