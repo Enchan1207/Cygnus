@@ -6,6 +6,7 @@
 //
 
 import LuaSwiftCore
+import LuaSwiftMacros
 import Foundation
 
 public extension Lua {
