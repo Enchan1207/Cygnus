@@ -12,6 +12,7 @@ public extension Lua {
     /// 指定した名称のグローバル変数を取得し、スタックに積む
     /// - Parameter name: 変数名
     /// - Returns: 変数の型
+    @discardableResult
     func getGlobal(name: String) throws -> LuaType {
         guard check(atleast: 1) else {throw LuaError.StackError}
         return .init(rawValue: lua_getglobal(state, name))!

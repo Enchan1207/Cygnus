@@ -1,6 +1,6 @@
 //
 //  Lua+Exec.swift
-//  Luaコードの読み込みと実行
+//  関数呼び出し、コードの読込み/実行
 //
 //  Created by EnchantCode on 2024/03/05.
 //
@@ -27,6 +27,17 @@ public extension Lua {
         
         let callResult = lua_pcall(state, 0, LUA_MULTRET, 0)
         guard callResult == 0 else { throw LuaError(statusCode: callResult)! }
+    }
+    
+    /// 引数の数と戻り値の数を渡して関数を実行する
+    /// - Parameters:
+    ///   - argCount: 引数の数
+    ///   - returnCount: 戻り値の数
+    /// - Note: 関数は`yield`できません(内部で`lua_pcall`を呼び出しています)。
+    func call(argCount: Int32, returnCount: Int32) throws {
+        guard numberOfItems >= argCount else {throw LuaError.StackError}
+        let result = lua_pcall(state, argCount, returnCount, 0)
+        guard result == 0 else {throw LuaError(statusCode: result)!}
     }
     
 }
