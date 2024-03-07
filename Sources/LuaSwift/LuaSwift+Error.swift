@@ -36,6 +36,9 @@ public enum LuaError: Error {
     /// 不正な関数呼び出し
     case IllegalFunctionCall
     
+    /// Luaスタックに空きがない
+    case StackOverflow
+    
     /// Luaのステータスコードから初期化
     /// - Parameter statusCode: ステータスコード
     init?(statusCode: Int32) {
