@@ -8,6 +8,7 @@
 import XCTest
 @testable import LuaSwift
 @testable import LuaSwiftCore
+@testable import LuaSwiftMacros
 
 /// Luaコードの実行テスト
 final class testLuaExec: XCTestCase {

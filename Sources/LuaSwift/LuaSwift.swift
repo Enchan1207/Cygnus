@@ -6,8 +6,7 @@
 //
 
 import LuaSwiftCore
-
-public typealias LuaState = UnsafeMutablePointer<lua_State>
+import LuaSwiftMacros
 
 /// Lua
 open class Lua {

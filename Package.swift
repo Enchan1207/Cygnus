@@ -17,6 +17,11 @@ let package = Package(
         // ライブラリ
         .target(
             name: "LuaSwift",
+            dependencies: ["LuaSwiftCore", "LuaSwiftMacros"]),
+
+        // マクロ
+        .target(
+            name: "LuaSwiftMacros",
             dependencies: ["LuaSwiftCore"]),
         
         // Luaコア
