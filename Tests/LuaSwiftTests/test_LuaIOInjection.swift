@@ -8,6 +8,7 @@
 import XCTest
 @testable import LuaSwift
 @testable import LuaSwiftCore
+@testable import LuaSwiftMacros
 
 /// 標準入出力のインジェクション
 final class testLuaIOInjection: XCTestCase {

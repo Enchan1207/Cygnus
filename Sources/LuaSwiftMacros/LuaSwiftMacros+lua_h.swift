@@ -8,7 +8,7 @@
 import LuaSwiftCore
 
 /// #define LUA_REGISTRYINDEX    (-LUAI_MAXSTACK - 1000)
-internal let LUA_REGISTRYINDEX = -LUAI_MAXSTACK - 1000
+public let LUA_REGISTRYINDEX = -LUAI_MAXSTACK - 1000
 
 /// #define lua_call(L,n,r)        lua_callk(L, (n), (r), 0, NULL)
 @inline(__always) public func lua_call(_ L: LuaState, _ n: Int32, _ r: Int32){

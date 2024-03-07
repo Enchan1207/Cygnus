@@ -8,7 +8,7 @@
 import LuaSwiftCore
 
 /// #define LUAL_NUMSIZES    (sizeof(lua_Integer)*16 + sizeof(lua_Number))
-internal let LUAL_NUMSIZES = MemoryLayout<lua_Integer>.size * 16 + MemoryLayout<lua_Number>.size
+public let LUAL_NUMSIZES = MemoryLayout<lua_Integer>.size * 16 + MemoryLayout<lua_Number>.size
 
 /// #define luaL_checkversion(L) luaL_checkversion_(L, LUA_VERSION_NUM, LUAL_NUMSIZES)
 @inline(__always) public func luaL_checkversion(_ L: LuaState) {
