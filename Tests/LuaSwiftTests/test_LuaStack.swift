@@ -7,6 +7,8 @@
 
 import XCTest
 @testable import LuaSwift
+@testable import LuaSwiftCore
+@testable import LuaSwiftMacros
 
 /// Luaスタックのテスト
 final class testLuaStack: XCTestCase {
@@ -177,4 +179,58 @@ final class testLuaStack: XCTestCase {
         XCTAssertThrowsError(try lua.get() as String)
         try lua.pop()
     }
+    
+    /// 関数オブジェクトのpush/pop
+    func testPushPopFunc() throws {
+        let lua = Lua()
+        try lua.configureStardardIO(replacePrintStatement: false)
+        
+        // 引数を二つとって乗じる関数をpush
+        try lua.push({ state in
+            guard let state = state else {return 0}
+            
+            guard lua_gettop(state) >= 2,
+                  lua_type(state, -1) == LuaType.Number.rawValue,
+                  lua_type(state, -2) == LuaType.Number.rawValue
+            else {return 0}
+            
+            let lhs = lua_tonumber(state, -1)
+            let rhs = lua_tonumber(state, -2)
+            lua_pop(state, 2)
+            
+            let result: Int64 = .init(lhs * rhs)
+            lua_pushinteger(state, result)
+            return 1
+        })
+        
+        // グローバルに登録
+        try lua.setGlobal(name: "mul")
+        
+        // luaから呼び出してみる
+        let luaSemaphore = DispatchSemaphore(value: 0)
+        DispatchQueue.global().async {
+            try! lua.eval("""
+                print("lhs pending")
+                lhs = tonumber(io.read())
+                print(lhs)
+                print("rhs pending")
+                rhs = tonumber(io.read())
+                print(rhs)
+                result = mul(lhs, rhs)
+                print(result)
+                io.write(result)
+                io.flush()
+            """)
+            luaSemaphore.signal()
+        }
+        
+        // 数値を二つ入力し
+        let lhs = 3, rhs = 5
+        try lua.stdin?.write(contentsOf: "\(lhs)\n\(rhs)\n".data(using: .ascii)!)
+        
+        // 読み出し
+        let result = Int(String(data: lua.stdout!.availableData, encoding: .ascii)!)
+        XCTAssertEqual(lhs * rhs, result)
+    }
+    
 }

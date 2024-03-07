@@ -20,7 +20,7 @@ public extension Lua {
     /// 指定した名称のグローバル変数をスタック最上段の値に設定する
     /// - Parameter name: 変数名
     func setGlobal(name: String) throws {
-        guard numberOfItems > 1 else {throw LuaError.StackError}
+        guard numberOfItems > 0 else {throw LuaError.StackError}
         lua_setglobal(state, name)
     }
     

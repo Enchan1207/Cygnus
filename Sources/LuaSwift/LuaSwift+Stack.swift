@@ -75,6 +75,13 @@ public extension Lua {
         lua_pushstring(state, v)
     }
     
+    /// 関数をスタックに積む
+    /// - Parameter v: 積む値
+    func push(_ v: lua_CFunction) throws {
+        guard check(atleast: 1) else {throw LuaError.StackError}
+        lua_pushcfunction(state, v)
+    }
+    
     /// nilをスタックに積む
     /// - Parameter v: 積む値
     func pushNil() throws {
@@ -142,13 +149,13 @@ public extension Lua {
             // TODO: 他のLuaTypeにも対応する
             
         case (is Int64.Type, .Number):
-            return try lua_tointeger(state, index) as! T
+            return lua_tointeger(state, index) as! T
             
         case (is Int.Type, .Number):
-            return Int(try lua_tointeger(state, index)) as! T
+            return Int(lua_tointeger(state, index)) as! T
             
         case (is Double.Type, .Number):
-            return try lua_tonumber(state, index) as! T
+            return lua_tonumber(state, index) as! T
         
         case (is String.Type, .String):
             guard let stringPtr = lua_tostring(state, index) else {throw LuaError.TypeError}
@@ -156,6 +163,9 @@ public extension Lua {
             
         case (is Bool.Type, .Boolean):
             return (lua_toboolean(state, index) != 0) as! T
+        
+        case (is lua_CFunction.Type, .Function):
+            return lua_tocfunction(state, index) as! T
             
         default:
             throw LuaError.TypeError
