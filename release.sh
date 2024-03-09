@@ -15,8 +15,8 @@ git fetch
 RELEASE_BRANCH=release
 git switch $RELEASE_BRANCH || git switch -c $RELEASE_BRANCH
 
-# masterブランチをマージ
-git merge master
+# masterブランチをマージ ここが失敗すると何の意味もないのでアクションごとコケさせる
+git merge master || exit 1
 
 # Luaコアの.gitディレクトリを削除し、強制的にaddしてcommit
 rm -rf Sources/LuaSwiftCore/lua/.git
