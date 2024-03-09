@@ -98,6 +98,36 @@ final class testLuaExec: XCTestCase {
         }
     }
     
+    /// 戻り値のない関数呼び出しのテスト
+    func testCallNoRetFunction() throws {
+        let lua = Lua()
+        try lua.configureStardardIO()
+        
+        // print()
+        let argument = "Hello, Lua!"
+        try lua.getGlobal(name: "print")
+        try lua.push(argument)
+        try lua.call(argCount: 1, returnCount: 0)
+        guard let output = lua.stdout?.availableData else {fatalError("Failed to capture output")}
+        XCTAssertEqual(argument, String(data: output, encoding: .ascii))
+    }
+    
+    /// 戻り値のある関数呼び出しのテスト
+    func testCallFunctionWithReturn() throws {
+        let lua = Lua()
+        try lua.configureStardardIO()
+        
+        // string.lower()
+        let argument = "HELLO, LUA!"
+        try lua.getGlobal(name: "string")
+        try lua.getField(key: "lower")
+        try lua.push(argument)
+        try lua.call(argCount: 1, returnCount: 1)
+        guard lua.numberOfItems >= 1 else {fatalError("Expected 1 return value, but no value is stored in stack")}
+        let result = try lua.get() as String
+        XCTAssertEqual(argument.lowercased(), result)
+    }
+    
 }
 
 fileprivate var outputStream: [String] = []

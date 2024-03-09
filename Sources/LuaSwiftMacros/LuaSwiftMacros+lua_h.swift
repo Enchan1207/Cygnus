@@ -26,12 +26,12 @@ public let LUA_REGISTRYINDEX = -LUAI_MAXSTACK - 1000
 }
 
 /// #define lua_tonumber(L,i)    lua_tonumberx(L,(i),NULL)
-@inline(__always) public func lua_tonumber(_ L: LuaState, _ idx: Int32) throws -> lua_Number {
+@inline(__always) public func lua_tonumber(_ L: LuaState, _ idx: Int32) -> lua_Number {
     lua_tonumberx(L, idx, nil)
 }
 
 /// #define lua_tointeger(L,i)    lua_tointegerx(L,(i),NULL)
-@inline(__always) public func lua_tointeger(_ L: LuaState, _ idx: Int32) throws -> lua_Integer {
+@inline(__always) public func lua_tointeger(_ L: LuaState, _ idx: Int32) -> lua_Integer {
     lua_tointegerx(L, idx, nil)
 }
 
