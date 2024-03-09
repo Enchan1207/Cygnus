@@ -8,6 +8,7 @@
 import XCTest
 @testable import LuaSwift
 @testable import LuaSwiftCore
+@testable import LuaSwiftMacros
 
 /// Luaコードの実行テスト
 final class testLuaExec: XCTestCase {
@@ -44,10 +45,10 @@ final class testLuaExec: XCTestCase {
         --
         -- FizzBuzz
         --
-
+        
         -- 最大値を設定
         local limit = \(limit)
-
+        
         --カウントアップ
         for n = 1, limit do
             if n % 3 == 0 and n % 5 == 0 then
@@ -79,6 +80,52 @@ final class testLuaExec: XCTestCase {
         
         // 同じ結果が得られるはず
         XCTAssertEqual(expected, outputStream)
+    }
+    
+    /// yieldのテスト
+    func testYield() throws {
+        let lua = Lua()
+        
+        // これは通る
+        let value = 123
+        try lua.eval("a = \(value)")
+        
+        // これは通らない となるとREPLは一体どんな仕組みになっているのか…?
+        do {
+            try lua.eval("a")
+        } catch LuaError.SyntaxError {
+            print("Syntax error: \(try lua.get() as String)")
+        }
+    }
+    
+    /// 戻り値のない関数呼び出しのテスト
+    func testCallNoRetFunction() throws {
+        let lua = Lua()
+        try lua.configureStardardIO()
+        
+        // print()
+        let argument = "Hello, Lua!"
+        try lua.getGlobal(name: "print")
+        try lua.push(argument)
+        try lua.call(argCount: 1, returnCount: 0)
+        guard let output = lua.stdout?.availableData else {fatalError("Failed to capture output")}
+        XCTAssertEqual(argument, String(data: output, encoding: .ascii))
+    }
+    
+    /// 戻り値のある関数呼び出しのテスト
+    func testCallFunctionWithReturn() throws {
+        let lua = Lua()
+        try lua.configureStardardIO()
+        
+        // string.lower()
+        let argument = "HELLO, LUA!"
+        try lua.getGlobal(name: "string")
+        try lua.getField(key: "lower")
+        try lua.push(argument)
+        try lua.call(argCount: 1, returnCount: 1)
+        guard lua.numberOfItems >= 1 else {fatalError("Expected 1 return value, but no value is stored in stack")}
+        let result = try lua.get() as String
+        XCTAssertEqual(argument.lowercased(), result)
     }
     
 }
