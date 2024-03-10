@@ -3,7 +3,17 @@
 #
 name: Test swift package
 
-on: push
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "Sources/**"
+      - "Tests/**"
+      - "Package.swift"
+  pull_request:
+    branches:
+      - master
 
 jobs:
   test:
@@ -13,12 +23,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Cache Lua working directory
-        uses: actions/cache@v4
-        with:
-          path: work
-          key: lua-workdir
-
       - name: Fetch and add Lua sources
         run: ./startup.sh
 
@@ -27,8 +31,5 @@ jobs:
         with:
           swift-version: "5"
 
-      - name: build
-        run: swift build
-
-      - name: test
+      - name: Build and test
         run: swift test
