@@ -1,5 +1,5 @@
 #
-# Luaソースを含む完全版をリリースブランチにpushし、ドラフトを作成
+# Luaソースを含む完全版をリリースブランチにpushする
 #
 name: Release preparation
 
@@ -14,32 +14,49 @@ on:
       - completed
 
 jobs:
-  fetch_lua_source:
-    name: Fetch Lua source files
-    runs-on: macos-latest
+  catch_up_with_master:
+    name: Apply changes from 'master' to 'release'
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Check if latest commit message contains "[Release]"
-        id: check_commit_message
-        if: github.event_name != 'workflow_dispatch'
-        run: git log -1 --pretty=%B | tr "[A-Z]" "[a-z]" | grep "\[release\]"
-        continue-on-error: true
-
-      - name: Git setup
-        if: steps.check_commit_message.outcome != 'failure'
+      - name: Setup git
         run: |
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
 
-      - name: Cache lua working directory
-        uses: actions/cache@v4
-        with:
-          path: work
-          key: lua-workdir
+      - name: Fetch changes and rebase 'release', then merge 'master'
+        run: |
+          git fetch
+          git switch release || git switch -c release
+          git rebase master
+          git merge master -m "[Merge] catch up with master branch (automated) [no ci]"
+          git push origin release
 
-      - name: fetch and add Lua sources, then commit and push to release branch
-        if: steps.check_commit_message.outcome != 'failure'
-        run: ./release.sh
+  fetch_lua_source:
+    name: Fetch and inject Lua sources
+    needs: catch_up_with_master
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout branch 'release'
+        uses: actions/checkout@v4
+        ref: release
+
+      - name: Setup git
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+
+      - name: Inject Lua sources
+        run: |
+          ./startup.sh
+          rm -rf Sources/LuaSwiftCore/lua/.git
+
+      - name: Add Lua sources and commit forcibly
+        run: |
+          git add -f Sources/LuaSwiftCore/lua
+          git commit -m "[Add] add source files of Lua (automated) [no ci]"
+          git push origin release
