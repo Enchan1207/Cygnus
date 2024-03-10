@@ -16,7 +16,7 @@ RELEASE_BRANCH=release
 git switch $RELEASE_BRANCH || git switch -c $RELEASE_BRANCH
 
 # masterブランチをマージ ここが失敗すると何の意味もないのでアクションごとコケさせる
-git merge --allow-unrelated-histories gmaster || exit 1
+git merge --allow-unrelated-histories master || exit 1
 
 # Luaコアの.gitディレクトリを削除し、強制的にaddしてcommit
 rm -rf Sources/LuaSwiftCore/lua/.git
