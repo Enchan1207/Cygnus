@@ -9,12 +9,13 @@ import LuaSwiftCore
 
 public extension Lua {
     
-    /// テーブルの指定したフィールドスタックトップの値に設定する
+    /// テーブル内の指定したフィールドの値をスタックトップの値に設定する
     /// - Parameters:
     ///   - index: スタック上でのテーブルオブジェクトの位置
     ///   - key: 設定するフィールド名
     func setField(index: Int32 = -1, key: String) throws {
-        guard try getType(at: index) == .Table else {throw LuaError.TypeError}
+        let elementType = try getType(at: index)
+        guard elementType == .Table else {throw LuaError.UnsupportedType(elementType)}
         lua_setfield(state, index, key)
     }
     
@@ -25,7 +26,8 @@ public extension Lua {
     /// - Returns: フィールドに対応するオブジェクト
     @discardableResult
     func getField(index: Int32 = -1, key: String) throws -> LuaType {
-        guard try getType(at: index) == .Table else {throw LuaError.TypeError}
+        let elementType = try getType(at: index)
+        guard elementType == .Table else {throw LuaError.UnsupportedType(elementType)}
         return .init(rawValue: lua_getfield(state, index, key))!
     }
     
