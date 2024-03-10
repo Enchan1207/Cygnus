@@ -43,7 +43,8 @@ jobs:
     steps:
       - name: Checkout branch 'release'
         uses: actions/checkout@v4
-        ref: release
+        with:
+          ref: release
 
       - name: Setup git
         run: |
