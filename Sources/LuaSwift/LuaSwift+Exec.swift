@@ -35,7 +35,7 @@ public extension Lua {
     ///   - returnCount: 戻り値の数
     /// - Note: 関数は`yield`できません(内部で`lua_pcall`を呼び出しています)。
     func call(argCount: Int32, returnCount: Int32) throws {
-        guard numberOfItems >= argCount else {throw LuaError.StackError}
+        guard numberOfItems >= argCount else {throw LuaError.StackUnderflow}
         let result = lua_pcall(state, argCount, returnCount, 0)
         guard result == 0 else {throw LuaError(statusCode: result)!}
     }

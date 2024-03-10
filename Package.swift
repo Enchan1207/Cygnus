@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "LuaSwift",
     platforms: [
-        .macOS(.v11), .iOS(.v12)
+        .macOS(.v11), .iOS(.v14)
     ],
     products: [
         .library(

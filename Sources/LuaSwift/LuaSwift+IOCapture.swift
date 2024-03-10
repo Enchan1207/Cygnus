@@ -40,7 +40,7 @@ public extension Lua {
         guard self.stdin == nil else {return}
         
         // ioテーブル、luaStream、luaStreamで合計3要素積むことになる
-        guard check(atleast: 3) else {throw LuaError.StackError}
+        guard check(atleast: 3) else {throw LuaError.StackOverflow}
 
         // グローバルのioテーブルを要求し、スタックに積む
         luaL_requiref(state, "io", luaopen_io, 1)
@@ -80,7 +80,7 @@ public extension Lua {
         guard self.stdout == nil else {return}
         
         // ioテーブル、luaStream、luaStreamで合計3要素積むことになる
-        guard check(atleast: 3) else {throw LuaError.StackError}
+        guard check(atleast: 3) else {throw LuaError.StackOverflow}
 
         // グローバルのioテーブルを要求し、スタックに積む
         luaL_requiref(state, "io", luaopen_io, 1)

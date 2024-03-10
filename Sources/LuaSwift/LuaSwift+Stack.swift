@@ -31,7 +31,7 @@ public extension Lua {
     /// - Parameter index: インデックス
     internal func checkBounds(_ index: Int32) throws {
         let absoluteIndex = lua_absindex(state, index)
-        guard absoluteIndex > 0 && absoluteIndex <= numberOfItems else {throw LuaError.IndexError}
+        guard absoluteIndex > 0 && absoluteIndex <= numberOfItems else {throw LuaError.IndexOutOfRange}
     }
     
     /// スタックに積めるかを返す
@@ -43,56 +43,56 @@ public extension Lua {
     /// 真偽値をスタックに積む
     /// - Parameter v: 積む値
     func push(_ v: Bool) throws {
-        guard check(atleast: 1) else {throw LuaError.StackError}
+        guard check(atleast: 1) else {throw LuaError.StackOverflow}
         lua_pushboolean(state, v ? 1 : 0)
     }
     
     /// 整数値をスタックに積む
     /// - Parameter v: 積む値
     func push(_ v: Int) throws {
-        guard check(atleast: 1) else {throw LuaError.StackError}
+        guard check(atleast: 1) else {throw LuaError.StackOverflow}
         try push(.init(v))
     }
     
     /// 実数値をスタックに積む
     /// - Parameter v: 積む値
     func push(_ v: Double) throws {
-        guard check(atleast: 1) else {throw LuaError.StackError}
+        guard check(atleast: 1) else {throw LuaError.StackOverflow}
         lua_pushnumber(state, v)
     }
     
     /// 整数値をスタックに積む
     /// - Parameter v: 積む値
     func push(_ v: Int64) throws {
-        guard check(atleast: 1) else {throw LuaError.StackError}
+        guard check(atleast: 1) else {throw LuaError.StackOverflow}
         lua_pushinteger(state, v)
     }
     
     /// 文字列値をスタックに積む
     /// - Parameter v: 積む値
     func push(_ v: String) throws {
-        guard check(atleast: 1) else {throw LuaError.StackError}
+        guard check(atleast: 1) else {throw LuaError.StackOverflow}
         lua_pushstring(state, v)
     }
     
     /// 関数をスタックに積む
     /// - Parameter v: 積む値
     func push(_ v: lua_CFunction) throws {
-        guard check(atleast: 1) else {throw LuaError.StackError}
+        guard check(atleast: 1) else {throw LuaError.StackOverflow}
         lua_pushcfunction(state, v)
     }
     
     /// nilをスタックに積む
     /// - Parameter v: 積む値
     func pushNil() throws {
-        guard check(atleast: 1) else {throw LuaError.StackError}
+        guard check(atleast: 1) else {throw LuaError.StackOverflow}
         lua_pushnil(state)
     }
     
     /// 指定位置の値をコピーしてスタックに積む
     /// - Parameter index: コピー元のインデックス
     func push(valueAt index: Int32) throws {
-        guard check(atleast: 1) else {throw LuaError.StackError}
+        guard check(atleast: 1) else {throw LuaError.StackOverflow}
         lua_pushvalue(state, index)
     }
     
@@ -120,7 +120,7 @@ public extension Lua {
     /// 指定された数の要素をスタックからポップ(破棄)する
     /// - Parameter count: ポップする要素数
     func pop(count: Int32 = 1) throws {
-        guard numberOfItems >= count else {throw LuaError.StackError}
+        guard numberOfItems >= count else {throw LuaError.StackUnderflow}
         lua_pop(state, count)
     }
     
@@ -158,7 +158,7 @@ public extension Lua {
             return lua_tonumber(state, index) as! T
         
         case (is String.Type, .String):
-            guard let stringPtr = lua_tostring(state, index) else {throw LuaError.TypeError}
+            guard let stringPtr = lua_tostring(state, index) else {throw LuaError.UnsupportedType(T.self)}
             return String(cString: stringPtr) as! T
             
         case (is Bool.Type, .Boolean):
@@ -168,7 +168,7 @@ public extension Lua {
             return lua_tocfunction(state, index) as! T
             
         default:
-            throw LuaError.TypeError
+            throw LuaError.UnsupportedType(T.self)
         }
     }
 }
