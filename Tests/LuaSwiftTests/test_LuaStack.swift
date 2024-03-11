@@ -183,7 +183,7 @@ final class testLuaStack: XCTestCase {
     /// 関数オブジェクトのpush/pop
     func testPushPopFunc() throws {
         let lua = Lua()
-        try lua.configureStardardIO(replacePrintStatement: false)
+        try lua.configureStandardIO(replacePrintStatement: false)
         
         // 引数を二つとって乗じる関数をpush
         try lua.push({ state in

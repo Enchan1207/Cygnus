@@ -15,7 +15,7 @@ public extension Lua {
     /// - Parameter replacePrintStatement: 標準関数 `print` を差し替えるかどうか
     /// - Note: Luaの標準関数 `print` は、内部で `stdio.h` レベルの `stdout` を使用しています。
     ///         引数 `replacePrintStatement` を `true` に設定することにより、`print` の出力先を `Lua.stdout` に変更することが可能です。
-    func configureStardardIO(replacePrintStatement: Bool = true) throws {
+    func configureStandardIO(replacePrintStatement: Bool = true) throws {
         try configureStandardInput()
         try configureStandardOutput()
         

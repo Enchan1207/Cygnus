@@ -101,7 +101,7 @@ final class testLuaExec: XCTestCase {
     /// 戻り値のない関数呼び出しのテスト
     func testCallNoRetFunction() throws {
         let lua = Lua()
-        try lua.configureStardardIO()
+        try lua.configureStandardIO()
         
         // print()
         let argument = "Hello, Lua!"
@@ -115,7 +115,7 @@ final class testLuaExec: XCTestCase {
     /// 戻り値のある関数呼び出しのテスト
     func testCallFunctionWithReturn() throws {
         let lua = Lua()
-        try lua.configureStardardIO()
+        try lua.configureStandardIO()
         
         // string.lower()
         let argument = "HELLO, LUA!"
