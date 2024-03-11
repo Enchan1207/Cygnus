@@ -5,6 +5,9 @@
 # Luaソースディレクトリ
 Sources/CygnusCore/lua
 
+# サンプルソース(万が一残ってしまった場合のために)
+Cygnus-demo-macOS
+
 # Created by https://www.toptal.com/developers/gitignore/api/macos,xcode,swiftpm
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,xcode,swiftpm
 
