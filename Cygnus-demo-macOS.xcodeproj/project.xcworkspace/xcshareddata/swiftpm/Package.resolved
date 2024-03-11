@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "cygnus",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Enchan1207/Cygnus",
+      "state" : {
+        "revision" : "7e15c0475e3738f86903367f2f5b6b835e85abce",
+        "version" : "1.0.0"
+      }
+    }
+  ],
+  "version" : 2
+}

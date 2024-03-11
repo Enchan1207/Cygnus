@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  Cygnus-demo-macOS
+//  Asteroid for mac
 //
 //  Created by EnchantCode on 2024/03/11.
 //
@@ -10,11 +10,10 @@ import Cocoa
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    @IBOutlet var window: NSWindow!
-
+    let replWindowController = ReplWindowController()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
+        replWindowController.showWindow(nil)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

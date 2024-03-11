@@ -7,13 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9E269CF92B9F060000739F75 /* Cygnus in Frameworks */ = {isa = PBXBuildFile; productRef = 9E269CF82B9F060000739F75 /* Cygnus */; };
+		9E269CFE2B9F09E200739F75 /* ReplWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E269CFC2B9F09E200739F75 /* ReplWindowController.swift */; };
+		9E269CFF2B9F09E200739F75 /* ReplWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E269CFD2B9F09E200739F75 /* ReplWindow.xib */; };
 		9E6344602B9EF1B7005EF691 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E63445F2B9EF1B7005EF691 /* AppDelegate.swift */; };
 		9E6344622B9EF1BA005EF691 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E6344612B9EF1BA005EF691 /* Assets.xcassets */; };
 		9E6344652B9EF1BA005EF691 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E6344632B9EF1BA005EF691 /* MainMenu.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9E63445C2B9EF1B7005EF691 /* Cygnus-demo-macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cygnus-demo-macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E269CFC2B9F09E200739F75 /* ReplWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplWindowController.swift; sourceTree = "<group>"; };
+		9E269CFD2B9F09E200739F75 /* ReplWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReplWindow.xib; sourceTree = "<group>"; };
+		9E63445C2B9EF1B7005EF691 /* Asteroid for mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Asteroid for mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E63445F2B9EF1B7005EF691 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E6344612B9EF1BA005EF691 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9E6344642B9EF1BA005EF691 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -25,6 +30,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E269CF92B9F060000739F75 /* Cygnus in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,7 +48,7 @@
 		9E63445D2B9EF1B7005EF691 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9E63445C2B9EF1B7005EF691 /* Cygnus-demo-macOS.app */,
+				9E63445C2B9EF1B7005EF691 /* Asteroid for mac.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -52,6 +58,8 @@
 			children = (
 				9E63445F2B9EF1B7005EF691 /* AppDelegate.swift */,
 				9E6344612B9EF1BA005EF691 /* Assets.xcassets */,
+				9E269CFC2B9F09E200739F75 /* ReplWindowController.swift */,
+				9E269CFD2B9F09E200739F75 /* ReplWindow.xib */,
 				9E6344632B9EF1BA005EF691 /* MainMenu.xib */,
 				9E6344662B9EF1BA005EF691 /* Cygnus_demo_macOS.entitlements */,
 			);
@@ -61,9 +69,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9E63445B2B9EF1B7005EF691 /* Cygnus-demo-macOS */ = {
+		9E63445B2B9EF1B7005EF691 /* Asteroid for mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9E6344692B9EF1BA005EF691 /* Build configuration list for PBXNativeTarget "Cygnus-demo-macOS" */;
+			buildConfigurationList = 9E6344692B9EF1BA005EF691 /* Build configuration list for PBXNativeTarget "Asteroid for mac" */;
 			buildPhases = (
 				9E6344582B9EF1B7005EF691 /* Sources */,
 				9E6344592B9EF1B7005EF691 /* Frameworks */,
@@ -73,9 +81,12 @@
 			);
 			dependencies = (
 			);
-			name = "Cygnus-demo-macOS";
+			name = "Asteroid for mac";
+			packageProductDependencies = (
+				9E269CF82B9F060000739F75 /* Cygnus */,
+			);
 			productName = "Cygnus-demo-macOS";
-			productReference = 9E63445C2B9EF1B7005EF691 /* Cygnus-demo-macOS.app */;
+			productReference = 9E63445C2B9EF1B7005EF691 /* Asteroid for mac.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -102,11 +113,14 @@
 				Base,
 			);
 			mainGroup = 9E6344532B9EF1B6005EF691;
+			packageReferences = (
+				9E269CF72B9F060000739F75 /* XCRemoteSwiftPackageReference "Cygnus" */,
+			);
 			productRefGroup = 9E63445D2B9EF1B7005EF691 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9E63445B2B9EF1B7005EF691 /* Cygnus-demo-macOS */,
+				9E63445B2B9EF1B7005EF691 /* Asteroid for mac */,
 			);
 		};
 /* End PBXProject section */
@@ -118,6 +132,7 @@
 			files = (
 				9E6344622B9EF1BA005EF691 /* Assets.xcassets in Resources */,
 				9E6344652B9EF1BA005EF691 /* MainMenu.xib in Resources */,
+				9E269CFF2B9F09E200739F75 /* ReplWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E269CFE2B9F09E200739F75 /* ReplWindowController.swift in Sources */,
 				9E6344602B9EF1B7005EF691 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -283,7 +299,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "enchantcode.Cygnus-demo-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -310,7 +327,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "enchantcode.Cygnus-demo-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -330,7 +348,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9E6344692B9EF1BA005EF691 /* Build configuration list for PBXNativeTarget "Cygnus-demo-macOS" */ = {
+		9E6344692B9EF1BA005EF691 /* Build configuration list for PBXNativeTarget "Asteroid for mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9E63446A2B9EF1BA005EF691 /* Debug */,
@@ -340,6 +358,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9E269CF72B9F060000739F75 /* XCRemoteSwiftPackageReference "Cygnus" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Enchan1207/Cygnus";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9E269CF82B9F060000739F75 /* Cygnus */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9E269CF72B9F060000739F75 /* XCRemoteSwiftPackageReference "Cygnus" */;
+			productName = Cygnus;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9E6344542B9EF1B6005EF691 /* Project object */;
 }
