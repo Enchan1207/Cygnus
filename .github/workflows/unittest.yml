@@ -24,7 +24,7 @@ jobs:
       matrix:
         destination:
           - platform=macOS
-          - platform=iOS Simulator,OS=14.0
+          - platform=iOS Simulator
 
     steps:
       - name: Checkout code
