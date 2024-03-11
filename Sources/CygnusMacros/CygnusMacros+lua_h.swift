@@ -1,11 +1,11 @@
 //
-//  LuaSwiftMacros+lua_h.swift
+//  CygnusMacros+lua_h.swift
 //  lua.hで定義されているマクロ
 //
 //  Created by EnchantCode on 2024/03/07.
 //
 
-import LuaSwiftCore
+import CygnusCore
 
 /// #define LUA_REGISTRYINDEX    (-LUAI_MAXSTACK - 1000)
 public let LUA_REGISTRYINDEX = -LUAI_MAXSTACK - 1000

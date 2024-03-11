@@ -1,16 +1,16 @@
 //
-//  test_LuaField.swift
+//  test_Field.swift
 //  
 //
 //  Created by EnchantCode on 2024/03/07.
 //
 
 import XCTest
-@testable import LuaSwift
-@testable import LuaSwiftMacros
+@testable import Cygnus
+@testable import CygnusMacros
 
 /// テーブルフィールド読み書きのテスト
-final class testLuaField: XCTestCase {
+final class testField: XCTestCase {
     
     func testFields() throws {
         let lua = Lua()

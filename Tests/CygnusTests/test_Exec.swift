@@ -1,17 +1,17 @@
 //
-//  test_LuaExec.swift
+//  test_Exec.swift
 //
 //
 //  Created by EnchantCode on 2024/03/05.
 //
 
 import XCTest
-@testable import LuaSwift
-@testable import LuaSwiftCore
-@testable import LuaSwiftMacros
+@testable import Cygnus
+@testable import CygnusCore
+@testable import CygnusMacros
 
 /// Luaコードの実行テスト
-final class testLuaExec: XCTestCase {
+final class testExec: XCTestCase {
     
     /// 1行ずつ評価していく
     func testEvaluateSingleStatements() throws {
@@ -131,7 +131,7 @@ final class testLuaExec: XCTestCase {
     /// カスタム関数の登録
     func testRegisterCustomFunction() throws {
         let lua = Lua()
-        try lua.configureStardardIO()
+        try lua.configureStandardIO()
         
         // 文字列をcapitalizeする関数を作成・登録
         let capitalize: lua_CFunction = {state in

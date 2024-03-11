@@ -5,7 +5,7 @@
 //  Created by EnchantCode on 2024/03/05.
 //
 
-import LuaSwiftCore
+import CygnusCore
 
 /// Luaが扱う型
 public enum LuaType: Int32 {

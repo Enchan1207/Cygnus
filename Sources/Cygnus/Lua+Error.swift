@@ -4,7 +4,7 @@
 //
 //  Created by EnchantCode on 2024/03/05.
 //
-import LuaSwiftCore
+import CygnusCore
 
 /// Lua VMのエラー
 public enum LuaError: Error {

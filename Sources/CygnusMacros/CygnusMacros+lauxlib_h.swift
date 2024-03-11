@@ -1,11 +1,11 @@
 //
-//  LuaSwiftMacros+lauxlib_h.swift
+//  CygnusMacros+lauxlib_h.swift
 //  lauxlib.hで定義されているマクロ
 //
 //  Created by EnchantCode on 2024/03/07.
 //
 
-import LuaSwiftCore
+import CygnusCore
 
 /// #define LUAL_NUMSIZES    (sizeof(lua_Integer)*16 + sizeof(lua_Number))
 public let LUAL_NUMSIZES = MemoryLayout<lua_Integer>.size * 16 + MemoryLayout<lua_Number>.size
