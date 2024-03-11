@@ -161,7 +161,7 @@ final class testLuaIOInjection: XCTestCase {
     /// Luaインスタンス内で構成されたstdioのテスト
     func testStardardIO() throws {
         let lua = Lua()
-        try lua.configureStardardIO(replacePrintStatement: false)
+        try lua.configureStandardIO(replacePrintStatement: false)
         
         // Luaには「読んで小文字にして返す」を繰り返してもらう
         DispatchQueue.global().async {
@@ -206,7 +206,7 @@ final class testLuaIOInjection: XCTestCase {
     /// printとio.writeを同じところに向ける
     func testUnifiedPrint() throws {
         let lua = Lua()
-        try lua.configureStardardIO()
+        try lua.configureStandardIO()
         
         // printがホストのstdoutではなくLuaインスタンスのstdoutに接続される
         let sendPrint = "Hello, Lua! I'm from print()!"
