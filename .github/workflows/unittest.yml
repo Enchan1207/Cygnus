@@ -17,6 +17,7 @@ on:
 
 jobs:
   test:
+    name: Unittest
     runs-on: macos-latest
 
     strategy:
