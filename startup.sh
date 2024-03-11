@@ -6,7 +6,7 @@
 #
 
 # Luaコアのソースディレクトリに移動
-cd Sources/LuaSwiftCore
+cd Sources/CygnusCore
 if [ $? -ne 0 ]; then
     echo "Source directory of Lua core not found."
     exit 1
