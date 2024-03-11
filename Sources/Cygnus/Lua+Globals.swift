@@ -1,11 +1,11 @@
 //
-//  LuaSwift+Globals.swift
+//  Lua+Globals.swift
 //  グローバル変数の操作
 //
 //  Created by EnchantCode on 2024/03/07.
 //
 
-import LuaSwiftCore
+import CygnusCore
 
 public extension Lua {
     

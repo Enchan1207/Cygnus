@@ -4,29 +4,29 @@
 import PackageDescription
 
 let package = Package(
-    name: "LuaSwift",
+    name: "Cygnus",
     platforms: [
         .macOS(.v11), .iOS(.v14)
     ],
     products: [
         .library(
-            name: "LuaSwift",
-            targets: ["LuaSwift"]),
+            name: "Cygnus",
+            targets: ["Cygnus"]),
     ],
     targets: [
         // ライブラリ
         .target(
-            name: "LuaSwift",
-            dependencies: ["LuaSwiftCore", "LuaSwiftMacros"]),
+            name: "Cygnus",
+            dependencies: ["CygnusCore", "CygnusMacros"]),
 
         // マクロ
         .target(
-            name: "LuaSwiftMacros",
-            dependencies: ["LuaSwiftCore"]),
+            name: "CygnusMacros",
+            dependencies: ["CygnusCore"]),
         
         // Luaコア
         .target(
-            name: "LuaSwiftCore",
+            name: "CygnusCore",
             exclude: [
                 "lua/ljumptab.h",
                 "lua/lua.c",
@@ -49,7 +49,7 @@ let package = Package(
         
         // テストターゲット
         .testTarget(
-            name: "LuaSwiftTests",
-            dependencies: ["LuaSwift", "LuaSwiftCore"]),
+            name: "CygnusTests",
+            dependencies: ["Cygnus", "CygnusCore"]),
     ]
 )

@@ -1,17 +1,17 @@
 //
-//  test_LuaIOInjection.swift
+//  test_IOInjection.swift
 //
 //
 //  Created by EnchantCode on 2024/03/06.
 //
 
 import XCTest
-@testable import LuaSwift
-@testable import LuaSwiftCore
-@testable import LuaSwiftMacros
+@testable import Cygnus
+@testable import CygnusCore
+@testable import CygnusMacros
 
 /// 標準入出力のインジェクション
-final class testLuaIOInjection: XCTestCase {
+final class testIOInjection: XCTestCase {
     
     /// 標準出力を置き換える
     func testInjectOutput() throws {

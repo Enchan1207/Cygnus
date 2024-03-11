@@ -5,8 +5,8 @@
 //  Created by EnchantCode on 2024/03/05.
 //
 
-import LuaSwiftCore
-import LuaSwiftMacros
+import CygnusCore
+import CygnusMacros
 
 public extension Lua {
     

@@ -3,7 +3,7 @@
 #
 
 # Luaソースディレクトリ
-Sources/LuaSwiftCore/lua
+Sources/CygnusCore/lua
 
 # Created by https://www.toptal.com/developers/gitignore/api/macos,xcode,swiftpm
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,xcode,swiftpm

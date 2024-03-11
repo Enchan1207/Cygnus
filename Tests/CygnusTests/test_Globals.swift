@@ -1,15 +1,15 @@
 //
-//  test_LuaGlobals.swift
+//  test_Globals.swift
 //
 //
 //  Created by EnchantCode on 2024/03/07.
 //
 
 import XCTest
-@testable import LuaSwift
+@testable import Cygnus
 
 /// グローバル変数のテスト
-final class testLuaGlobals: XCTestCase {
+final class testGlobals: XCTestCase {
     
     func testAccessGlobals() throws {
         let lua = Lua()

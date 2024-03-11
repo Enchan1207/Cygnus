@@ -1,11 +1,11 @@
 //
-//  LuaSwiftCore.h - Umbrella header for Lua
-//  LuaSwift
+//  CygnusCore.h - Umbrella header for Lua
+//  Cygnus
 //
 //  Created by EnchantCode on 2024/03/04.
 //
-#ifndef LuaSwiftCore_h
-#define LuaSwiftCore_h
+#ifndef CygnusCore_h
+#define CygnusCore_h
 
 /**
     At umbrella header, you should import all header files of Lua, but following files must be excluded:
@@ -40,4 +40,4 @@
 #import "../lua/lvm.h"
 #import "../lua/lzio.h"
 
-#endif /* LuaSwiftCore_h */
+#endif /* CygnusCore_h */

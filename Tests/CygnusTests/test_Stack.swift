@@ -1,17 +1,17 @@
 //
-//  test_LuaStack.swift
+//  test_Stack.swift
 //
 //
 //  Created by EnchantCode on 2024/03/05.
 //
 
 import XCTest
-@testable import LuaSwift
-@testable import LuaSwiftCore
-@testable import LuaSwiftMacros
+@testable import Cygnus
+@testable import CygnusCore
+@testable import CygnusMacros
 
 /// Luaスタックのテスト
-final class testLuaStack: XCTestCase {
+final class testStack: XCTestCase {
     
     /// 基本的な操作
     func testPushPop() throws {

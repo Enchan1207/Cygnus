@@ -1,6 +1,6 @@
 ![Cygnus](banner.png)
 
-[![Latest release](https://img.shields.io/github/v/release/Enchan1207/LuaSwift)](https://github.com/Enchan1207/LuaSwift/releases/latest)
+[![Latest release](https://img.shields.io/github/v/release/Enchan1207/Cygnus)](https://github.com/Enchan1207/Cygnus/releases/latest)
 
 **Cygnus** is Swift package for embedding Lua into your projects.
 

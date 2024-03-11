@@ -1,17 +1,17 @@
 //
-//  test_LuaError.swift
+//  test_Error.swift
 //  
 //
 //  Created by EnchantCode on 2024/03/10.
 //
 
 import XCTest
-@testable import LuaSwift
-@testable import LuaSwiftCore
-@testable import LuaSwiftMacros
+@testable import Cygnus
+@testable import CygnusCore
+@testable import CygnusMacros
 
 /// いろんな環境のエラーを起こしてみる
-final class testLuaError: XCTestCase {
+final class testError: XCTestCase {
     
     func testStackError() throws {
         // 無を取得
@@ -34,7 +34,7 @@ final class testLuaError: XCTestCase {
         lua.popAll()
         try lua.pushNil()
         do {
-            _ = try lua.get() as testLuaError
+            _ = try lua.get() as testError
         } catch LuaError.TypeError(_) {}
         
         // 非tableオブジェクトに対するフィールド操作

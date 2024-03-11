@@ -1,12 +1,12 @@
 //
-//  LuaSwift+IOCapture.swift
+//  Lua+IOCapture.swift
 //  標準入出力の構成
 //
 //  Created by EnchantCode on 2024/03/07.
 //
 
-import LuaSwiftCore
-import LuaSwiftMacros
+import CygnusCore
+import CygnusMacros
 import Foundation
 
 public extension Lua {
