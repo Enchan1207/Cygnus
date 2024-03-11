@@ -128,6 +128,34 @@ final class testLuaExec: XCTestCase {
         XCTAssertEqual(argument.lowercased(), result)
     }
     
+    /// カスタム関数の登録
+    func testRegisterCustomFunction() throws {
+        let lua = Lua()
+        try lua.configureStardardIO()
+        
+        // 文字列をcapitalizeする関数を作成・登録
+        let capitalize: lua_CFunction = {state in
+            let lua = Lua(state: state!, owned: false)
+            guard let argument = try? lua.get() as String else {return 0}
+            try! lua.eval("print(\"\(argument.capitalized)\")")
+            return 0
+        }
+        lua_pushcfunction(lua.state, capitalize)
+        try lua.setGlobal(name: "capitalize")
+        lua.popAll()
+        
+        // 呼び出して実行
+        let input = "Hello! this is test text."
+        try lua.getGlobal(name: "capitalize")
+        try lua.push(input)
+        try lua.call(argCount: 1, returnCount: 0)
+        
+        // 結果を取得
+        guard let output = lua.stdout?.availableData,
+              let outputString = String(data: output, encoding: .utf8) else {fatalError("Failed to capture output")}
+        XCTAssertEqual(outputString, input.capitalized)
+    }
+    
 }
 
 fileprivate var outputStream: [String] = []

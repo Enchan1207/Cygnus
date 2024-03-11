@@ -15,6 +15,9 @@ open class Lua {
     /// Luaステート
     public let state: LuaState
     
+    /// ステートが借り物かどうか
+    private let isStateOwned: Bool
+    
     /// 標準入力
     internal (set) public var stdin: FileHandle?
     
@@ -23,14 +26,17 @@ open class Lua {
     
     /// Luaステートを渡して初期化
     /// - Parameter state: Luaステート
-    public init(state: LuaState){
+    /// - Parameter owned: stateオブジェクトをこのインスタンスに管理させるかどうか
+    /// - Note: `owned`  に `true` を渡した場合、Luaステートはこのインスタンスのデイニシャライザ内で閉じられます。
+    public init(state: LuaState, owned: Bool){
         self.state = state
+        self.isStateOwned = owned
     }
     
     /// 新しくLuaステートを作成し、インスタンスを初期化
     /// - Note: 標準ライブラリの読み込みなどの初期化処理が行われます。
-    convenience init() {
-        self.init(state: luaL_newstate())
+    public convenience init() {
+        self.init(state: luaL_newstate(), owned: true)
         luaL_openlibs(state)
     }
     
@@ -43,8 +49,10 @@ open class Lua {
             print("Failed to close standard I/O.")
         }
         
-        // Luaステートを閉じる
-        lua_close(state)
+        // このインスタンスの所有物なら、Luaステートを閉じる
+        if isStateOwned {
+            lua_close(state)
+        }
     }
     
 }

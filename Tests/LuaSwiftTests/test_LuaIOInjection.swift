@@ -15,7 +15,7 @@ final class testLuaIOInjection: XCTestCase {
     
     /// 標準出力を置き換える
     func testInjectOutput() throws {
-        let lua = Lua(state: luaL_newstate())
+        let lua = Lua(state: luaL_newstate(), owned: true)
         luaL_openlibs(lua.state)
         
         // pipeシステムコールを呼び出し、書込み用のファイルポインタを生成
@@ -86,7 +86,7 @@ final class testLuaIOInjection: XCTestCase {
     
     /// 標準入力を置き換える
     func testInjectInput() throws {
-        let lua = Lua(state: luaL_newstate())
+        let lua = Lua(state: luaL_newstate(), owned: true)
         luaL_openlibs(lua.state)
         
         // pipeシステムコールを呼び出し、読出し用のファイルポインタを生成
@@ -221,5 +221,4 @@ final class testLuaIOInjection: XCTestCase {
         let receiveWrite = String(data: lua.stdout!.availableData, encoding: .ascii)!
         XCTAssertEqual(sendWrite, receiveWrite)
     }
-    
 }
