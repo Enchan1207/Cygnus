@@ -19,6 +19,12 @@ jobs:
   test:
     runs-on: macos-latest
 
+    strategy:
+      matrix:
+        destination:
+          - platform=macOS
+          - platform=iOS Simulator,OS=14.0
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -32,4 +38,4 @@ jobs:
           swift-version: "5"
 
       - name: Build and test
-        run: swift test
+        run: xcodebuild -scheme "Cygnus" -destination "${{ matrix.destination }}" test
