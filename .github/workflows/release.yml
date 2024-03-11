@@ -27,12 +27,11 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
 
-      - name: Fetch changes and rebase 'release', then merge 'master'
+      - name: Switch branch to 'release', and merge to catch up with 'master'
         run: |
           git fetch
           git switch release || git switch -c release
-          git rebase master
-          git merge master -m "[Merge] catch up with master branch (automated) [no ci]"
+          git merge --allow-unrelated-histories --no-ff -X theirs -m "[Merge] catch up (automated) [no ci]" master
           git push origin release
 
   fetch_lua_source:
@@ -53,11 +52,12 @@ jobs:
 
       - name: Inject Lua sources
         run: |
+          rm -rf Sources/CygnusCore/lua
           ./startup.sh
-          rm -rf Sources/LuaSwiftCore/lua/.git
+          rm -rf Sources/CygnusCore/lua/.git
 
       - name: Add Lua sources and commit forcibly
         run: |
-          git add -f Sources/LuaSwiftCore/lua
-          git commit -m "[Add] add source files of Lua (automated) [no ci]"
+          git add -f Sources/CygnusCore/lua
+          git commit -m "[Add] source files of Lua (automated) [no ci]"
           git push origin release
