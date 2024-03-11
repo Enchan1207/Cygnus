@@ -8,7 +8,7 @@ This branch is detached from Cygnus package and provides sample application for 
 To clone this branch:
 
 ```sh
-git clone -b https://github.com/Enchan1207/Cygnus
+git clone -b demo-macOS https://github.com/Enchan1207/Cygnus
 ```
 
 ## License
