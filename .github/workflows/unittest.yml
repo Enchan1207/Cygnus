@@ -23,8 +23,8 @@ jobs:
     strategy:
       matrix:
         destination:
-          - platform=macOS
-          - platform=iOS Simulator
+          - macOS
+          - iOS
 
     steps:
       - name: Checkout code
@@ -38,5 +38,12 @@ jobs:
         with:
           swift-version: "5"
 
+      - name: Test on macOS
+        if: ${{ matrix.destination }} == "macOS"
+        run: xcodebuild -scheme "Cygnus" -destination "platform=macOS" test
+
       - name: Build and test
-        run: xcodebuild -scheme "Cygnus" -destination "${{ matrix.destination }}" test
+        if: ${{ matrix.destination }} == "iOS"
+        run: |
+          latestSimulatorName=$(xcrun simctl list -j | jq -r ".devicetypes | .[] | select(.name | startswith(\"iPhone\")) | .name" | tail -n 1)
+          xcodebuild -scheme "Cygnus" -destination "platform=iOS Simulator,name=$latestSimulatorName" test
