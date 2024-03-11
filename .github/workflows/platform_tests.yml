@@ -1,0 +1,45 @@
+#
+# プラットフォーム別のちゃんとしたテスト
+#
+name: Tests on all supported platforms
+
+# ワークフロー自体の実行にかなり時間がかかるので、masterへのソースファイルの変更を含むPRが閉じた場合にのみ実行する
+on:
+  pull_request:
+    branches:
+      - master
+    types:
+      - closed
+    paths:
+      - "Sources/**"
+      - "Tests/**"
+      - "Package.swift"
+
+jobs:
+  test_on_supported_platforms:
+    name: Testing on all supported platforms
+    runs-on: macos-latest
+
+    strategy:
+      matrix:
+        destination:
+          - macOS
+          - iOS
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Fetch and add Lua sources
+        run: ./startup.sh
+
+      - name: Test on macOS
+        if: matrix.destination == "macOS"
+        run: xcodebuild -scheme "Cygnus" -destination "platform=macOS" test
+
+      - name: Test on iOS
+        if: matrix.destination == "iOS"
+        run: |
+          latestSimulatorName=$(xcrun simctl list -j | jq -r ".devicetypes | .[] | select(.name | startswith(\"iPhone\")) | .name" | tail -n 1)
+          echo "Platform: $latestSimulatorName"
+          xcodebuild -scheme "Cygnus" -destination "platform=iOS Simulator,name=$latestSimulatorName" test

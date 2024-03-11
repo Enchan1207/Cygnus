@@ -43,25 +43,25 @@ public enum LuaType: Int32 {
     public var rawValue: Int32 {
         switch self {
         case .None:
-            LUA_TNONE
+            return LUA_TNONE
         case .Nil:
-            LUA_TNIL
+            return LUA_TNIL
         case .Boolean:
-            LUA_TBOOLEAN
+            return LUA_TBOOLEAN
         case .LightUserData:
-            LUA_TLIGHTUSERDATA
+            return LUA_TLIGHTUSERDATA
         case .Number:
-            LUA_TNUMBER
+            return LUA_TNUMBER
         case .String:
-            LUA_TSTRING
+            return LUA_TSTRING
         case .Table:
-            LUA_TTABLE
+            return LUA_TTABLE
         case .Function:
-            LUA_TFUNCTION
+            return LUA_TFUNCTION
         case .UserData:
-            LUA_TUSERDATA
+            return LUA_TUSERDATA
         case .Thread:
-            LUA_TTHREAD
+            return LUA_TTHREAD
         }
     }
     
@@ -95,25 +95,25 @@ public enum LuaType: Int32 {
     public var name: String {
         switch self {
         case .None:
-            "none"
+            return "none"
         case .Nil:
-            "nil"
+            return "nil"
         case .Boolean:
-            "boolean"
+            return "boolean"
         case .LightUserData:
-            "light user data"
+            return "light user data"
         case .Number:
-            "number"
+            return "number"
         case .String:
-            "string"
+            return "string"
         case .Table:
-            "table"
+            return "table"
         case .Function:
-            "function"
+            return "function"
         case .UserData:
-            "user data"
+            return "user data"
         case .Thread:
-            "thread"
+            return "thread"
         }
     }
 }

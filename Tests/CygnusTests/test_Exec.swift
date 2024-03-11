@@ -68,13 +68,13 @@ final class testExec: XCTestCase {
         
         let expected: [String] = (1...100).map{
             if $0 % 3 == 0 && $0 % 5 == 0 {
-                "FizzBuzz"
+                return "FizzBuzz"
             }else if $0 % 3 == 0 {
-                "Fizz"
+                return "Fizz"
             }else if $0 % 5 == 0 {
-                "Buzz"
+                return "Buzz"
             }else{
-                "\($0)"
+                return "\($0)"
             }
         }
         
