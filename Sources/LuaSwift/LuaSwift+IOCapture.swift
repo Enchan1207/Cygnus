@@ -56,15 +56,19 @@ public extension Lua {
         let luaInputStream = lua_newuserdatauv(state, MemoryLayout<luaL_Stream>.size, 0).bindMemory(to: luaL_Stream.self, capacity: 1)
         luaInputStream.pointee.f = readPtr
         luaInputStream.pointee.closef = { state in
-            // ioテーブル, luaStreamで合計2要素
-            guard let state = state , lua_checkstack(state, 2) != 0 else {return 0}
-            lua_getglobal(state, "io")
-            lua_getfield(state, -1, "stdin")
-            guard lua_type(state, -1) == LUA_TUSERDATA else {return 0}
-            let streamPtr = lua_touserdata(state, -1).bindMemory(to: luaL_Stream.self, capacity: 1)
-            fclose(streamPtr.pointee.f)
-            print("Lua state \(state): stdin closed")
-            lua_pop(state, 2)
+            guard let state = state else {return 0}
+            let lua = Lua(state: state, owned: false)
+            do {
+                try lua.getGlobal(name: "io")
+                try lua.getField(key: "stdin")
+                guard try lua.getType() == .UserData else {return 0}
+                let streamPtr = lua_touserdata(state, -1).bindMemory(to: luaL_Stream.self, capacity: 1)
+                fclose(streamPtr.pointee.f)
+                print("Lua state \(state): stdin closed")
+                try lua.pop(count: 2)
+            } catch {
+                print("Failed to close stdin")
+            }
             return 0
         }
         luaL_setmetatable(state, LUA_FILEHANDLE)
@@ -96,15 +100,19 @@ public extension Lua {
         let luaInputStream = lua_newuserdatauv(state, MemoryLayout<luaL_Stream>.size, 0).bindMemory(to: luaL_Stream.self, capacity: 1)
         luaInputStream.pointee.f = writePtr
         luaInputStream.pointee.closef = { state in
-            // ioテーブル, luaStreamで合計2要素
-            guard let state = state , lua_checkstack(state, 2) != 0 else {return 0}
-            lua_getglobal(state, "io")
-            lua_getfield(state, -1, "stdout")
-            guard lua_type(state, -1) == LUA_TUSERDATA else {return 0}
-            let streamPtr = lua_touserdata(state, -1).bindMemory(to: luaL_Stream.self, capacity: 1)
-            fclose(streamPtr.pointee.f)
-            print("Lua state \(state): stdout closed")
-            lua_pop(state, 2)
+            guard let state = state else {return 0}
+            let lua = Lua(state: state, owned: false)
+            do {
+                try lua.getGlobal(name: "io")
+                try lua.getField(key: "stdout")
+                guard try lua.getType() == .UserData else {return 0}
+                let streamPtr = lua_touserdata(state, -1).bindMemory(to: luaL_Stream.self, capacity: 1)
+                fclose(streamPtr.pointee.f)
+                print("Lua state \(state): stdout closed")
+                try lua.pop(count: 2)
+            } catch {
+                print("Failed to close stdout")
+            }
             return 0
         }
         luaL_setmetatable(state, LUA_FILEHANDLE)
