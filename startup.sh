@@ -16,7 +16,7 @@ fi
 echo "Looking for Lua repository..."
 if [ ! -e lua ]; then
     echo "Cloning..."
-    git clone --depth 1 https://github.com/lua/lua
+    git clone https://github.com/lua/lua
 fi
 cd lua
 
