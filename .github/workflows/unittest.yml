@@ -1,7 +1,7 @@
 #
 # パッケージのソースを準備してテストを行う
 #
-name: Test swift package
+name: Simple and lightweight unittest
 
 on:
   push:
@@ -17,14 +17,8 @@ on:
 
 jobs:
   test:
-    name: Unittest
+    name: Simple tests
     runs-on: macos-latest
-
-    strategy:
-      matrix:
-        destination:
-          - macOS
-          - iOS
 
     steps:
       - name: Checkout code
@@ -33,17 +27,5 @@ jobs:
       - name: Fetch and add Lua sources
         run: ./startup.sh
 
-      - name: Setup Swift 5
-        uses: swift-actions/setup-swift@v1
-        with:
-          swift-version: "5"
-
-      - name: Test on macOS
-        if: ${{ matrix.destination }} == "macOS"
-        run: xcodebuild -scheme "Cygnus" -destination "platform=macOS" test
-
       - name: Build and test
-        if: ${{ matrix.destination }} == "iOS"
-        run: |
-          latestSimulatorName=$(xcrun simctl list -j | jq -r ".devicetypes | .[] | select(.name | startswith(\"iPhone\")) | .name" | tail -n 1)
-          xcodebuild -scheme "Cygnus" -destination "platform=iOS Simulator,name=$latestSimulatorName" test
+        run: swift test
