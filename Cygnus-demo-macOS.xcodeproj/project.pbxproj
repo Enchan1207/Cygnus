@@ -10,6 +10,9 @@
 		9E269CF92B9F060000739F75 /* Cygnus in Frameworks */ = {isa = PBXBuildFile; productRef = 9E269CF82B9F060000739F75 /* Cygnus */; };
 		9E269CFE2B9F09E200739F75 /* ReplWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E269CFC2B9F09E200739F75 /* ReplWindowController.swift */; };
 		9E269CFF2B9F09E200739F75 /* ReplWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E269CFD2B9F09E200739F75 /* ReplWindow.xib */; };
+		9E269D032B9FE82000739F75 /* LuaCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E269D022B9FE82000739F75 /* LuaCanvasView.swift */; };
+		9E269D0B2BA02B5500739F75 /* LuaCanvasClipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E269D0A2BA02B5500739F75 /* LuaCanvasClipView.swift */; };
+		9E269D0D2BA035DA00739F75 /* LuaCanvasScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E269D0C2BA035DA00739F75 /* LuaCanvasScrollView.swift */; };
 		9E6344602B9EF1B7005EF691 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E63445F2B9EF1B7005EF691 /* AppDelegate.swift */; };
 		9E6344622B9EF1BA005EF691 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E6344612B9EF1BA005EF691 /* Assets.xcassets */; };
 		9E6344652B9EF1BA005EF691 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E6344632B9EF1BA005EF691 /* MainMenu.xib */; };
@@ -18,6 +21,9 @@
 /* Begin PBXFileReference section */
 		9E269CFC2B9F09E200739F75 /* ReplWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplWindowController.swift; sourceTree = "<group>"; };
 		9E269CFD2B9F09E200739F75 /* ReplWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReplWindow.xib; sourceTree = "<group>"; };
+		9E269D022B9FE82000739F75 /* LuaCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaCanvasView.swift; sourceTree = "<group>"; };
+		9E269D0A2BA02B5500739F75 /* LuaCanvasClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaCanvasClipView.swift; sourceTree = "<group>"; };
+		9E269D0C2BA035DA00739F75 /* LuaCanvasScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaCanvasScrollView.swift; sourceTree = "<group>"; };
 		9E63445C2B9EF1B7005EF691 /* Asteroid for mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Asteroid for mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E63445F2B9EF1B7005EF691 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E6344612B9EF1BA005EF691 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -37,6 +43,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9E269D062B9FF07600739F75 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9E269CFC2B9F09E200739F75 /* ReplWindowController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		9E269D072B9FF07F00739F75 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9E269CFD2B9F09E200739F75 /* ReplWindow.xib */,
+				9E6344632B9EF1BA005EF691 /* MainMenu.xib */,
+				9E269D0C2BA035DA00739F75 /* LuaCanvasScrollView.swift */,
+				9E269D0A2BA02B5500739F75 /* LuaCanvasClipView.swift */,
+				9E269D022B9FE82000739F75 /* LuaCanvasView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		9E6344532B9EF1B6005EF691 = {
 			isa = PBXGroup;
 			children = (
@@ -58,10 +84,9 @@
 			children = (
 				9E63445F2B9EF1B7005EF691 /* AppDelegate.swift */,
 				9E6344612B9EF1BA005EF691 /* Assets.xcassets */,
-				9E269CFC2B9F09E200739F75 /* ReplWindowController.swift */,
-				9E269CFD2B9F09E200739F75 /* ReplWindow.xib */,
-				9E6344632B9EF1BA005EF691 /* MainMenu.xib */,
 				9E6344662B9EF1BA005EF691 /* Cygnus_demo_macOS.entitlements */,
+				9E269D062B9FF07600739F75 /* Controller */,
+				9E269D072B9FF07F00739F75 /* View */,
 			);
 			path = "Cygnus-demo-macOS";
 			sourceTree = "<group>";
@@ -143,8 +168,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E269D032B9FE82000739F75 /* LuaCanvasView.swift in Sources */,
+				9E269D0D2BA035DA00739F75 /* LuaCanvasScrollView.swift in Sources */,
 				9E269CFE2B9F09E200739F75 /* ReplWindowController.swift in Sources */,
 				9E6344602B9EF1B7005EF691 /* AppDelegate.swift in Sources */,
+				9E269D0B2BA02B5500739F75 /* LuaCanvasClipView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
