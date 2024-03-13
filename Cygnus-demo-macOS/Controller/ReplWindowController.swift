@@ -25,22 +25,7 @@ class ReplWindowController: NSWindowController {
     }
     
     /// キャンバス
-    @IBOutlet weak var canvasView: LuaCanvasView! {
-        didSet {
-            let layer = canvasView.layer!
-            
-            // グラデーションレイヤを構成
-            let gradientLayer = CAGradientLayer()
-            let colors: [NSColor] = [.red, .green]
-            gradientLayer.frame = layer.bounds
-            gradientLayer.autoresizingMask = [.layerWidthSizable, .layerHeightSizable]
-            gradientLayer.colors = colors.map({$0.cgColor})
-            gradientLayer.startPoint = .init(x: 0.0, y: 0.0)
-            gradientLayer.endPoint = .init(x: 1.0, y: 1.0)
-            gradientLayer.locations = [0.0, 1.0]
-            layer.addSublayer(gradientLayer)
-        }
-    }
+    @IBOutlet weak var canvasView: LuaCanvasView!
     
     /// スケールコントローラのビュー
     @IBOutlet weak var scaleControllerView: NSView! {
@@ -54,11 +39,38 @@ class ReplWindowController: NSWindowController {
     @IBOutlet weak var scaleLabel: NSTextField!
     
     /// ソースコード編集エリア
-    @IBOutlet var codeView: NSTextView!
+    @IBOutlet var codeView: NSTextView! {
+        didSet {
+            // フォント設定
+            codeView.font = .monospacedSystemFont(ofSize: 13.0, weight: .regular)
+            
+            // アセットからサンプルコードを読み込んで反映
+            guard let sampleURL = Bundle.main.url(forResource: "Sample", withExtension: "lua"),
+                  let sampleCode = try? String(contentsOf: sampleURL) else {return}
+            codeView.string = sampleCode
+        }
+    }
+    
+    /// 「実行」ボタン
+    @IBOutlet weak var runButton: NSButton! {
+        didSet {
+            isRunning = false
+        }
+    }
     
     // MARK: - Properties
     
     override var windowNibName: NSNib.Name? { "ReplWindow" }
+    
+    /// Luaコード実行状態
+    private var isRunning: Bool = false {
+        didSet {
+            let buttonName = isRunning ? "pause.fill" : "play.fill"
+            let buttonLabel = isRunning ? "Pause" : "Run"
+            runButton.image = .init(systemSymbolName: buttonName, accessibilityDescription: buttonLabel)
+            runButton.toolTip = buttonLabel
+        }
+    }
     
     // MARK: - View lifecycles
     
@@ -74,9 +86,7 @@ class ReplWindowController: NSWindowController {
     /// - Parameter magnification: 倍率
     private func setScrollViewMagnification(_ magnification: CGFloat) {
         canvasScrollView.magnification = magnification
-        let scaleString = String(format: "%.0f%%", canvasScrollView.magnification * 100.0)
-        let sizeString = String(format: "%.0fpx x %.0fpx", canvasView.bounds.size.width, canvasView.bounds.size.height)
-        scaleLabel.stringValue = "\(scaleString) (\(sizeString))"
+        updateScaleLabel()
     }
     
     /// スクロールビューの倍率をウィンドウサイズにフィットするように変更する
@@ -84,15 +94,16 @@ class ReplWindowController: NSWindowController {
         // 最低限必要なマージン
         let margin: CGFloat = 10
         
-        // 理想的な幅の倍率を計算
-        let canvasViewWidth = canvasScrollView.documentView!.bounds.width
-        let scrollViewWidth = canvasScrollView.bounds.width
-        let bestScaleByWidth = (scrollViewWidth - margin * 2) / canvasViewWidth
+        // キャンバスビューのサイズを取得 ゼロ除算を防ぐため、幅か高さがゼロなら戻る
+        let canvasSize = canvasView.bounds.size
+        guard canvasSize.width > 0, canvasSize.height > 0 else {return}
         
-        // 理想的な高さの倍率を計算
-        let canvasViewHeight = canvasScrollView.documentView!.bounds.height
-        let scrollViewHeight = canvasScrollView.bounds.height
-        let bestScaleByHeight = (scrollViewHeight - margin * 2) / canvasViewHeight
+        // 外側(スクロール)ビューのサイズを取得
+        let outerViewSize = canvasScrollView.bounds.size
+        
+        // 幅と高さそれぞれについて、はみ出ない最大の倍率を計算
+        let bestScaleByWidth = (outerViewSize.width - margin * 2) / canvasSize.width
+        let bestScaleByHeight = (outerViewSize.height - margin * 2) / canvasSize.height
         
         // 小さい方を採用
         setScrollViewMagnification(min(bestScaleByWidth, bestScaleByHeight))
@@ -102,6 +113,14 @@ class ReplWindowController: NSWindowController {
     /// - Parameter to: サイズ
     private func setCanvasSize(_ to: NSSize) {
         canvasScrollView.documentView?.setFrameSize(to)
+        updateScaleLabel()
+    }
+    
+    /// スケールラベルの情報を更新する
+    private func updateScaleLabel(){
+        let scaleString = String(format: "%.0f%%", canvasScrollView.magnification * 100.0)
+        let sizeString = String(format: "%.0fpx x %.0fpx", canvasView.bounds.size.width, canvasView.bounds.size.height)
+        scaleLabel.stringValue = "\(scaleString) (\(sizeString))"
     }
     
     // MARK: - GUI actions
@@ -117,6 +136,16 @@ class ReplWindowController: NSWindowController {
     /// 自動スケーリングボタン
     @IBAction func onClickScaleToFit(_ sender: Any) {
         setCanvasScaleToFit()
+    }
+    
+    /// 実行ボタン
+    @IBAction func onClickRun(_ sender: Any) {
+        if !isRunning {
+            // TODO: Luaコードをロードして実行
+        } else {
+            // TODO: 実行中のコードを止める
+        }
+        isRunning = !isRunning
     }
     
 }
