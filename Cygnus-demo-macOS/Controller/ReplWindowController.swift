@@ -72,12 +72,15 @@ class ReplWindowController: NSWindowController {
         }
     }
     
+    private let runner = LuaRunner()
+    
     // MARK: - View lifecycles
     
     override func windowDidLoad() {
         super.windowDidLoad()
         
         setCanvasScaleToFit()
+        runner.delegate = self
     }
     
     // MARK: - Private methods
@@ -123,6 +126,13 @@ class ReplWindowController: NSWindowController {
         scaleLabel.stringValue = "\(scaleString) (\(sizeString))"
     }
     
+    /// エラーダイアログを表示
+    /// - Parameter error: エラー
+    private func showErrorDialog(error: Error){
+        // TODO: ダイアログ構成
+        print(error)
+    }
+    
     // MARK: - GUI actions
     
     /// スクロールビューの拡大縮小
@@ -140,12 +150,32 @@ class ReplWindowController: NSWindowController {
     
     /// 実行ボタン
     @IBAction func onClickRun(_ sender: Any) {
-        if !isRunning {
-            // TODO: Luaコードをロードして実行
-        } else {
-            // TODO: 実行中のコードを止める
+        // 実行中なら止めて戻る
+        guard !isRunning else {
+            runner.stop()
+            return
         }
-        isRunning = !isRunning
+        
+        do {
+            // コードをランナーに食わせて実行
+            try runner.load(codeView.string)
+            try runner.run()
+        } catch {
+            showErrorDialog(error: error)
+        }
     }
     
+}
+
+extension ReplWindowController: LuaRunnerDelegate {
+    func didStart(_ runner: LuaRunner) {
+        isRunning = true
+    }
+    
+    func didStop(_ runner: LuaRunner, withError error: Error?) {
+        isRunning = false
+        if let error = error {
+            showErrorDialog(error: error)
+        }
+    }
 }
