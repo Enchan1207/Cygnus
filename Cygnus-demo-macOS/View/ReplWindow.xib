@@ -10,7 +10,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ReplWindowController" customModule="Asteroid_for_mac" customModuleProvider="target">
             <connections>
                 <outlet property="canvasScrollView" destination="i0y-PR-8Yr" id="cda-mS-4v1"/>
-                <outlet property="canvasView" destination="gQK-ym-pB1" id="Xcu-ip-87c"/>
+                <outlet property="canvasView" destination="N2o-6E-QUY" id="XXS-GK-SK0"/>
                 <outlet property="codeView" destination="ymb-QX-6nS" id="KMc-4v-2Dd"/>
                 <outlet property="runButton" destination="Es5-sb-Sw1" id="ZcT-He-spw"/>
                 <outlet property="scaleControllerView" destination="Fdu-XL-pby" id="sY7-a4-OD3"/>
@@ -78,15 +78,9 @@
                                                     <rect key="frame" x="1" y="1" width="318" height="411"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N2o-6E-QUY">
+                                                        <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N2o-6E-QUY" customClass="CanvasView" customModule="Asteroid_for_mac" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="400" height="300"/>
                                                             <autoresizingMask key="autoresizingMask"/>
-                                                            <subviews>
-                                                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gQK-ym-pB1" customClass="CanvasView" customModule="Asteroid_for_mac" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="400" height="300"/>
-                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                                                                </customView>
-                                                            </subviews>
                                                         </view>
                                                     </subviews>
                                                 </clipView>
