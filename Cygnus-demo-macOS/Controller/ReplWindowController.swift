@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import Cygnus
 
 class ReplWindowController: NSWindowController {
     
@@ -44,10 +45,20 @@ class ReplWindowController: NSWindowController {
             // フォント設定
             codeView.font = .monospacedSystemFont(ofSize: 13.0, weight: .regular)
             
+            // 自動置換を無効化
+            codeView.isAutomaticDataDetectionEnabled = false
+            codeView.isAutomaticLinkDetectionEnabled = false
+            codeView.isAutomaticTextCompletionEnabled = false
+            codeView.isAutomaticTextReplacementEnabled = false
+            codeView.isAutomaticDashSubstitutionEnabled = false
+            codeView.isAutomaticQuoteSubstitutionEnabled = false
+            codeView.isAutomaticSpellingCorrectionEnabled = false
+            
             // アセットからサンプルコードを読み込んで反映
-            guard let sampleURL = Bundle.main.url(forResource: "Sample", withExtension: "lua"),
-                  let sampleCode = try? String(contentsOf: sampleURL) else {return}
-            codeView.string = sampleCode
+            if let sampleURL = Bundle.main.url(forResource: "Sample", withExtension: "lua"),
+               let sampleCode = try? String(contentsOf: sampleURL) {
+                codeView.string = sampleCode
+            }
         }
     }
     
@@ -129,8 +140,22 @@ class ReplWindowController: NSWindowController {
     /// エラーダイアログを表示
     /// - Parameter error: エラー
     private func showErrorDialog(error: Error){
-        // TODO: ダイアログ構成
-        print(error)
+        // エラーメッセージを生成
+        let errorMessage: String
+        let errorInfo: String
+        if let luaError = error as? LuaError {
+            errorMessage = luaError.name
+            errorInfo = luaError.reason
+        } else {
+            errorMessage = "\(type(of: error))"
+            errorInfo = error.localizedDescription
+        }
+        
+        // ダイアログを構成して表示
+        let dialog = NSAlert()
+        dialog.messageText = errorMessage
+        dialog.informativeText = errorInfo
+        dialog.runModal()
     }
     
     // MARK: - GUI actions

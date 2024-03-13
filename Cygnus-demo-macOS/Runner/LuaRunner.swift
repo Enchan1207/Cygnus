@@ -7,7 +7,6 @@
 
 import Foundation
 import Cygnus
-import CygnusCore
 
 /// Luaコードのランナー
 final class LuaRunner {
@@ -41,7 +40,7 @@ final class LuaRunner {
         try lua.getGlobal(name: "setup")
         guard try lua.getType() == .Function else {throw LuaError.FileError("Function setup() not defined or it is not function object")}
         try lua.getGlobal(name: "loop")
-        guard try lua.getType() == .Function else {throw LuaError.FileError("Function setup() not defined or it is not function object")}
+        guard try lua.getType() == .Function else {throw LuaError.FileError("Function loop() not defined or it is not function object")}
         try lua.pop(count: 2)
     }
     

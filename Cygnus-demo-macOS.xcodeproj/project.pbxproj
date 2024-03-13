@@ -18,6 +18,7 @@
 		9E6344652B9EF1BA005EF691 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E6344632B9EF1BA005EF691 /* MainMenu.xib */; };
 		9E93ECB92BA1469B00879416 /* LuaRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECB82BA1469B00879416 /* LuaRunner.swift */; };
 		9E93ECBF2BA14AE000879416 /* LuaRunnerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECBE2BA14AE000879416 /* LuaRunnerDelegate.swift */; };
+		9E93ECC22BA1555F00879416 /* LuaErrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECC12BA1555F00879416 /* LuaErrorExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		9E6344662B9EF1BA005EF691 /* Cygnus_demo_macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cygnus_demo_macOS.entitlements; sourceTree = "<group>"; };
 		9E93ECB82BA1469B00879416 /* LuaRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaRunner.swift; sourceTree = "<group>"; };
 		9E93ECBE2BA14AE000879416 /* LuaRunnerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaRunnerDelegate.swift; sourceTree = "<group>"; };
+		9E93ECC12BA1555F00879416 /* LuaErrorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaErrorExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,8 +60,8 @@
 		9E269D072B9FF07F00739F75 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				9E269CFD2B9F09E200739F75 /* ReplWindow.xib */,
 				9E6344632B9EF1BA005EF691 /* MainMenu.xib */,
+				9E269CFD2B9F09E200739F75 /* ReplWindow.xib */,
 				9E269D0A2BA02B5500739F75 /* LuaCanvasClipView.swift */,
 				9E269D022B9FE82000739F75 /* LuaCanvasView.swift */,
 			);
@@ -100,6 +102,7 @@
 				9E269D062B9FF07600739F75 /* Controller */,
 				9E269D072B9FF07F00739F75 /* View */,
 				9E269D142BA140A600739F75 /* Resources */,
+				9E93ECC02BA1554F00879416 /* Extensions */,
 			);
 			path = "Cygnus-demo-macOS";
 			sourceTree = "<group>";
@@ -111,6 +114,14 @@
 				9E93ECBE2BA14AE000879416 /* LuaRunnerDelegate.swift */,
 			);
 			path = Runner;
+			sourceTree = "<group>";
+		};
+		9E93ECC02BA1554F00879416 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9E93ECC12BA1555F00879416 /* LuaErrorExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,6 +202,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E93ECC22BA1555F00879416 /* LuaErrorExtension.swift in Sources */,
 				9E269D032B9FE82000739F75 /* LuaCanvasView.swift in Sources */,
 				9E93ECBF2BA14AE000879416 /* LuaRunnerDelegate.swift in Sources */,
 				9E93ECB92BA1469B00879416 /* LuaRunner.swift in Sources */,
