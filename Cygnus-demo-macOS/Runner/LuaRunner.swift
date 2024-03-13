@@ -65,8 +65,12 @@ final class LuaRunner {
         // 関数drawを呼び出すタイマを構成
         loopTimer = .scheduledTimer(withTimeInterval: frameRate, repeats: true, block: {[weak self] timer in
             do {
+                // 関数drawを実行 これによりコンテキスト内に描画される
                 try self?.lua.getGlobal(name: "draw")
                 try self?.lua.call(argCount: 0, returnCount: 0)
+                
+                // キャンバスを更新
+                Renderer.default.updateCanvas()
             } catch {
                 // 実行時にエラーになったら止める
                 self?.stop(withError: error)
