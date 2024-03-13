@@ -15,6 +15,16 @@ final class Renderer {
     /// Singletonインスタンス
     static let `default` = Renderer()
     
+    /// API関数
+    enum API: String, CaseIterable {
+        
+        /// 描画領域のサイズを設定する
+        case SetSize = "size"
+        
+        /// 背景色を設定する
+        case SetBackgroundColor = "background"
+    }
+    
     /// キャンバスビュー
     var canvas: CanvasView?
     

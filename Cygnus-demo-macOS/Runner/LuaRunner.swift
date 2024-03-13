@@ -7,6 +7,7 @@
 
 import Foundation
 import Cygnus
+import CygnusCore
 
 /// Luaコードのランナー
 final class LuaRunner {
@@ -16,7 +17,7 @@ final class LuaRunner {
     /// Luaインスタンス
     private var lua = Lua() {
         didSet {
-            configureRendererFunctions()
+            Renderer.default.installMethods(to: lua)
         }
     }
     
@@ -33,7 +34,7 @@ final class LuaRunner {
     
     init(){
         // レンダラの関数をインスタンスに登録
-        configureRendererFunctions()
+        Renderer.default.installMethods(to: lua)
     }
     
     // MARK: - Public methods
@@ -82,11 +83,4 @@ final class LuaRunner {
         delegate?.didStop(self, withError: error)
     }
     
-    // MARK: - Private methods
-    
-    /// Luaインスタンスにレンダラを構成する
-    private func configureRendererFunctions(){
-        try! lua.register(function: {Renderer.default.setCanvasSize($0)}, for: "size")
-        try! lua.register(function: {Renderer.default.setBackgroundColor($0)}, for: "background")
-    }
 }
