@@ -1,5 +1,5 @@
 //
-//  Renderer+Graphics.swift
+//  Renderer+GraphicFunctions.swift
 //  Asteroid for mac
 //
 //  Created by EnchantCode on 2024/03/13.
@@ -10,7 +10,7 @@ import Cygnus
 import CygnusCore
 import CygnusMacros
 
-/// グラフィックス関連
+/// グラフィックス関連の関数群
 extension Renderer {
     
     /// キャンバスビューのサイズを設定
@@ -34,6 +34,9 @@ extension Renderer {
         return 0
     }
     
+    /// キャンバスの背景色を設定
+    /// - Parameter state: Luaステート
+    /// - Returns: 戻り値の数
     func setBackgroundColor(_ state: LuaState?) -> Int32 {
         guard let state = state else {return 0}
         let lua = Lua(state: state, owned: false)

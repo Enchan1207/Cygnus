@@ -47,11 +47,11 @@ final class LuaRunner {
         // 面倒なので丸ごとevalに通す
         try lua.eval(code)
         
-        // 関数setup,loopが存在することを確認する
+        // 関数setup,drawが存在することを確認する
         try lua.getGlobal(name: "setup")
         guard try lua.getType() == .Function else {throw LuaError.FileError("Function setup() not defined or it is not function object")}
-        try lua.getGlobal(name: "loop")
-        guard try lua.getType() == .Function else {throw LuaError.FileError("Function loop() not defined or it is not function object")}
+        try lua.getGlobal(name: "draw")
+        guard try lua.getType() == .Function else {throw LuaError.FileError("Function draw() not defined or it is not function object")}
         try lua.pop(count: 2)
     }
     
@@ -61,10 +61,10 @@ final class LuaRunner {
         try lua.getGlobal(name: "setup")
         try lua.call(argCount: 0, returnCount: 0)
         
-        // 関数loopを呼び出すタイマを構成
+        // 関数drawを呼び出すタイマを構成
         loopTimer = .scheduledTimer(withTimeInterval: frameRate, repeats: true, block: {[weak self] timer in
             do {
-                try self?.lua.getGlobal(name: "loop")
+                try self?.lua.getGlobal(name: "draw")
                 try self?.lua.call(argCount: 0, returnCount: 0)
             } catch {
                 // 実行時にエラーになったら止める
