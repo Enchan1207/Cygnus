@@ -14,7 +14,11 @@ final class LuaRunner {
     // MARK: - Properties
     
     /// Luaインスタンス
-    private var lua = Lua()
+    private var lua = Lua() {
+        didSet {
+            configureRendererFunctions()
+        }
+    }
     
     /// loop関数を定期的に実行するためのタイマ
     private var loopTimer: Timer?
@@ -24,6 +28,13 @@ final class LuaRunner {
     
     /// デリゲート
     weak var delegate: LuaRunnerDelegate?
+    
+    // MARK: - Initializers
+    
+    init(){
+        // レンダラの関数をインスタンスに登録
+        configureRendererFunctions()
+    }
     
     // MARK: - Public methods
     
@@ -70,5 +81,12 @@ final class LuaRunner {
         loopTimer?.invalidate()
         delegate?.didStop(self, withError: error)
     }
-        
+    
+    // MARK: - Private methods
+    
+    /// Luaインスタンスにレンダラを構成する
+    private func configureRendererFunctions(){
+        try! lua.register(function: {Renderer.default.setCanvasSize($0)}, for: "size")
+        try! lua.register(function: {Renderer.default.setBackgroundColor($0)}, for: "background")
+    }
 }

@@ -74,7 +74,7 @@
                                         <subviews>
                                             <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i0y-PR-8Yr">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="413"/>
-                                                <clipView key="contentView" id="1XX-rQ-A8s" customClass="LuaCanvasClipView" customModule="Asteroid_for_mac" customModuleProvider="target">
+                                                <clipView key="contentView" id="1XX-rQ-A8s" customClass="CanvasClipView" customModule="Asteroid_for_mac" customModuleProvider="target">
                                                     <rect key="frame" x="1" y="1" width="318" height="411"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
@@ -82,7 +82,7 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="400" height="300"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
-                                                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gQK-ym-pB1" customClass="LuaCanvasView" customModule="Asteroid_for_mac" customModuleProvider="target">
+                                                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gQK-ym-pB1" customClass="CanvasView" customModule="Asteroid_for_mac" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="0.0" width="400" height="300"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
                                                                 </customView>

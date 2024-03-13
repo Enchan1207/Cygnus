@@ -1,5 +1,5 @@
 //
-//  LuaCanvasView.swift
+//  CanvasView.swift
 //  Asteroid for mac
 //
 //  Created by EnchantCode on 2024/03/12.
@@ -7,7 +7,9 @@
 
 import Cocoa
 
-class LuaCanvasView: NSView {
+class CanvasView: NSView {
+    
+    weak var delegate: CanvasViewDelegate?
     
     override var isFlipped: Bool {true}
     
@@ -23,6 +25,7 @@ class LuaCanvasView: NSView {
     
     private func configure(){
         wantsLayer = true
+        layer!.needsDisplayOnBoundsChange = true
         layer!.frame = bounds
         layer!.autoresizingMask = [.layerWidthSizable, .layerHeightSizable]
     }
@@ -33,4 +36,13 @@ class LuaCanvasView: NSView {
         // Drawing code here.
     }
     
+    override func setFrameSize(_ newSize: NSSize) {
+        super.setFrameSize(newSize)
+        delegate?.canvas(self, didResize: newSize)
+    }
+    
+    override func setBoundsSize(_ newSize: NSSize) {
+        super.setBoundsSize(newSize)
+        delegate?.canvas(self, didResize: newSize)
+    }
 }

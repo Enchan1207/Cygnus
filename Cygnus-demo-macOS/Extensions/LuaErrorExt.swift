@@ -1,5 +1,5 @@
 //
-//  LuaErrorExtension.swift
+//  LuaErrorExt.swift
 //  Asteroid for mac
 //
 //  Created by EnchantCode on 2024/03/13.

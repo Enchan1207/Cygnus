@@ -1,5 +1,5 @@
 //
-//  LuaCanvasClipView.swift
+//  CanvasClipView.swift
 //  Asteroid for mac
 //
 //  Created by EnchantCode on 2024/03/12.
@@ -7,7 +7,7 @@
 
 import Cocoa
 
-class LuaCanvasClipView: NSClipView {
+class CanvasClipView: NSClipView {
     
     override var isFlipped: Bool {true}
     

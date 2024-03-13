@@ -26,7 +26,12 @@ class ReplWindowController: NSWindowController {
     }
     
     /// キャンバス
-    @IBOutlet weak var canvasView: LuaCanvasView!
+    @IBOutlet weak var canvasView: CanvasView! {
+        didSet {
+            canvasView.delegate = self
+            Renderer.default.canvas = canvasView
+        }
+    }
     
     /// スケールコントローラのビュー
     @IBOutlet weak var scaleControllerView: NSView! {
@@ -123,13 +128,6 @@ class ReplWindowController: NSWindowController {
         setScrollViewMagnification(min(bestScaleByWidth, bestScaleByHeight))
     }
     
-    /// キャンバスのサイズを変更する
-    /// - Parameter to: サイズ
-    private func setCanvasSize(_ to: NSSize) {
-        canvasScrollView.documentView?.setFrameSize(to)
-        updateScaleLabel()
-    }
-    
     /// スケールラベルの情報を更新する
     private func updateScaleLabel(){
         let scaleString = String(format: "%.0f%%", canvasScrollView.magnification * 100.0)
@@ -203,4 +201,12 @@ extension ReplWindowController: LuaRunnerDelegate {
             showErrorDialog(error: error)
         }
     }
+}
+
+extension ReplWindowController: CanvasViewDelegate {
+    
+    func canvas(_ view: CanvasView, didResize to: NSSize) {
+        updateScaleLabel()
+    }
+    
 }
