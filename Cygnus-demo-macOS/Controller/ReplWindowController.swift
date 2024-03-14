@@ -216,8 +216,9 @@ extension ReplWindowController: LuaRunnerDelegate {
     }
     
     func didFinishLoopFunction(_ runner: LuaRunner) {
-        // レンダラから描画内容を生成し、キャンバスに渡す
-        canvasView.layer!.contents = Renderer.default.context?.makeImage()
+        let objects = Renderer.default.getRenderObjects()
+        guard objects.count > 0 else {return}
+        canvasView.setObjects(objects)
     }
     
 }
@@ -225,8 +226,10 @@ extension ReplWindowController: LuaRunnerDelegate {
 extension ReplWindowController: RendererDelegate {
     
     func renderer(_ renderer: Renderer, didResizeCanvas to: NSSize) {
-        canvasView.setFrameSize(to)
-        updateScaleLabel()
+        DispatchQueue.main.async{[weak self] in
+            self?.canvasView.setFrameSize(to)
+            self?.updateScaleLabel()
+        }
     }
     
 }
