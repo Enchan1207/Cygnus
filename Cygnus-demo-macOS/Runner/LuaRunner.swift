@@ -17,14 +17,17 @@ final class LuaRunner {
     /// Luaインスタンス
     private var lua = Lua()
     
+    /// Luaランナーの処理キュー
+    private let runnerQueue = DispatchQueue(label: "lua_runner")
+    
+    /// ループ関数処理タイマ
+    private var loopInvocationTimer: DispatchSourceTimer?
+    
     /// セットアップ関数の名前
     private let setupFunctionName = "setup"
     
     /// ループ関数の名前
     private let drawFunctionName = "draw"
-    
-    /// loop関数を定期的に実行するためのタイマ
-    private var loopTimer: Timer?
     
     /// loop関数の実行間隔
     var fps: UInt = 30
@@ -59,18 +62,23 @@ final class LuaRunner {
         // Luaコードの実行が始まったことをデリゲートに通知
         self.delegate?.didStartRunning(self)
         
-        // セットアップ関数とループ関数を呼び出す
-        do {
-            try lua.getGlobal(name: setupFunctionName)
-            try lua.call(argCount: 0, returnCount: 0)
-            try lua.getGlobal(name: drawFunctionName)
-            try lua.call(argCount: 0, returnCount: 0)
-        } catch {
-            stop(withError: error)
+        runnerQueue.async {[weak self] in
+            guard let self = self else {return}
+            // セットアップ関数とループ関数を呼び出す
+            do {
+                try lua.getGlobal(name: setupFunctionName)
+                try lua.call(argCount: 0, returnCount: 0)
+                try lua.getGlobal(name: drawFunctionName)
+                try lua.call(argCount: 0, returnCount: 0)
+            } catch {
+                stop(withError: error)
+            }
         }
         
         // 定期実行タイマを構成
-        loopTimer = .scheduledTimer(withTimeInterval: 1.0 / Double(fps), repeats: true, block: {[weak self] timer in
+        loopInvocationTimer = DispatchSource.makeTimerSource(flags: [], queue: runnerQueue)
+        loopInvocationTimer!.schedule(deadline: .now(), repeating: 1.0 / Double(fps))
+        loopInvocationTimer!.setEventHandler(handler: {[weak self] in
             guard let self = self else {return}
             do {
                 delegate?.didStartLoopFunction(self)
@@ -82,12 +90,13 @@ final class LuaRunner {
                 stop(withError: error)
             }
         })
+        loopInvocationTimer!.resume()
     }
     
     /// 実行中のコードを停止する
     /// - Parameter error: 発生したエラー
     func stop(withError error: Error? = nil){
-        loopTimer?.invalidate()
+        loopInvocationTimer?.cancel()
         delegate?.didStop(self, withError: error)
     }
     
