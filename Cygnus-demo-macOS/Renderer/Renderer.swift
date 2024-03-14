@@ -17,27 +17,50 @@ final class Renderer {
     /// Singletonインスタンス
     static let `default` = Renderer()
     
-    /// キャンバスビュー
-    var canvas: CanvasView?
-    
     /// グラフィックスコンテキスト
     private (set) public var context: CGContext?
+    
+    /// API関数群
+    enum API: String, LuaAPI {
+        /// 描画領域のサイズを設定する
+        case SetSize = "size"
+        
+        /// 背景色を設定する
+        case SetBackgroundColor = "background"
+        
+        /// 塗りつぶし色を設定する
+        case SetFillColor = "fill"
+        
+        /// 線の色を設定する
+        case SetStrokeColor = "stroke"
+        
+        /// 線分を描画する
+        case DrawLine = "line"
+        
+        /// 矩形を描画する
+        case DrawRect = "rect"
+        
+        var name: String { self.rawValue }
+    }
     
     // MARK: - Initializers
     
     /// 内部イニシャライザ
     private init(){
-        initContext(with: .init(width: 400, height: 300))
+        initCanvas(size: .zero)
     }
     
-    /// 指定されたサイズでコンテキストを初期化する
-    /// - Parameter size: サイズ
-    func initContext(with size: NSSize){
-        context = .init(data: nil, width: .init(size.width), height: .init(size.height), bitsPerComponent: 8, bytesPerRow: 0, space: .init(name: CGColorSpace.sRGB)!, bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)
+    /// グラフィックスコンテキストを初期化する
+    /// - Parameter canvasSize: 描画領域のサイズ
+    func initCanvas(size: NSSize){
+        context = .init(
+            data: nil,
+            width: .init(size.width),
+            height: .init(size.height),
+            bitsPerComponent: 8,
+            bytesPerRow: 0,
+            space: .init(name: CGColorSpace.sRGB)!,
+            bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)
     }
     
-    /// コンテキストの内容をキャンバスに反映する
-    func updateCanvas(){
-        canvas?.layer!.contents = context?.makeImage()
-    }
 }

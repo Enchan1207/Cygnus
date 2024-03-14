@@ -12,21 +12,20 @@ import CygnusMacros
 
 extension Renderer.API {
     
-    /// API関数が示すLua関数オブジェクトを返す
-    fileprivate var function: lua_CFunction {
+    var function: lua_CFunction {
         switch self {
         case .SetSize:
-            return {Renderer.default.setCanvasSize($0)}
+            return {Renderer.default.setCanvasSize(.init(state: $0!, owned: false))}
         case .SetBackgroundColor:
-            return {Renderer.default.setBackgroundColor($0)}
+            return {Renderer.default.setBackgroundColor(.init(state: $0!, owned: false))}
         case .SetFillColor:
-            return {Renderer.default.setFillColor($0)}
+            return {Renderer.default.setFillColor(.init(state: $0!, owned: false))}
         case .SetStrokeColor:
-            return {Renderer.default.setStrokeColor($0)}
+            return {Renderer.default.setStrokeColor(.init(state: $0!, owned: false))}
         case .DrawLine:
-            return {Renderer.default.drawLine($0)}
+            return {Renderer.default.drawLine(.init(state: $0!, owned: false))}
         case .DrawRect:
-            return {Renderer.default.drawRect($0)}
+            return {Renderer.default.drawRect(.init(state: $0!, owned: false))}
         }
     }
     
@@ -35,19 +34,11 @@ extension Renderer.API {
 /// グラフィックス関数の実装
 extension Renderer {
 
-    /// レンダラのメソッドをLuaインスタンスに登録する
-    /// - Parameter lua: Luaインスタンス
-    func installMethods(to lua: Lua){
-        Renderer.API.allCases.forEach({try! lua.register(function: $0.function, for: $0.rawValue)})
-    }
-    
     /// キャンバスビューのサイズを設定
-    /// - Parameter state: Luaステート
+    /// - Parameter lua: Luaインスタンス
     /// - Returns: 戻り値の数
-    fileprivate func setCanvasSize(_ state: LuaState?) -> Int32 {
+    fileprivate func setCanvasSize(_ lua: Lua) -> Int32 {
         // 引数チェック
-        guard let state = state else {return 0}
-        let lua = Lua(state: state, owned: false)
         guard lua.checkArguments([.Number, .Number]),
               let width = try? lua.get(at: -2) as Int,
               let height = try? lua.get(at: -1) as Int else {return 0}
@@ -55,18 +46,16 @@ extension Renderer {
         let newSize = NSSize(width: width, height: height)
         
         // コンテキストを再生成し、キャンバスサイズを変更
-        initContext(with: newSize)
-        canvas?.setFrameSize(newSize)
+        initCanvas(size: newSize)
+        // TODO: キャンバスのサイズが変わったことを通知すべき?
         return 0
     }
     
     /// キャンバスの背景色を設定
-    /// - Parameter state: Luaステート
+    /// - Parameter lua: Luaインスタンス
     /// - Returns: 戻り値の数
-    fileprivate func setBackgroundColor(_ state: LuaState?) -> Int32 {
+    fileprivate func setBackgroundColor(_ lua: Lua) -> Int32 {
         // 引数チェック
-        guard let state = state else {return 0}
-        let lua = Lua(state: state, owned: false)
         guard lua.checkArguments([.String]),
               let colorCode = try? lua.get(at: -1) as String else {return 0}
         
@@ -84,12 +73,10 @@ extension Renderer {
     }
     
     /// 塗りつぶし色を設定
-    /// - Parameter state: Luaステート
+    /// - Parameter lua: Luaインスタンス
     /// - Returns: 戻り値の数
-    fileprivate func setFillColor(_ state: LuaState?) -> Int32 {
+    fileprivate func setFillColor(_ lua: Lua) -> Int32 {
         // 引数チェック
-        guard let state = state else {return 0}
-        let lua = Lua(state: state, owned: false)
         guard lua.checkArguments([.String]),
               let colorCode = try? lua.get(at: -1) as String else {return 0}
         
@@ -100,12 +87,10 @@ extension Renderer {
     }
     
     /// 線分の色を設定
-    /// - Parameter state: Luaステート
+    /// - Parameter lua: Luaインスタンス
     /// - Returns: 戻り値の数
-    fileprivate func setStrokeColor(_ state: LuaState?) -> Int32 {
+    fileprivate func setStrokeColor(_ lua: Lua) -> Int32 {
         // 引数チェック
-        guard let state = state else {return 0}
-        let lua = Lua(state: state, owned: false)
         guard lua.checkArguments([.String]),
               let colorCode = try? lua.get(at: -1) as String else {return 0}
         
@@ -116,12 +101,10 @@ extension Renderer {
     }
     
     /// 線分を描画
-    /// - Parameter state: Luaステート
+    /// - Parameter lua: Luaインスタンス
     /// - Returns: 戻り値の数
-    fileprivate func drawLine(_ state: LuaState?) -> Int32 {
+    fileprivate func drawLine(_ lua: Lua) -> Int32 {
         // 引数チェック
-        guard let state = state else {return 0}
-        let lua = Lua(state: state, owned: false)
         guard lua.checkArguments([.Number, .Number, .Number, .Number]),
               let startX = try? lua.get(at: -4) as Int,
               let startY = try? lua.get(at: -3) as Int,
@@ -135,12 +118,10 @@ extension Renderer {
     }
 
     /// 矩形を描画
-    /// - Parameter state: Luaステート
+    /// - Parameter lua: Luaインスタンス
     /// - Returns: 戻り値の数
-    fileprivate func drawRect(_ state: LuaState?) -> Int32 {
+    fileprivate func drawRect(_ lua: Lua) -> Int32 {
         // 引数チェック
-        guard let state = state else {return 0}
-        let lua = Lua(state: state, owned: false)
         guard lua.checkArguments([.Number, .Number, .Number, .Number]),
               let startX = try? lua.get(at: -4) as Int,
               let startY = try? lua.get(at: -3) as Int,

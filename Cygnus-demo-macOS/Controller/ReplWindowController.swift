@@ -29,7 +29,6 @@ class ReplWindowController: NSWindowController {
     @IBOutlet weak var canvasView: CanvasView! {
         didSet {
             canvasView.delegate = self
-            Renderer.default.canvas = canvasView
         }
     }
     
@@ -100,6 +99,12 @@ class ReplWindowController: NSWindowController {
     }
     
     // MARK: - Private methods
+    
+    /// ランナーを構成する
+    private func configureRunner(){
+        runner.reset()
+        runner.install(api: Renderer.API.self)
+    }
     
     /// スクロールビューの倍率をいじる
     /// - Parameter magnification: 倍率
@@ -179,8 +184,11 @@ class ReplWindowController: NSWindowController {
             return
         }
         
+        // ランナーを再構成する
+        configureRunner()
+        
+        // コードをランナーに食わせて実行
         do {
-            // コードをランナーに食わせて実行
             try runner.load(codeView.string)
             try runner.run()
         } catch {

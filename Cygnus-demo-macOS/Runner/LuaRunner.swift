@@ -15,11 +15,13 @@ final class LuaRunner {
     // MARK: - Properties
     
     /// Luaインスタンス
-    private var lua = Lua() {
-        didSet {
-            Renderer.default.installMethods(to: lua)
-        }
-    }
+    private var lua = Lua()
+    
+    /// セットアップ関数の名前
+    private let setupFunctionName = "setup"
+    
+    /// ループ関数の名前
+    private let drawFunctionName = "draw"
     
     /// loop関数を定期的に実行するためのタイマ
     private var loopTimer: Timer?
@@ -30,54 +32,54 @@ final class LuaRunner {
     /// デリゲート
     weak var delegate: LuaRunnerDelegate?
     
-    // MARK: - Initializers
-    
-    init(){
-        // レンダラの関数をインスタンスに登録
-        Renderer.default.installMethods(to: lua)
-    }
-    
     // MARK: - Public methods
     
-    /// ソースコードを読み込む
+    /// Luaステートをリセットする
+    /// - Note: 導入したAPIは削除されます。
+    func reset(){
+        lua = .init()
+    }
+    
+    /// Luaコードを読み込む
     /// - Parameter code: コード
     func load(_ code: String) throws {
-        // Luaインスタンスを立て直す
-        lua = .init()
-        
-        // 面倒なので丸ごとevalに通す
+        // 丸ごとevalに通す
         try lua.eval(code)
         
-        // 関数setup,drawが存在することを確認する
-        try lua.getGlobal(name: "setup")
-        guard try lua.getType() == .Function else {throw LuaError.FileError("Function setup() not defined or it is not function object")}
-        try lua.getGlobal(name: "draw")
-        guard try lua.getType() == .Function else {throw LuaError.FileError("Function draw() not defined or it is not function object")}
+        // 必要な関数が定義されていることを確認する
+        try lua.getGlobal(name: setupFunctionName)
+        guard try lua.getType() == .Function else {throw LuaError.FileError("Function \(setupFunctionName)() not defined or it is not function object")}
+        try lua.getGlobal(name: drawFunctionName)
+        guard try lua.getType() == .Function else {throw LuaError.FileError("Function \(drawFunctionName)() not defined or it is not function object")}
         try lua.pop(count: 2)
     }
     
     /// 読み込んだLuaコードを実行する
     func run() throws {
-        // 関数setupを呼び出す
-        try lua.getGlobal(name: "setup")
+        // Luaコードの実行が始まったことをデリゲートに通知
+        self.delegate?.didStart(self)
+        
+        // TODO: rethrowsにしてこの中でエラーが発生した際にdidTerminate的な関数を呼ぶべき?
+        
+        // セットアップ関数を呼び出す
+        try lua.getGlobal(name: setupFunctionName)
         try lua.call(argCount: 0, returnCount: 0)
         
-        // 関数drawを呼び出すタイマを構成
+        // ループ関数を呼び出し、定期的に呼ぶタイマを構成
+        try lua.getGlobal(name: drawFunctionName)
+        try lua.call(argCount: 0, returnCount: 0)
         loopTimer = .scheduledTimer(withTimeInterval: frameRate, repeats: true, block: {[weak self] timer in
+            guard let self = self else {return}
             do {
-                // 関数drawを実行 これによりコンテキスト内に描画される
-                try self?.lua.getGlobal(name: "draw")
-                try self?.lua.call(argCount: 0, returnCount: 0)
-                
-                // キャンバスを更新
-                Renderer.default.updateCanvas()
+                // TODO: ループ関数の実行が始まったことをデリゲートに通知
+                try lua.getGlobal(name: drawFunctionName)
+                try lua.call(argCount: 0, returnCount: 0)
+                // TODO: ループ関数の実行が完了したことをデリゲートに通知
             } catch {
                 // 実行時にエラーになったら止める
-                self?.stop(withError: error)
+                stop(withError: error)
             }
         })
-        
-        self.delegate?.didStart(self)
     }
     
     /// 実行中のコードを停止する
@@ -85,6 +87,12 @@ final class LuaRunner {
     func stop(withError error: Error? = nil){
         loopTimer?.invalidate()
         delegate?.didStop(self, withError: error)
+    }
+    
+    /// ランナーにAPIを導入する
+    /// - Parameter api: 導入するAPI
+    func install<T>(api: T.Type) where T: LuaAPI {
+        T.allCases.forEach({try! lua.register(function: $0.function, for: $0.name)})
     }
     
 }

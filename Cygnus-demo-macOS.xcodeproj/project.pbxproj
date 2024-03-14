@@ -17,7 +17,7 @@
 		9E6344622B9EF1BA005EF691 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E6344612B9EF1BA005EF691 /* Assets.xcassets */; };
 		9E6344652B9EF1BA005EF691 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E6344632B9EF1BA005EF691 /* MainMenu.xib */; };
 		9E898AC52BA1A1B30053B6CA /* Renderer+Graphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E898AC42BA1A1B30053B6CA /* Renderer+Graphics.swift */; };
-		9E898AC72BA1AECD0053B6CA /* Renderer+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E898AC62BA1AECD0053B6CA /* Renderer+API.swift */; };
+		9E898AC92BA27E250053B6CA /* LuaAPIProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E898AC82BA27E250053B6CA /* LuaAPIProtocol.swift */; };
 		9E93ECB92BA1469B00879416 /* LuaRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECB82BA1469B00879416 /* LuaRunner.swift */; };
 		9E93ECBF2BA14AE000879416 /* LuaRunnerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECBE2BA14AE000879416 /* LuaRunnerDelegate.swift */; };
 		9E93ECC22BA1555F00879416 /* LuaErrorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECC12BA1555F00879416 /* LuaErrorExt.swift */; };
@@ -39,7 +39,7 @@
 		9E6344642B9EF1BA005EF691 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9E6344662B9EF1BA005EF691 /* Cygnus_demo_macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cygnus_demo_macOS.entitlements; sourceTree = "<group>"; };
 		9E898AC42BA1A1B30053B6CA /* Renderer+Graphics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Renderer+Graphics.swift"; sourceTree = "<group>"; };
-		9E898AC62BA1AECD0053B6CA /* Renderer+API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Renderer+API.swift"; sourceTree = "<group>"; };
+		9E898AC82BA27E250053B6CA /* LuaAPIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaAPIProtocol.swift; sourceTree = "<group>"; };
 		9E93ECB82BA1469B00879416 /* LuaRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaRunner.swift; sourceTree = "<group>"; };
 		9E93ECBE2BA14AE000879416 /* LuaRunnerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaRunnerDelegate.swift; sourceTree = "<group>"; };
 		9E93ECC12BA1555F00879416 /* LuaErrorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaErrorExt.swift; sourceTree = "<group>"; };
@@ -126,6 +126,7 @@
 			children = (
 				9E93ECB82BA1469B00879416 /* LuaRunner.swift */,
 				9E93ECBE2BA14AE000879416 /* LuaRunnerDelegate.swift */,
+				9E898AC82BA27E250053B6CA /* LuaAPIProtocol.swift */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -144,7 +145,6 @@
 			isa = PBXGroup;
 			children = (
 				9E93ECC52BA1608300879416 /* Renderer.swift */,
-				9E898AC62BA1AECD0053B6CA /* Renderer+API.swift */,
 				9E898AC42BA1A1B30053B6CA /* Renderer+Graphics.swift */,
 			);
 			path = Renderer;
@@ -228,9 +228,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E898AC72BA1AECD0053B6CA /* Renderer+API.swift in Sources */,
 				9E93ECC62BA1608300879416 /* Renderer.swift in Sources */,
 				9E93ECCF2BA1689F00879416 /* CGColorExt.swift in Sources */,
+				9E898AC92BA27E250053B6CA /* LuaAPIProtocol.swift in Sources */,
 				9E93ECC22BA1555F00879416 /* LuaErrorExt.swift in Sources */,
 				9E269D032B9FE82000739F75 /* CanvasView.swift in Sources */,
 				9E93ECBF2BA14AE000879416 /* LuaRunnerDelegate.swift in Sources */,
