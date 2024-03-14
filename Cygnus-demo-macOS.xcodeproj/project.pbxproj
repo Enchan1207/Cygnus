@@ -18,12 +18,12 @@
 		9E6344652B9EF1BA005EF691 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E6344632B9EF1BA005EF691 /* MainMenu.xib */; };
 		9E898AC52BA1A1B30053B6CA /* Renderer+Graphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E898AC42BA1A1B30053B6CA /* Renderer+Graphics.swift */; };
 		9E898AC92BA27E250053B6CA /* LuaAPIProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E898AC82BA27E250053B6CA /* LuaAPIProtocol.swift */; };
+		9E898ACB2BA291190053B6CA /* RendererDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E898ACA2BA291190053B6CA /* RendererDelegate.swift */; };
 		9E93ECB92BA1469B00879416 /* LuaRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECB82BA1469B00879416 /* LuaRunner.swift */; };
 		9E93ECBF2BA14AE000879416 /* LuaRunnerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECBE2BA14AE000879416 /* LuaRunnerDelegate.swift */; };
 		9E93ECC22BA1555F00879416 /* LuaErrorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECC12BA1555F00879416 /* LuaErrorExt.swift */; };
 		9E93ECC62BA1608300879416 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECC52BA1608300879416 /* Renderer.swift */; };
 		9E93ECCB2BA162C700879416 /* LuaExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECCA2BA162C700879416 /* LuaExt.swift */; };
-		9E93ECCD2BA1671700879416 /* CanvasViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECCC2BA1671700879416 /* CanvasViewDelegate.swift */; };
 		9E93ECCF2BA1689F00879416 /* CGColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECCE2BA1689F00879416 /* CGColorExt.swift */; };
 /* End PBXBuildFile section */
 
@@ -40,12 +40,12 @@
 		9E6344662B9EF1BA005EF691 /* Cygnus_demo_macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cygnus_demo_macOS.entitlements; sourceTree = "<group>"; };
 		9E898AC42BA1A1B30053B6CA /* Renderer+Graphics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Renderer+Graphics.swift"; sourceTree = "<group>"; };
 		9E898AC82BA27E250053B6CA /* LuaAPIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaAPIProtocol.swift; sourceTree = "<group>"; };
+		9E898ACA2BA291190053B6CA /* RendererDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererDelegate.swift; sourceTree = "<group>"; };
 		9E93ECB82BA1469B00879416 /* LuaRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaRunner.swift; sourceTree = "<group>"; };
 		9E93ECBE2BA14AE000879416 /* LuaRunnerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaRunnerDelegate.swift; sourceTree = "<group>"; };
 		9E93ECC12BA1555F00879416 /* LuaErrorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaErrorExt.swift; sourceTree = "<group>"; };
 		9E93ECC52BA1608300879416 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		9E93ECCA2BA162C700879416 /* LuaExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaExt.swift; sourceTree = "<group>"; };
-		9E93ECCC2BA1671700879416 /* CanvasViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewDelegate.swift; sourceTree = "<group>"; };
 		9E93ECCE2BA1689F00879416 /* CGColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGColorExt.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -76,7 +76,6 @@
 				9E269CFD2B9F09E200739F75 /* ReplWindow.xib */,
 				9E269D0A2BA02B5500739F75 /* CanvasClipView.swift */,
 				9E269D022B9FE82000739F75 /* CanvasView.swift */,
-				9E93ECCC2BA1671700879416 /* CanvasViewDelegate.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -145,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				9E93ECC52BA1608300879416 /* Renderer.swift */,
+				9E898ACA2BA291190053B6CA /* RendererDelegate.swift */,
 				9E898AC42BA1A1B30053B6CA /* Renderer+Graphics.swift */,
 			);
 			path = Renderer;
@@ -239,8 +239,8 @@
 				9E269CFE2B9F09E200739F75 /* ReplWindowController.swift in Sources */,
 				9E6344602B9EF1B7005EF691 /* AppDelegate.swift in Sources */,
 				9E93ECCB2BA162C700879416 /* LuaExt.swift in Sources */,
-				9E93ECCD2BA1671700879416 /* CanvasViewDelegate.swift in Sources */,
 				9E269D0B2BA02B5500739F75 /* CanvasClipView.swift in Sources */,
+				9E898ACB2BA291190053B6CA /* RendererDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

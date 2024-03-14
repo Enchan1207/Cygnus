@@ -26,11 +26,7 @@ class ReplWindowController: NSWindowController {
     }
     
     /// キャンバス
-    @IBOutlet weak var canvasView: CanvasView! {
-        didSet {
-            canvasView.delegate = self
-        }
-    }
+    @IBOutlet weak var canvasView: CanvasView!
     
     /// スケールコントローラのビュー
     @IBOutlet weak var scaleControllerView: NSView! {
@@ -96,6 +92,7 @@ class ReplWindowController: NSWindowController {
         
         setCanvasScaleToFit()
         runner.delegate = self
+        Renderer.default.delegate = self
     }
     
     // MARK: - Private methods
@@ -187,19 +184,23 @@ class ReplWindowController: NSWindowController {
         // ランナーを再構成する
         configureRunner()
         
-        // コードをランナーに食わせて実行
+        // コードを読み込む
         do {
             try runner.load(codeView.string)
-            try runner.run()
         } catch {
             showErrorDialog(error: error)
+            return
         }
+        
+        // 実行開始
+        runner.run()
     }
     
 }
 
 extension ReplWindowController: LuaRunnerDelegate {
-    func didStart(_ runner: LuaRunner) {
+    
+    func didStartRunning(_ runner: LuaRunner) {
         isRunning = true
     }
     
@@ -209,11 +210,22 @@ extension ReplWindowController: LuaRunnerDelegate {
             showErrorDialog(error: error)
         }
     }
+    
+    func didStartLoopFunction(_ runner: LuaRunner) {
+        // 何もしない
+    }
+    
+    func didFinishLoopFunction(_ runner: LuaRunner) {
+        // レンダラから描画内容を生成し、キャンバスに渡す
+        canvasView.layer!.contents = Renderer.default.context?.makeImage()
+    }
+    
 }
 
-extension ReplWindowController: CanvasViewDelegate {
+extension ReplWindowController: RendererDelegate {
     
-    func canvas(_ view: CanvasView, didResize to: NSSize) {
+    func renderer(_ renderer: Renderer, didResizeCanvas to: NSSize) {
+        canvasView.setFrameSize(to)
         updateScaleLabel()
     }
     

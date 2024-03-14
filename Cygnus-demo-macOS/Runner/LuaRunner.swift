@@ -55,26 +55,28 @@ final class LuaRunner {
     }
     
     /// 読み込んだLuaコードを実行する
-    func run() throws {
+    func run() {
         // Luaコードの実行が始まったことをデリゲートに通知
-        self.delegate?.didStart(self)
+        self.delegate?.didStartRunning(self)
         
-        // TODO: rethrowsにしてこの中でエラーが発生した際にdidTerminate的な関数を呼ぶべき?
+        // セットアップ関数とループ関数を呼び出す
+        do {
+            try lua.getGlobal(name: setupFunctionName)
+            try lua.call(argCount: 0, returnCount: 0)
+            try lua.getGlobal(name: drawFunctionName)
+            try lua.call(argCount: 0, returnCount: 0)
+        } catch {
+            stop(withError: error)
+        }
         
-        // セットアップ関数を呼び出す
-        try lua.getGlobal(name: setupFunctionName)
-        try lua.call(argCount: 0, returnCount: 0)
-        
-        // ループ関数を呼び出し、定期的に呼ぶタイマを構成
-        try lua.getGlobal(name: drawFunctionName)
-        try lua.call(argCount: 0, returnCount: 0)
+        // 定期実行タイマを構成
         loopTimer = .scheduledTimer(withTimeInterval: frameRate, repeats: true, block: {[weak self] timer in
             guard let self = self else {return}
             do {
-                // TODO: ループ関数の実行が始まったことをデリゲートに通知
+                delegate?.didStartLoopFunction(self)
                 try lua.getGlobal(name: drawFunctionName)
                 try lua.call(argCount: 0, returnCount: 0)
-                // TODO: ループ関数の実行が完了したことをデリゲートに通知
+                delegate?.didFinishLoopFunction(self)
             } catch {
                 // 実行時にエラーになったら止める
                 stop(withError: error)

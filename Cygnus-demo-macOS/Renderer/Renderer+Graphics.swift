@@ -47,11 +47,11 @@ extension Renderer {
         
         // コンテキストを再生成し、キャンバスサイズを変更
         initCanvas(size: newSize)
-        // TODO: キャンバスのサイズが変わったことを通知すべき?
+        delegate?.renderer(self, didResizeCanvas: newSize)
         return 0
     }
     
-    /// キャンバスの背景色を設定
+    /// キャンバスを指定された色で塗りつぶす
     /// - Parameter lua: Luaインスタンス
     /// - Returns: 戻り値の数
     fileprivate func setBackgroundColor(_ lua: Lua) -> Int32 {
@@ -114,6 +114,7 @@ extension Renderer {
         guard let context = context else {return 0}
         context.move(to: .init(x: startX, y: startY))
         context.addLine(to: .init(x: endX, y: endY))
+        context.strokePath()
         return 0
     }
 
@@ -130,6 +131,8 @@ extension Renderer {
         
         guard let context = context else {return 0}
         context.addRect(.init(x: startX, y: startY, width: width, height: height))
+        context.fillPath()
+        context.strokePath()
         return 0
     }
     

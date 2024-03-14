@@ -20,6 +20,9 @@ final class Renderer {
     /// グラフィックスコンテキスト
     private (set) public var context: CGContext?
     
+    /// デリゲート
+    weak var delegate: RendererDelegate?
+    
     /// API関数群
     enum API: String, LuaAPI {
         /// 描画領域のサイズを設定する
@@ -61,6 +64,9 @@ final class Renderer {
             bytesPerRow: 0,
             space: .init(name: CGColorSpace.sRGB)!,
             bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)
+        
+        // y軸をフリップする
+        context?.concatenate(.init(1, 0, 0, -1, 0, size.height))
     }
     
 }
