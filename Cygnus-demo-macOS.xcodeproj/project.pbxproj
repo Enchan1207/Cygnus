@@ -7,17 +7,46 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9E269CF92B9F060000739F75 /* Cygnus in Frameworks */ = {isa = PBXBuildFile; productRef = 9E269CF82B9F060000739F75 /* Cygnus */; };
+		9E269CFE2B9F09E200739F75 /* ReplWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E269CFC2B9F09E200739F75 /* ReplWindowController.swift */; };
+		9E269CFF2B9F09E200739F75 /* ReplWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E269CFD2B9F09E200739F75 /* ReplWindow.xib */; };
+		9E269D032B9FE82000739F75 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E269D022B9FE82000739F75 /* CanvasView.swift */; };
+		9E269D0B2BA02B5500739F75 /* CanvasClipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E269D0A2BA02B5500739F75 /* CanvasClipView.swift */; };
+		9E269D182BA1414D00739F75 /* Sample.lua in Resources */ = {isa = PBXBuildFile; fileRef = 9E269D172BA1414D00739F75 /* Sample.lua */; };
 		9E6344602B9EF1B7005EF691 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E63445F2B9EF1B7005EF691 /* AppDelegate.swift */; };
 		9E6344622B9EF1BA005EF691 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E6344612B9EF1BA005EF691 /* Assets.xcassets */; };
 		9E6344652B9EF1BA005EF691 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E6344632B9EF1BA005EF691 /* MainMenu.xib */; };
+		9E898AC52BA1A1B30053B6CA /* Renderer+Graphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E898AC42BA1A1B30053B6CA /* Renderer+Graphics.swift */; };
+		9E898AC92BA27E250053B6CA /* LuaAPIProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E898AC82BA27E250053B6CA /* LuaAPIProtocol.swift */; };
+		9E898ACB2BA291190053B6CA /* RendererDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E898ACA2BA291190053B6CA /* RendererDelegate.swift */; };
+		9E93ECB92BA1469B00879416 /* LuaRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECB82BA1469B00879416 /* LuaRunner.swift */; };
+		9E93ECBF2BA14AE000879416 /* LuaRunnerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECBE2BA14AE000879416 /* LuaRunnerDelegate.swift */; };
+		9E93ECC22BA1555F00879416 /* LuaErrorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECC12BA1555F00879416 /* LuaErrorExt.swift */; };
+		9E93ECC62BA1608300879416 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECC52BA1608300879416 /* Renderer.swift */; };
+		9E93ECCB2BA162C700879416 /* LuaExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECCA2BA162C700879416 /* LuaExt.swift */; };
+		9E93ECCF2BA1689F00879416 /* CGColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECCE2BA1689F00879416 /* CGColorExt.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9E63445C2B9EF1B7005EF691 /* Cygnus-demo-macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cygnus-demo-macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E269CFC2B9F09E200739F75 /* ReplWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplWindowController.swift; sourceTree = "<group>"; };
+		9E269CFD2B9F09E200739F75 /* ReplWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReplWindow.xib; sourceTree = "<group>"; };
+		9E269D022B9FE82000739F75 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
+		9E269D0A2BA02B5500739F75 /* CanvasClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasClipView.swift; sourceTree = "<group>"; };
+		9E269D172BA1414D00739F75 /* Sample.lua */ = {isa = PBXFileReference; lastKnownFileType = text; path = Sample.lua; sourceTree = "<group>"; };
+		9E63445C2B9EF1B7005EF691 /* Asteroid for mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Asteroid for mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E63445F2B9EF1B7005EF691 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E6344612B9EF1BA005EF691 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9E6344642B9EF1BA005EF691 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9E6344662B9EF1BA005EF691 /* Cygnus_demo_macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cygnus_demo_macOS.entitlements; sourceTree = "<group>"; };
+		9E898AC42BA1A1B30053B6CA /* Renderer+Graphics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Renderer+Graphics.swift"; sourceTree = "<group>"; };
+		9E898AC82BA27E250053B6CA /* LuaAPIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaAPIProtocol.swift; sourceTree = "<group>"; };
+		9E898ACA2BA291190053B6CA /* RendererDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererDelegate.swift; sourceTree = "<group>"; };
+		9E93ECB82BA1469B00879416 /* LuaRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaRunner.swift; sourceTree = "<group>"; };
+		9E93ECBE2BA14AE000879416 /* LuaRunnerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaRunnerDelegate.swift; sourceTree = "<group>"; };
+		9E93ECC12BA1555F00879416 /* LuaErrorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaErrorExt.swift; sourceTree = "<group>"; };
+		9E93ECC52BA1608300879416 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		9E93ECCA2BA162C700879416 /* LuaExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaExt.swift; sourceTree = "<group>"; };
+		9E93ECCE2BA1689F00879416 /* CGColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGColorExt.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -25,12 +54,41 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E269CF92B9F060000739F75 /* Cygnus in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9E269D062B9FF07600739F75 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9E269CFC2B9F09E200739F75 /* ReplWindowController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		9E269D072B9FF07F00739F75 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9E6344632B9EF1BA005EF691 /* MainMenu.xib */,
+				9E269CFD2B9F09E200739F75 /* ReplWindow.xib */,
+				9E269D0A2BA02B5500739F75 /* CanvasClipView.swift */,
+				9E269D022B9FE82000739F75 /* CanvasView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9E269D142BA140A600739F75 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9E6344612B9EF1BA005EF691 /* Assets.xcassets */,
+				9E269D172BA1414D00739F75 /* Sample.lua */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		9E6344532B9EF1B6005EF691 = {
 			isa = PBXGroup;
 			children = (
@@ -42,7 +100,7 @@
 		9E63445D2B9EF1B7005EF691 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9E63445C2B9EF1B7005EF691 /* Cygnus-demo-macOS.app */,
+				9E63445C2B9EF1B7005EF691 /* Asteroid for mac.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -51,19 +109,53 @@
 			isa = PBXGroup;
 			children = (
 				9E63445F2B9EF1B7005EF691 /* AppDelegate.swift */,
-				9E6344612B9EF1BA005EF691 /* Assets.xcassets */,
-				9E6344632B9EF1BA005EF691 /* MainMenu.xib */,
+				9E93ECC72BA1614C00879416 /* Renderer */,
+				9E93ECBD2BA14ADA00879416 /* Runner */,
 				9E6344662B9EF1BA005EF691 /* Cygnus_demo_macOS.entitlements */,
+				9E269D062B9FF07600739F75 /* Controller */,
+				9E269D072B9FF07F00739F75 /* View */,
+				9E269D142BA140A600739F75 /* Resources */,
+				9E93ECC02BA1554F00879416 /* Extensions */,
 			);
 			path = "Cygnus-demo-macOS";
+			sourceTree = "<group>";
+		};
+		9E93ECBD2BA14ADA00879416 /* Runner */ = {
+			isa = PBXGroup;
+			children = (
+				9E93ECB82BA1469B00879416 /* LuaRunner.swift */,
+				9E93ECBE2BA14AE000879416 /* LuaRunnerDelegate.swift */,
+				9E898AC82BA27E250053B6CA /* LuaAPIProtocol.swift */,
+			);
+			path = Runner;
+			sourceTree = "<group>";
+		};
+		9E93ECC02BA1554F00879416 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9E93ECC12BA1555F00879416 /* LuaErrorExt.swift */,
+				9E93ECCA2BA162C700879416 /* LuaExt.swift */,
+				9E93ECCE2BA1689F00879416 /* CGColorExt.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		9E93ECC72BA1614C00879416 /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				9E93ECC52BA1608300879416 /* Renderer.swift */,
+				9E898ACA2BA291190053B6CA /* RendererDelegate.swift */,
+				9E898AC42BA1A1B30053B6CA /* Renderer+Graphics.swift */,
+			);
+			path = Renderer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9E63445B2B9EF1B7005EF691 /* Cygnus-demo-macOS */ = {
+		9E63445B2B9EF1B7005EF691 /* Asteroid for mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9E6344692B9EF1BA005EF691 /* Build configuration list for PBXNativeTarget "Cygnus-demo-macOS" */;
+			buildConfigurationList = 9E6344692B9EF1BA005EF691 /* Build configuration list for PBXNativeTarget "Asteroid for mac" */;
 			buildPhases = (
 				9E6344582B9EF1B7005EF691 /* Sources */,
 				9E6344592B9EF1B7005EF691 /* Frameworks */,
@@ -73,9 +165,12 @@
 			);
 			dependencies = (
 			);
-			name = "Cygnus-demo-macOS";
+			name = "Asteroid for mac";
+			packageProductDependencies = (
+				9E269CF82B9F060000739F75 /* Cygnus */,
+			);
 			productName = "Cygnus-demo-macOS";
-			productReference = 9E63445C2B9EF1B7005EF691 /* Cygnus-demo-macOS.app */;
+			productReference = 9E63445C2B9EF1B7005EF691 /* Asteroid for mac.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -102,11 +197,14 @@
 				Base,
 			);
 			mainGroup = 9E6344532B9EF1B6005EF691;
+			packageReferences = (
+				9E269CF72B9F060000739F75 /* XCRemoteSwiftPackageReference "Cygnus" */,
+			);
 			productRefGroup = 9E63445D2B9EF1B7005EF691 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9E63445B2B9EF1B7005EF691 /* Cygnus-demo-macOS */,
+				9E63445B2B9EF1B7005EF691 /* Asteroid for mac */,
 			);
 		};
 /* End PBXProject section */
@@ -116,8 +214,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E269D182BA1414D00739F75 /* Sample.lua in Resources */,
 				9E6344622B9EF1BA005EF691 /* Assets.xcassets in Resources */,
 				9E6344652B9EF1BA005EF691 /* MainMenu.xib in Resources */,
+				9E269CFF2B9F09E200739F75 /* ReplWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,7 +228,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E93ECC62BA1608300879416 /* Renderer.swift in Sources */,
+				9E93ECCF2BA1689F00879416 /* CGColorExt.swift in Sources */,
+				9E898AC92BA27E250053B6CA /* LuaAPIProtocol.swift in Sources */,
+				9E93ECC22BA1555F00879416 /* LuaErrorExt.swift in Sources */,
+				9E269D032B9FE82000739F75 /* CanvasView.swift in Sources */,
+				9E93ECBF2BA14AE000879416 /* LuaRunnerDelegate.swift in Sources */,
+				9E898AC52BA1A1B30053B6CA /* Renderer+Graphics.swift in Sources */,
+				9E93ECB92BA1469B00879416 /* LuaRunner.swift in Sources */,
+				9E269CFE2B9F09E200739F75 /* ReplWindowController.swift in Sources */,
 				9E6344602B9EF1B7005EF691 /* AppDelegate.swift in Sources */,
+				9E93ECCB2BA162C700879416 /* LuaExt.swift in Sources */,
+				9E269D0B2BA02B5500739F75 /* CanvasClipView.swift in Sources */,
+				9E898ACB2BA291190053B6CA /* RendererDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,6 +385,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "Cygnus-demo-macOS/Resources/Sample.lua";
 				DEVELOPMENT_TEAM = 9JTFXT4CWH;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -283,7 +396,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "enchantcode.Cygnus-demo-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -300,6 +414,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "Cygnus-demo-macOS/Resources/Sample.lua";
 				DEVELOPMENT_TEAM = 9JTFXT4CWH;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -310,7 +425,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "enchantcode.Cygnus-demo-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -330,7 +446,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9E6344692B9EF1BA005EF691 /* Build configuration list for PBXNativeTarget "Cygnus-demo-macOS" */ = {
+		9E6344692B9EF1BA005EF691 /* Build configuration list for PBXNativeTarget "Asteroid for mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9E63446A2B9EF1BA005EF691 /* Debug */,
@@ -340,6 +456,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9E269CF72B9F060000739F75 /* XCRemoteSwiftPackageReference "Cygnus" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Enchan1207/Cygnus";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9E269CF82B9F060000739F75 /* Cygnus */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9E269CF72B9F060000739F75 /* XCRemoteSwiftPackageReference "Cygnus" */;
+			productName = Cygnus;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9E6344542B9EF1B6005EF691 /* Project object */;
 }
