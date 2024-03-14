@@ -211,16 +211,6 @@ extension ReplWindowController: LuaRunnerDelegate {
         }
     }
     
-    func didStartSetupFunction(_ runner: LuaRunner) {
-        // 何もしない
-    }
-    
-    func didFinishSetupFunction(_ runner: LuaRunner) {
-        let objects = Renderer.default.getRenderObjects()
-        guard objects.count > 0 else {return}
-        canvasView.setObjects(objects)
-    }
-    
     func didStartLoopFunction(_ runner: LuaRunner) {
         // 何もしない
     }

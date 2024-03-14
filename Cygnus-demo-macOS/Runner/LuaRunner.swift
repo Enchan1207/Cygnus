@@ -62,33 +62,32 @@ final class LuaRunner {
         // Luaコードの実行が始まったことをデリゲートに通知
         self.delegate?.didStartRunning(self)
         
-        runnerQueue.async {[weak self] in
+        // セットアップ関数を呼び出す
+        runnerQueue.sync {[weak self] in
             guard let self = self else {return}
-            // セットアップ関数とループ関数を呼び出す
             do {
                 try lua.getGlobal(name: setupFunctionName)
                 try lua.call(argCount: 0, returnCount: 0)
-                try lua.getGlobal(name: drawFunctionName)
-                try lua.call(argCount: 0, returnCount: 0)
             } catch {
                 stop(withError: error)
+                return
             }
         }
         
-        // 定期実行タイマを構成
+        // ループ関数を呼び出す定期実行タイマを構成
         loopInvocationTimer = DispatchSource.makeTimerSource(flags: [], queue: runnerQueue)
         loopInvocationTimer!.schedule(deadline: .now(), repeating: 1.0 / Double(fps))
         loopInvocationTimer!.setEventHandler(handler: {[weak self] in
             guard let self = self else {return}
+            delegate?.didStartLoopFunction(self)
             do {
-                delegate?.didStartLoopFunction(self)
                 try lua.getGlobal(name: drawFunctionName)
                 try lua.call(argCount: 0, returnCount: 0)
-                delegate?.didFinishLoopFunction(self)
             } catch {
-                // 実行時にエラーになったら止める
                 stop(withError: error)
+                return
             }
+            delegate?.didFinishLoopFunction(self)
         })
         loopInvocationTimer!.resume()
     }

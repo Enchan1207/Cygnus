@@ -12,14 +12,6 @@ protocol LuaRunnerDelegate: AnyObject {
     /// コードの実行が開始された
     /// - Parameter runner: Runnerインスタンス
     func didStartRunning(_ runner: LuaRunner)
-
-    /// セットアップ関数の実行が開始された
-    /// - Parameter runner: Runnerインスタンス
-    func didStartSetupFunction(_ runner: LuaRunner)
-    
-    /// セットアップ関数の実行が完了した
-    /// - Parameter runner: Runnerインスタンス
-    func didFinishSetupFunction(_ runner: LuaRunner)
     
     /// ループ関数の実行が開始された
     /// - Parameter runner: Runnerインスタンス
