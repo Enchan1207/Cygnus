@@ -16,6 +16,7 @@
 		9E6344602B9EF1B7005EF691 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E63445F2B9EF1B7005EF691 /* AppDelegate.swift */; };
 		9E6344622B9EF1BA005EF691 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E6344612B9EF1BA005EF691 /* Assets.xcassets */; };
 		9E6344652B9EF1BA005EF691 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E6344632B9EF1BA005EF691 /* MainMenu.xib */; };
+		9E6E4EE62BA2E2EB00A4D923 /* RenderingObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E4EE52BA2E2EB00A4D923 /* RenderingObject.swift */; };
 		9E898AC52BA1A1B30053B6CA /* Renderer+Graphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E898AC42BA1A1B30053B6CA /* Renderer+Graphics.swift */; };
 		9E898AC92BA27E250053B6CA /* LuaAPIProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E898AC82BA27E250053B6CA /* LuaAPIProtocol.swift */; };
 		9E898ACB2BA291190053B6CA /* RendererDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E898ACA2BA291190053B6CA /* RendererDelegate.swift */; };
@@ -38,6 +39,7 @@
 		9E6344612B9EF1BA005EF691 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9E6344642B9EF1BA005EF691 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9E6344662B9EF1BA005EF691 /* Cygnus_demo_macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cygnus_demo_macOS.entitlements; sourceTree = "<group>"; };
+		9E6E4EE52BA2E2EB00A4D923 /* RenderingObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderingObject.swift; sourceTree = "<group>"; };
 		9E898AC42BA1A1B30053B6CA /* Renderer+Graphics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Renderer+Graphics.swift"; sourceTree = "<group>"; };
 		9E898AC82BA27E250053B6CA /* LuaAPIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaAPIProtocol.swift; sourceTree = "<group>"; };
 		9E898ACA2BA291190053B6CA /* RendererDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererDelegate.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				9E93ECC52BA1608300879416 /* Renderer.swift */,
 				9E898ACA2BA291190053B6CA /* RendererDelegate.swift */,
 				9E898AC42BA1A1B30053B6CA /* Renderer+Graphics.swift */,
+				9E6E4EE52BA2E2EB00A4D923 /* RenderingObject.swift */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -231,6 +234,7 @@
 				9E93ECC62BA1608300879416 /* Renderer.swift in Sources */,
 				9E93ECCF2BA1689F00879416 /* CGColorExt.swift in Sources */,
 				9E898AC92BA27E250053B6CA /* LuaAPIProtocol.swift in Sources */,
+				9E6E4EE62BA2E2EB00A4D923 /* RenderingObject.swift in Sources */,
 				9E93ECC22BA1555F00879416 /* LuaErrorExt.swift in Sources */,
 				9E269D032B9FE82000739F75 /* CanvasView.swift in Sources */,
 				9E93ECBF2BA14AE000879416 /* LuaRunnerDelegate.swift in Sources */,
