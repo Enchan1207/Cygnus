@@ -27,7 +27,7 @@ final class LuaRunner {
     private var loopTimer: Timer?
     
     /// loop関数の実行間隔
-    var frameRate: TimeInterval = 0.1
+    var fps: UInt = 30
     
     /// デリゲート
     weak var delegate: LuaRunnerDelegate?
@@ -70,7 +70,7 @@ final class LuaRunner {
         }
         
         // 定期実行タイマを構成
-        loopTimer = .scheduledTimer(withTimeInterval: frameRate, repeats: true, block: {[weak self] timer in
+        loopTimer = .scheduledTimer(withTimeInterval: 1.0 / Double(fps), repeats: true, block: {[weak self] timer in
             guard let self = self else {return}
             do {
                 delegate?.didStartLoopFunction(self)

@@ -40,8 +40,8 @@ extension Renderer {
     fileprivate func setCanvasSize(_ lua: Lua) -> Int32 {
         // 引数チェック
         guard lua.checkArguments([.Number, .Number]),
-              let width = try? lua.get(at: -2) as Int,
-              let height = try? lua.get(at: -1) as Int else {return 0}
+              let width = try? lua.get(at: -2) as Double,
+              let height = try? lua.get(at: -1) as Double else {return 0}
         
         let newSize = NSSize(width: width, height: height)
         
@@ -106,10 +106,10 @@ extension Renderer {
     fileprivate func drawLine(_ lua: Lua) -> Int32 {
         // 引数チェック
         guard lua.checkArguments([.Number, .Number, .Number, .Number]),
-              let startX = try? lua.get(at: -4) as Int,
-              let startY = try? lua.get(at: -3) as Int,
-              let endX = try? lua.get(at: -2) as Int,
-              let endY = try? lua.get(at: -1) as Int else {return 0}
+              let startX = try? lua.get(at: -4) as Double,
+              let startY = try? lua.get(at: -3) as Double,
+              let endX = try? lua.get(at: -2) as Double,
+              let endY = try? lua.get(at: -1) as Double else {return 0}
         
         guard let context = context else {return 0}
         context.move(to: .init(x: startX, y: startY))
@@ -124,10 +124,10 @@ extension Renderer {
     fileprivate func drawRect(_ lua: Lua) -> Int32 {
         // 引数チェック
         guard lua.checkArguments([.Number, .Number, .Number, .Number]),
-              let startX = try? lua.get(at: -4) as Int,
-              let startY = try? lua.get(at: -3) as Int,
-              let width = try? lua.get(at: -2) as Int,
-              let height = try? lua.get(at: -1) as Int else {return 0}
+              let startX = try? lua.get(at: -4) as Double,
+              let startY = try? lua.get(at: -3) as Double,
+              let width = try? lua.get(at: -2) as Double,
+              let height = try? lua.get(at: -1) as Double else {return 0}
         
         guard let context = context else {return 0}
         context.addRect(.init(x: startX, y: startY, width: width, height: height))
