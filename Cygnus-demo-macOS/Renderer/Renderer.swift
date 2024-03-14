@@ -6,8 +6,6 @@
 //
 
 import Cocoa
-import CoreGraphics
-import Foundation
 
 /// レンダラ
 final class Renderer {
@@ -17,8 +15,8 @@ final class Renderer {
     /// Singletonインスタンス
     static let `default` = Renderer()
     
-    /// グラフィックスコンテキスト
-    private (set) public var context: CGContext?
+    /// 描画オブジェクトリスト
+    private var renderObjects: [RenderingObject] = []
     
     /// デリゲート
     weak var delegate: RendererDelegate?
@@ -43,6 +41,9 @@ final class Renderer {
         /// 矩形を描画する
         case DrawRect = "rect"
         
+        /// 楕円を描画する
+        case DrawEllipse = "ellipse"
+        
         var name: String { self.rawValue }
     }
     
@@ -50,23 +51,19 @@ final class Renderer {
     
     /// 内部イニシャライザ
     private init(){
-        initCanvas(size: .zero)
     }
     
-    /// グラフィックスコンテキストを初期化する
-    /// - Parameter canvasSize: 描画領域のサイズ
-    func initCanvas(size: NSSize){
-        context = .init(
-            data: nil,
-            width: .init(size.width),
-            height: .init(size.height),
-            bitsPerComponent: 8,
-            bytesPerRow: 0,
-            space: .init(name: CGColorSpace.sRGB)!,
-            bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)
-        
-        // y軸をフリップする
-        context?.concatenate(.init(1, 0, 0, -1, 0, size.height))
+    /// 描画オブジェクトをリストに追加する
+    /// - Parameter object: 追加するオブジェクト
+    func addRenderObject(_ object: RenderingObject){
+        renderObjects.append(object)
     }
     
+    /// 描画オブジェクトリストを返し、内部リストをクリアする
+    /// - Returns: 描画オブジェクトリスト
+    func getRenderObjects() -> [RenderingObject]{
+        let objects = renderObjects
+        renderObjects.removeAll()
+        return objects
+    }
 }

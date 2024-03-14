@@ -25,7 +25,7 @@
 		9E93ECC22BA1555F00879416 /* LuaErrorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECC12BA1555F00879416 /* LuaErrorExt.swift */; };
 		9E93ECC62BA1608300879416 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECC52BA1608300879416 /* Renderer.swift */; };
 		9E93ECCB2BA162C700879416 /* LuaExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECCA2BA162C700879416 /* LuaExt.swift */; };
-		9E93ECCF2BA1689F00879416 /* CGColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECCE2BA1689F00879416 /* CGColorExt.swift */; };
+		9E93ECCF2BA1689F00879416 /* NSColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93ECCE2BA1689F00879416 /* NSColorExt.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,7 +48,7 @@
 		9E93ECC12BA1555F00879416 /* LuaErrorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaErrorExt.swift; sourceTree = "<group>"; };
 		9E93ECC52BA1608300879416 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		9E93ECCA2BA162C700879416 /* LuaExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuaExt.swift; sourceTree = "<group>"; };
-		9E93ECCE2BA1689F00879416 /* CGColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGColorExt.swift; sourceTree = "<group>"; };
+		9E93ECCE2BA1689F00879416 /* NSColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColorExt.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,7 +137,7 @@
 			children = (
 				9E93ECC12BA1555F00879416 /* LuaErrorExt.swift */,
 				9E93ECCA2BA162C700879416 /* LuaExt.swift */,
-				9E93ECCE2BA1689F00879416 /* CGColorExt.swift */,
+				9E93ECCE2BA1689F00879416 /* NSColorExt.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -232,7 +232,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E93ECC62BA1608300879416 /* Renderer.swift in Sources */,
-				9E93ECCF2BA1689F00879416 /* CGColorExt.swift in Sources */,
+				9E93ECCF2BA1689F00879416 /* NSColorExt.swift in Sources */,
 				9E898AC92BA27E250053B6CA /* LuaAPIProtocol.swift in Sources */,
 				9E6E4EE62BA2E2EB00A4D923 /* RenderingObject.swift in Sources */,
 				9E93ECC22BA1555F00879416 /* LuaErrorExt.swift in Sources */,

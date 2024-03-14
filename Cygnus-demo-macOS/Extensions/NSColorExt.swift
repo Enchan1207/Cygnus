@@ -1,20 +1,19 @@
 //
-//  CGColorExt.swift
+//  NSColorExt.swift
 //  Asteroid for mac
 //
 //  Created by EnchantCode on 2024/03/13.
 //
 
-import CoreGraphics
-import Foundation
+import Cocoa
 
-extension CGColor {
+extension NSColor {
     
     /// カラーコードから生成
     /// - Parameter code: カラーコード
-    /// - Returns: 生成されたCGColorインスタンス
+    /// - Returns: 生成されたNSColorインスタンス
     /// - Note: フォーマットは `#RGB`, `#RGBA`, `#RRGGBB`, `#RRGGBBAA` のいずれかです。それ以外のフォーマットではnilが返ります。
-    static func fromColorCode(_ code: String) -> CGColor? {
+    static func fromColorCode(_ code: String) -> NSColor? {
         guard [4, 5, 7, 9].contains(code.count), code.starts(with: "#") else {return nil}
         
         // 頭の#を外し、各色要素の桁数と成分数を求めておく

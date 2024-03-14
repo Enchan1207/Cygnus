@@ -8,7 +8,6 @@
 import Cocoa
 import Cygnus
 import CygnusCore
-import CygnusMacros
 
 extension Renderer.API {
     
@@ -26,6 +25,8 @@ extension Renderer.API {
             return {Renderer.default.drawLine(.init(state: $0!, owned: false))}
         case .DrawRect:
             return {Renderer.default.drawRect(.init(state: $0!, owned: false))}
+        case .DrawEllipse:
+            return {Renderer.default.drawEllipse(.init(state: $0!, owned: false))}
         }
     }
     
@@ -42,11 +43,7 @@ extension Renderer {
         guard lua.checkArguments([.Number, .Number]),
               let width = try? lua.get(at: -2) as Double,
               let height = try? lua.get(at: -1) as Double else {return 0}
-        
         let newSize = NSSize(width: width, height: height)
-        
-        // コンテキストを再生成し、キャンバスサイズを変更
-        initCanvas(size: newSize)
         delegate?.renderer(self, didResizeCanvas: newSize)
         return 0
     }
@@ -58,17 +55,8 @@ extension Renderer {
         // 引数チェック
         guard lua.checkArguments([.String]),
               let colorCode = try? lua.get(at: -1) as String else {return 0}
-        
-        // カラーコードをCGColorに変換
-        guard let color = CGColor.fromColorCode(colorCode) else {return 0}
-        
-        // コンテキストが生きてるなら塗り潰す fill() に影響しないよう、一旦ステートを保存してから行う
-        if let context = context {
-            context.saveGState()
-            context.setFillColor(color)
-            context.fill(.init(origin: .zero, size: .init(width: context.width, height: context.height)))
-            context.restoreGState()
-        }
+        guard let color = NSColor.fromColorCode(colorCode) else {return 0}
+        addRenderObject(.background(color: color))
         return 0
     }
     
@@ -79,10 +67,8 @@ extension Renderer {
         // 引数チェック
         guard lua.checkArguments([.String]),
               let colorCode = try? lua.get(at: -1) as String else {return 0}
-        
-        // カラーコードをCGColorに変換
-        guard let color = CGColor.fromColorCode(colorCode) else {return 0}
-        context?.setFillColor(color)
+        guard let color = NSColor.fromColorCode(colorCode) else {return 0}
+        addRenderObject(.fill(color: color))
         return 0
     }
     
@@ -93,10 +79,8 @@ extension Renderer {
         // 引数チェック
         guard lua.checkArguments([.String]),
               let colorCode = try? lua.get(at: -1) as String else {return 0}
-        
-        // カラーコードをCGColorに変換
-        guard let color = CGColor.fromColorCode(colorCode) else {return 0}
-        context?.setStrokeColor(color)
+        guard let color = NSColor.fromColorCode(colorCode) else {return 0}
+        addRenderObject(.stroke(color: color))
         return 0
     }
     
@@ -110,11 +94,7 @@ extension Renderer {
               let startY = try? lua.get(at: -3) as Double,
               let endX = try? lua.get(at: -2) as Double,
               let endY = try? lua.get(at: -1) as Double else {return 0}
-        
-        guard let context = context else {return 0}
-        context.move(to: .init(x: startX, y: startY))
-        context.addLine(to: .init(x: endX, y: endY))
-        context.strokePath()
+        addRenderObject(.line(from: .init(x: startX, y: startY), to: .init(x: endX, y: endY)))
         return 0
     }
 
@@ -129,11 +109,22 @@ extension Renderer {
               let width = try? lua.get(at: -2) as Double,
               let height = try? lua.get(at: -1) as Double else {return 0}
         
-        guard let context = context else {return 0}
-        context.addRect(.init(x: startX, y: startY, width: width, height: height))
-        context.fillPath()
-        context.strokePath()
+        addRenderObject(.rect(origin: .init(x: startX, y: startY), size: .init(width: width, height: height)))
         return 0
     }
-    
+
+    /// 楕円を描画
+    /// - Parameter lua: Luaインスタンス
+    /// - Returns: 戻り値の数
+    fileprivate func drawEllipse(_ lua: Lua) -> Int32 {
+        // 引数チェック
+        guard lua.checkArguments([.Number, .Number, .Number, .Number]),
+              let startX = try? lua.get(at: -4) as Double,
+              let startY = try? lua.get(at: -3) as Double,
+              let width = try? lua.get(at: -2) as Double,
+              let height = try? lua.get(at: -1) as Double else {return 0}
+        
+        addRenderObject(.ellipse(origin: .init(x: startX, y: startY), size: .init(width: width, height: height)))
+        return 0
+    }
 }
