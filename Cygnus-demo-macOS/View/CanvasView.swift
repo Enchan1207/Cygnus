@@ -39,11 +39,17 @@ class CanvasView: NSView {
     /// 現在のフォントサイズ
     private var currentTextSize: CGFloat = 0
     
-    /// 現在の座標軸情報
-    private var currentTransform: AffineTransform = .init()
+    /// 現在の座標軸オフセット量
+    private var currentOffset: CGPoint = .zero
     
-    /// save/restoreによって退避された/復帰される座標軸情報
-    private var pastTransform: AffineTransform?
+    /// 現在の座標軸傾き量
+    private var currentTilt: CGFloat = 0
+    
+    /// 退避されたオフセット量
+    private var pastOffset: CGPoint?
+    
+    /// 退避された傾き量
+    private var pastTilt: CGFloat?
     
     // MARK: - Initializers
     
@@ -60,6 +66,10 @@ class CanvasView: NSView {
     // MARK: - Overridden methods
     
     override func draw(_ dirtyRect: NSRect) {
+        //　座標軸の変形を初期化
+        currentOffset = .zero
+        currentTilt = 0
+        
         // オブジェクト配列を取得
         var objects: [RenderingObject] = []
         objectAccessQueue.sync{[weak self] in
@@ -77,6 +87,57 @@ class CanvasView: NSView {
         layer!.needsDisplayOnBoundsChange = true
         layer!.frame = bounds
         layer!.autoresizingMask = [.layerWidthSizable, .layerHeightSizable]
+    }
+    
+    /// 現在の傾き情報をもとに座標軸の基準点を移動する
+    /// - Parameters:
+    ///   - dx: 移動量x
+    ///   - dy: 移動量y
+    private func moveOffset(dx: CGFloat, dy: CGFloat){
+        // 極座標系に変換
+        let radius = sqrt(dx * dx + dy * dy)
+        let theta = atan2(dy, dx)
+        
+        // 現在の傾きの値を加算し、各軸増加量を決定
+        let newX = radius * cos(theta + currentTilt)
+        let newY = radius * sin(theta + currentTilt)
+        
+        // 移動
+        currentOffset = currentOffset.applying(.init(translationX: newX, y: newY))
+    }
+    
+    /// 座標軸情報を退避してリセットする
+    private func saveTranslationInfos(){
+        // 退避
+        pastOffset = currentOffset
+        pastTilt = currentTilt
+        
+        // 初期化
+        currentOffset = .zero
+        currentTilt = 0
+    }
+    
+    /// 退避していた座標軸情報を復帰する
+    private func restoreTranslationInfos(){
+        guard pastOffset != nil, pastTilt != nil else {return}
+        // 復帰
+        currentOffset = pastOffset!
+        currentTilt = pastTilt!
+        
+        // 消去
+        pastOffset = nil
+        pastTilt = nil
+    }
+    
+    // MARK: - Object rendering processes
+    
+    /// レンダリングオブジェクトを更新する
+    /// - Parameter objects: 設定する描画オブジェクト
+    func setObjects(_ objects: [RenderingObject]){
+        objectAccessQueue.async(flags: .barrier) {[weak self] in
+            guard let self = self else {return}
+            renderObjects = objects
+        }
     }
     
     /// オブジェクトを描画する
@@ -104,11 +165,17 @@ class CanvasView: NSView {
             currentStrokeWidth = width
             
         case .path(let path):
-            // パスに現在の変換行列を適用して描画
-            path.lineWidth = currentStrokeWidth
-            path.transform(using: currentTransform)
-            path.fill()
-            path.stroke()
+            // 変換行列を生成
+            var transform = AffineTransform()
+            transform.append(.init(rotationByRadians: currentTilt))
+            transform.append(.init(translationByX: currentOffset.x, byY: currentOffset.y))
+            
+            // パスをコピーし、変換を適用して描画
+            let _path: NSBezierPath = path.copy() as! NSBezierPath
+            _path.lineWidth = currentStrokeWidth
+            _path.transform(using: transform)
+            _path.fill()
+            _path.stroke()
             
         case .text(origin: let origin, content: let content):
             let attr: [NSAttributedString.Key: Any] = [
@@ -122,28 +189,16 @@ class CanvasView: NSView {
             currentTextSize = point
         
         case .rotate(angle: let angle):
-            currentTransform.append(.init(rotationByRadians: angle))
+            currentTilt += angle
             
         case .translate(offset: let offset):
-            currentTransform.append(.init(translationByX: offset.x, byY: offset.y))
+            moveOffset(dx: offset.x, dy: offset.y)
         
         case .saveTransform:
-            pastTransform = currentTransform
-            currentTransform = .init()
+            saveTranslationInfos()
 
         case .restoreTransform:
-            guard pastTransform != nil else {return}
-            currentTransform = pastTransform!
-            pastTransform = nil
-        }
-    }
-    
-    /// レンダリングオブジェクトを更新する
-    /// - Parameter objects: 設定する描画オブジェクト
-    func setObjects(_ objects: [RenderingObject]){
-        objectAccessQueue.async(flags: .barrier) {[weak self] in
-            guard let self = self else {return}
-            renderObjects = objects
+            restoreTranslationInfos()
         }
     }
 }
