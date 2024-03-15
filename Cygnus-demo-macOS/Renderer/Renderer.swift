@@ -44,6 +44,9 @@ final class Renderer {
         /// 楕円を描画する
         case DrawEllipse = "ellipse"
         
+        /// 文字列を描画する
+        case DrawText = "text"
+        
         var name: String { self.rawValue }
     }
     

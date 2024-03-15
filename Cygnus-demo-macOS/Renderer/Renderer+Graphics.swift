@@ -27,6 +27,8 @@ extension Renderer.API {
             return {Renderer.default.drawRect(.init(state: $0!, owned: false))}
         case .DrawEllipse:
             return {Renderer.default.drawEllipse(.init(state: $0!, owned: false))}
+        case .DrawText:
+            return {Renderer.default.drawText(.init(state: $0!, owned: false))}
         }
     }
     
@@ -125,6 +127,20 @@ extension Renderer {
               let height = try? lua.get(at: -1) as Double else {return 0}
         
         addRenderObject(.ellipse(origin: .init(x: startX, y: startY), size: .init(width: width, height: height)))
+        return 0
+    }
+    
+    /// 文字列を描画
+    /// - Parameter lua: Luaインスタンス
+    /// - Returns: 戻り値の数
+    fileprivate func drawText(_ lua: Lua) -> Int32 {
+        // 引数チェック
+        guard lua.checkArguments([.Number, .Number, .String]),
+              let x = try? lua.get(at: -3) as Double,
+              let y = try? lua.get(at: -2) as Double,
+              let content = try? lua.get(at: -1) as String else {return 0}
+        
+        addRenderObject(.text(origin: .init(x: x, y: y), content: content))
         return 0
     }
 }

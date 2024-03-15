@@ -112,6 +112,14 @@ class CanvasView: NSView {
             path.lineWidth = currentStrokeWidth
             path.fill()
             path.stroke()
+        
+        case .text(origin: let origin, content: let content):
+            let attr: [NSAttributedString.Key: Any] = [
+                .font: NSFont.systemFont(ofSize: 12),
+                .foregroundColor: currentStrokeColor
+            ]
+            let string = NSAttributedString(string: content, attributes: attr)
+            string.draw(at: origin)
         }
     }
     

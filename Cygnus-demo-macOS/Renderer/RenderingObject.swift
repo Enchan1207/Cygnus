@@ -31,5 +31,8 @@ enum RenderingObject {
     /// 楕円を描く
     case ellipse(origin: CGPoint, size: CGSize)
     
+    /// 文字列を描く
+    case text(origin: CGPoint, content: String)
+    
 }
 
