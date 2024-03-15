@@ -49,8 +49,18 @@ extension Renderer {
         guard lua.checkArguments([.Number, .Number]),
               let width = try? lua.get(at: -2) as Double,
               let height = try? lua.get(at: -1) as Double else {return 0}
+        
+        // 新しいサイズを生成し、デリゲートに通知 コード内で参照できるようグローバル変数にも設定
         let newSize = NSSize(width: width, height: height)
         delegate?.renderer(self, didResizeCanvas: newSize)
+        do {
+            try lua.push(width)
+            try lua.setGlobal(name: "width")
+            try lua.push(height)
+            try lua.setGlobal(name: "height")
+        } catch {
+            print("Failed to update lua globals")
+        }
         return 0
     }
     

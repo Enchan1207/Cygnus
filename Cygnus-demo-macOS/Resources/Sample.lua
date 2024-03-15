@@ -36,10 +36,10 @@ function draw()
     -- 速度に従って移動する ぶつかったら跳ね返る
     x = x + vx
     y = y + vy
-    if(x < w / 2 or x > (400.0 - w / 2)) then
+    if(x < w / 2 or x > (width - w / 2)) then
         vx = -vx
     end
-    if(y < h / 2 or y > (400.0 - h / 2)) then
+    if(y < h / 2 or y > (height - h / 2)) then
         vy = -vy
     end
 end
