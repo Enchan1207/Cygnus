@@ -39,6 +39,12 @@ class CanvasView: NSView {
     /// 現在のフォントサイズ
     private var currentTextSize: CGFloat = 0
     
+    /// 現在の座標軸情報
+    private var currentTransform: AffineTransform = .init()
+    
+    /// save/restoreによって退避された/復帰される座標軸情報
+    private var pastTransform: AffineTransform?
+    
     // MARK: - Initializers
     
     override init(frame frameRect: NSRect) {
@@ -97,25 +103,13 @@ class CanvasView: NSView {
         case .strokeWeight(weight: let width):
             currentStrokeWidth = width
             
-        case .line(from: let from, to: let to):
-            let path = NSBezierPath()
+        case .path(let path):
+            // パスに現在の変換行列を適用して描画
             path.lineWidth = currentStrokeWidth
-            path.move(to: from)
-            path.line(to: to)
-            path.stroke()
-            
-        case .rect(origin: let origin, size: let size):
-            let path = NSBezierPath(rect: .init(origin: origin, size: size))
-            path.lineWidth = currentStrokeWidth
+            path.transform(using: currentTransform)
             path.fill()
             path.stroke()
             
-        case .ellipse(origin: let origin, size: let size):
-            let path = NSBezierPath(ovalIn: .init(origin: origin, size: size))
-            path.lineWidth = currentStrokeWidth
-            path.fill()
-            path.stroke()
-        
         case .text(origin: let origin, content: let content):
             let attr: [NSAttributedString.Key: Any] = [
                 .font: NSFont.systemFont(ofSize: currentTextSize),
@@ -126,6 +120,21 @@ class CanvasView: NSView {
             
         case .textSize(point: let point):
             currentTextSize = point
+        
+        case .rotate(angle: let angle):
+            currentTransform.append(.init(rotationByRadians: angle))
+            
+        case .translate(offset: let offset):
+            currentTransform.append(.init(translationByX: offset.x, byY: offset.y))
+        
+        case .saveTransform:
+            pastTransform = currentTransform
+            currentTransform = .init()
+
+        case .restoreTransform:
+            guard pastTransform != nil else {return}
+            currentTransform = pastTransform!
+            pastTransform = nil
         }
     }
     

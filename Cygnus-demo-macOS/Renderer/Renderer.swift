@@ -53,6 +53,24 @@ final class Renderer {
         /// 文字のフォントサイズを設定する
         case SetTextSize = "textSize"
         
+        /// 以降の描画座標軸を回転する
+        case SetRotation = "rotate"
+        
+        /// 以降の描画座標軸を移動する
+        case SetTranslation = "translate"
+        
+        /// 描画時に線を引かない
+        case SetNoStroke = "noStroke"
+        
+        /// 描画時に塗りつぶさない
+        case SetNoFill = "noFill"
+        
+        /// 描画座標情報を退避する
+        case SaveTransform = "saveTransform"
+        
+        /// 退避した座標情報を復帰する
+        case RestoreTransform = "restoreTransform"
+        
         var name: String { self.rawValue }
     }
     
