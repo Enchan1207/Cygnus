@@ -10,6 +10,18 @@ import Cocoa
 /// 描画オブジェクト
 enum RenderingObject {
     
+    /// 文字列のアライメント
+    enum TextAlign {
+        /// 左揃え
+        case Left
+        
+        /// 中央揃え
+        case Center
+        
+        /// 右揃え
+        case Right
+    }
+    
     /// 背景を塗り潰す
     case background(color: NSColor)
     
@@ -30,6 +42,9 @@ enum RenderingObject {
     
     /// 文字のフォントサイズを設定する
     case textSize(point: CGFloat)
+    
+    /// 文字列のアライメントを設定する
+    case textAlign(align: TextAlign)
     
     /// 座標軸の回転角度を設定する
     case rotate(angle: CGFloat)

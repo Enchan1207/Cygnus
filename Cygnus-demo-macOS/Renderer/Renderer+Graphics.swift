@@ -33,6 +33,8 @@ extension Renderer.API {
             return {Renderer.default.drawText(.init(state: $0!, owned: false))}
         case .SetTextSize:
             return {Renderer.default.setTextSize(.init(state: $0!, owned: false))}
+        case .SetTextAlign:
+            return {Renderer.default.setTextAlign(.init(state: $0!, owned: false))}
         case .SetRotation:
             return {Renderer.default.setRotation(.init(state: $0!, owned: false))}
         case .SetTranslation:
@@ -195,6 +197,31 @@ extension Renderer {
               let point = try? lua.get(at: -1) as Double else {return 0}
 
         addRenderObject(.textSize(point: point))
+        return 0
+    }
+    
+    /// 文字列のアライメントを設定
+    /// - Parameter lua: Luaインスタンス
+    /// - Returns: 戻り値の数
+    fileprivate func setTextAlign(_ lua: Lua) -> Int32 {
+        // 引数チェック
+        guard lua.checkArguments([.String]),
+              let alignmentString = try? lua.get(at: -1) as String else {return 0}
+        
+        let align: RenderingObject.TextAlign
+        switch alignmentString.lowercased() {
+        case "left":
+            align = .Left
+        case "center":
+            align = .Center
+        case "right":
+            align = .Right
+        default:
+            try? lua.push("Unexpected argument \(alignmentString) (acceptable: left, center, or right)")
+            lua_error(lua.state)
+            return 0
+        }
+        addRenderObject(.textAlign(align: align))
         return 0
     }
     
