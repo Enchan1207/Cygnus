@@ -35,6 +35,9 @@ final class Renderer {
         /// 線の色を設定する
         case SetStrokeColor = "stroke"
         
+        /// 線の太さを設定する
+        case SetStrokeWeight = "strokeWeight"
+        
         /// 線分を描画する
         case DrawLine = "line"
         
@@ -46,6 +49,9 @@ final class Renderer {
         
         /// 文字列を描画する
         case DrawText = "text"
+        
+        /// 文字のフォントサイズを設定する
+        case SetTextSize = "textSize"
         
         var name: String { self.rawValue }
     }

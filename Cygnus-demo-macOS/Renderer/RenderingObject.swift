@@ -20,7 +20,7 @@ enum RenderingObject {
     case stroke(color: NSColor)
     
     /// 線の太さを設定する
-    case strokeWidth(width: CGFloat)
+    case strokeWeight(weight: CGFloat)
     
     /// 線を引く
     case line(from: CGPoint, to: CGPoint)
@@ -33,6 +33,9 @@ enum RenderingObject {
     
     /// 文字列を描く
     case text(origin: CGPoint, content: String)
+    
+    /// 文字のフォントサイズを設定する
+    case textSize(point: CGFloat)
     
 }
 

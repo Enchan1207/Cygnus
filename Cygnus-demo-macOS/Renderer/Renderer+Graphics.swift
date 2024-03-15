@@ -21,6 +21,8 @@ extension Renderer.API {
             return {Renderer.default.setFillColor(.init(state: $0!, owned: false))}
         case .SetStrokeColor:
             return {Renderer.default.setStrokeColor(.init(state: $0!, owned: false))}
+        case .SetStrokeWeight:
+            return {Renderer.default.setStrokeWeight(.init(state: $0!, owned: false))}
         case .DrawLine:
             return {Renderer.default.drawLine(.init(state: $0!, owned: false))}
         case .DrawRect:
@@ -29,6 +31,8 @@ extension Renderer.API {
             return {Renderer.default.drawEllipse(.init(state: $0!, owned: false))}
         case .DrawText:
             return {Renderer.default.drawText(.init(state: $0!, owned: false))}
+        case .SetTextSize:
+            return {Renderer.default.setTextSize(.init(state: $0!, owned: false))}
         }
     }
     
@@ -83,6 +87,17 @@ extension Renderer {
               let colorCode = try? lua.get(at: -1) as String else {return 0}
         guard let color = NSColor.fromColorCode(colorCode) else {return 0}
         addRenderObject(.stroke(color: color))
+        return 0
+    }
+    
+    /// 線分の太さを設定
+    /// - Parameter lua: Luaインスタンス
+    /// - Returns: 戻り値の数
+    fileprivate func setStrokeWeight(_ lua: Lua) -> Int32 {
+        // 引数チェック
+        guard lua.checkArguments([.Number]),
+              let weight = try? lua.get(at: -1) as Double else {return 0}
+        addRenderObject(.strokeWeight(weight: weight))
         return 0
     }
     
@@ -141,6 +156,18 @@ extension Renderer {
               let content = try? lua.get(at: -1) as String else {return 0}
         
         addRenderObject(.text(origin: .init(x: x, y: y), content: content))
+        return 0
+    }
+    
+    /// フォントサイズを設定
+    /// - Parameter lua: Luaインスタンス
+    /// - Returns: 戻り値の数
+    fileprivate func setTextSize(_ lua: Lua) -> Int32 {
+        // 引数チェック
+        guard lua.checkArguments([.Number]),
+              let point = try? lua.get(at: -1) as Double else {return 0}
+
+        addRenderObject(.textSize(point: point))
         return 0
     }
 }

@@ -36,6 +36,9 @@ class CanvasView: NSView {
     /// 現在の線の太さ
     private var currentStrokeWidth: CGFloat = 0
     
+    /// 現在のフォントサイズ
+    private var currentTextSize: CGFloat = 0
+    
     // MARK: - Initializers
     
     override init(frame frameRect: NSRect) {
@@ -91,7 +94,7 @@ class CanvasView: NSView {
         case .stroke(color: let color):
             currentStrokeColor = color
             
-        case .strokeWidth(width: let width):
+        case .strokeWeight(weight: let width):
             currentStrokeWidth = width
             
         case .line(from: let from, to: let to):
@@ -115,11 +118,14 @@ class CanvasView: NSView {
         
         case .text(origin: let origin, content: let content):
             let attr: [NSAttributedString.Key: Any] = [
-                .font: NSFont.systemFont(ofSize: 12),
+                .font: NSFont.systemFont(ofSize: currentTextSize),
                 .foregroundColor: currentStrokeColor
             ]
             let string = NSAttributedString(string: content, attributes: attr)
             string.draw(at: origin)
+            
+        case .textSize(point: let point):
+            currentTextSize = point
         }
     }
     
