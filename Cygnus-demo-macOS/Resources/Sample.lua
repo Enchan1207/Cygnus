@@ -4,55 +4,97 @@
 -- @2024 Enchan1207.
 --
 
--- 矩形の位置とサイズ
-x = 200
-y = 200
-w = 20
-h = 20
-
--- 移動速度
-vx = 0
-vy = 0
-
 -- This is setup function. Run once.
 function setup()
     size(400, 400)
-    fill("#FF0000")
-    stroke("#0000")
-
-    -- 移動速度の設定
-    vx = getInitialVelocity()
-    vy = getInitialVelocity()
 end
 
 -- This is main loop. Run repeatedly.
 function draw()
-    -- 背景を塗りつぶす
-    background("#444")
-
-    -- 円を描画する
-    ellipse(x - w / 2, y - h / 2, w, h)
-
-    -- 速度に従って移動する ぶつかったら跳ね返る
-    x = x + vx
-    y = y + vy
-    if(x < w / 2 or x > (width - w / 2)) then
-        vx = -vx
-    end
-    if(y < h / 2 or y > (height - h / 2)) then
-        vy = -vy
-    end
+    --Fill background
+    background("#222")
+    
+    -- Get current time
+    local currentTime = os.date("*t")
+    local hour = currentTime.hour
+    local minute = currentTime.min
+    local second = currentTime.sec
+    
+    -- Convert time to angle
+    local secondAngle = second * 6.0
+    local minuteAngle = minute * 6.0 + second / 10.0
+    local hourAngle = hour * 30.0 + minute / 2.0
+    
+    -- Draw frame
+    drawClockFrame()
+    
+    -- Draw time text
+    drawTimeInfo()
+    
+    -- Draw second hand
+    drawHand(3, "#A00", secondAngle, 150)
+    
+    -- Draw minute hand
+    drawHand(5, "#DDD", minuteAngle, 100)
+    
+    -- Draw hour hand
+    drawHand(7, "#EEE", hourAngle, 80)
 end
 
--- 初期速度を生成する
-function getInitialVelocity()
-    -- -1.0 ~ +1.0
-    local base = (math.random() - 0.5) * 2.0
+-- Draw time information text
+function drawTimeInfo()
+    local currentDateString = os.date("%Y/%m/%d")
+    local currentTimeString = os.date("%H:%M:%S")
+    stroke("#666")
+    textSize(30)
+    textAlign("center")
+    text(200, 130, currentDateString)
+    text(200, 270, currentTimeString)
+end
 
-    if base > 0 then
-        base = base + 0.5
-    else
-        base = base - 0.5
+-- Draw clock hand
+function drawHand(weight, color, angle, length)
+    saveTransform()
+    strokeWeight(weight)
+    stroke(color)
+    translate(200, 200)
+    rotate(math.rad(angle - 180))
+    line(0, length, 0, -20)
+    restoreTransform()
+end
+
+-- Draw clock frame
+function drawClockFrame()
+    -- Draw outer frame
+    strokeWeight(5)
+    stroke("#CCC")
+    ellipse(20, 20, 360, 360)
+    strokeWeight(2)
+    stroke("#DDD")
+    ellipse(30, 30, 340, 340)
+    
+    -- Draw dial
+    for angle = 0, 359, 30 do
+        -- Modify style each dial line
+        local lineWeight = 4
+        local lineColor = "#AAA"
+        local lineLength = 20
+        
+        if angle % 90 == 0 then
+            lineWeight = 5
+            lineColor = "#EEE"
+            lineLength = 30
+        end
+        
+        -- Switch transformation and draw one dial line
+        saveTransform()
+        strokeWeight(lineWeight)
+        stroke(lineColor)
+        translate(200, 200)
+        rotate(math.rad(angle - 90))
+        translate(0, 160 - lineLength)
+        line(0, 0, 0, lineLength)
+        restoreTransform()
     end
-    return base
+
 end

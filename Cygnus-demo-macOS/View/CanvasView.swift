@@ -39,6 +39,9 @@ class CanvasView: NSView {
     /// 現在のフォントサイズ
     private var currentTextSize: CGFloat = 0
     
+    /// 現在のテキストアライメント
+    private var currentTextAlign: RenderingObject.TextAlign = .Left
+    
     /// 現在の座標軸オフセット量
     private var currentOffset: CGPoint = .zero
     
@@ -178,15 +181,31 @@ class CanvasView: NSView {
             _path.stroke()
             
         case .text(origin: let origin, content: let content):
+            // テキストオブジェクトを準備
             let attr: [NSAttributedString.Key: Any] = [
                 .font: NSFont.systemFont(ofSize: currentTextSize),
                 .foregroundColor: currentStrokeColor
             ]
             let string = NSAttributedString(string: content, attributes: attr)
-            string.draw(at: origin)
+            
+            // アライメントに従って原点を移動
+            let stringWidth = string.size().width
+            let stringOriginX: CGFloat
+            switch currentTextAlign {
+            case .Left:
+                stringOriginX = origin.x
+            case .Center:
+                stringOriginX = origin.x - stringWidth / 2
+            case .Right:
+                stringOriginX = origin.x - stringWidth
+            }
+            string.draw(at: .init(x: stringOriginX, y: origin.y))
             
         case .textSize(point: let point):
             currentTextSize = point
+            
+        case .textAlign(align: let align):
+            currentTextAlign = align
         
         case .rotate(angle: let angle):
             currentTilt += angle

@@ -53,6 +53,9 @@ final class Renderer {
         /// 文字のフォントサイズを設定する
         case SetTextSize = "textSize"
         
+        /// 文字のアライメントを設定する
+        case SetTextAlign = "textAlign"
+        
         /// 以降の描画座標軸を回転する
         case SetRotation = "rotate"
         
