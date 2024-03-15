@@ -76,10 +76,13 @@ class ReplWindowController: NSWindowController {
     /// Luaコード実行状態
     private var isRunning: Bool = false {
         didSet {
-            let buttonName = isRunning ? "pause.fill" : "play.fill"
-            let buttonLabel = isRunning ? "Pause" : "Run"
-            runButton.image = .init(systemSymbolName: buttonName, accessibilityDescription: buttonLabel)
-            runButton.toolTip = buttonLabel
+            DispatchQueue.main.async{[weak self] in
+                guard let self = self else {return}
+                let buttonName = isRunning ? "pause.fill" : "play.fill"
+                let buttonLabel = isRunning ? "Pause" : "Run"
+                runButton.image = .init(systemSymbolName: buttonName, accessibilityDescription: buttonLabel)
+                runButton.toolTip = buttonLabel
+            }
         }
     }
     
@@ -140,22 +143,24 @@ class ReplWindowController: NSWindowController {
     /// エラーダイアログを表示
     /// - Parameter error: エラー
     private func showErrorDialog(error: Error){
-        // エラーメッセージを生成
-        let errorMessage: String
-        let errorInfo: String
-        if let luaError = error as? LuaError {
-            errorMessage = luaError.name
-            errorInfo = luaError.reason
-        } else {
-            errorMessage = "\(type(of: error))"
-            errorInfo = error.localizedDescription
+        DispatchQueue.main.async {
+            // エラーメッセージを生成
+            let errorMessage: String
+            let errorInfo: String
+            if let luaError = error as? LuaError {
+                errorMessage = luaError.name
+                errorInfo = luaError.reason
+            } else {
+                errorMessage = "\(type(of: error))"
+                errorInfo = error.localizedDescription
+            }
+            
+            // ダイアログを構成して表示
+            let dialog = NSAlert()
+            dialog.messageText = errorMessage
+            dialog.informativeText = errorInfo
+            dialog.runModal()
         }
-        
-        // ダイアログを構成して表示
-        let dialog = NSAlert()
-        dialog.messageText = errorMessage
-        dialog.informativeText = errorInfo
-        dialog.runModal()
     }
     
     // MARK: - GUI actions

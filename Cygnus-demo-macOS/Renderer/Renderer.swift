@@ -35,6 +35,9 @@ final class Renderer {
         /// 線の色を設定する
         case SetStrokeColor = "stroke"
         
+        /// 線の太さを設定する
+        case SetStrokeWeight = "strokeWeight"
+        
         /// 線分を描画する
         case DrawLine = "line"
         
@@ -43,6 +46,30 @@ final class Renderer {
         
         /// 楕円を描画する
         case DrawEllipse = "ellipse"
+        
+        /// 文字列を描画する
+        case DrawText = "text"
+        
+        /// 文字のフォントサイズを設定する
+        case SetTextSize = "textSize"
+        
+        /// 以降の描画座標軸を回転する
+        case SetRotation = "rotate"
+        
+        /// 以降の描画座標軸を移動する
+        case SetTranslation = "translate"
+        
+        /// 描画時に線を引かない
+        case SetNoStroke = "noStroke"
+        
+        /// 描画時に塗りつぶさない
+        case SetNoFill = "noFill"
+        
+        /// 描画座標情報を退避する
+        case SaveTransform = "saveTransform"
+        
+        /// 退避した座標情報を復帰する
+        case RestoreTransform = "restoreTransform"
         
         var name: String { self.rawValue }
     }

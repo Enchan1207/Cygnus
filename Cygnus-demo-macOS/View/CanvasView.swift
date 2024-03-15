@@ -36,6 +36,21 @@ class CanvasView: NSView {
     /// 現在の線の太さ
     private var currentStrokeWidth: CGFloat = 0
     
+    /// 現在のフォントサイズ
+    private var currentTextSize: CGFloat = 0
+    
+    /// 現在の座標軸オフセット量
+    private var currentOffset: CGPoint = .zero
+    
+    /// 現在の座標軸傾き量
+    private var currentTilt: CGFloat = 0
+    
+    /// 退避されたオフセット量
+    private var pastOffset: CGPoint?
+    
+    /// 退避された傾き量
+    private var pastTilt: CGFloat?
+    
     // MARK: - Initializers
     
     override init(frame frameRect: NSRect) {
@@ -51,6 +66,10 @@ class CanvasView: NSView {
     // MARK: - Overridden methods
     
     override func draw(_ dirtyRect: NSRect) {
+        //　座標軸の変形を初期化
+        currentOffset = .zero
+        currentTilt = 0
+        
         // オブジェクト配列を取得
         var objects: [RenderingObject] = []
         objectAccessQueue.sync{[weak self] in
@@ -68,6 +87,57 @@ class CanvasView: NSView {
         layer!.needsDisplayOnBoundsChange = true
         layer!.frame = bounds
         layer!.autoresizingMask = [.layerWidthSizable, .layerHeightSizable]
+    }
+    
+    /// 現在の傾き情報をもとに座標軸の基準点を移動する
+    /// - Parameters:
+    ///   - dx: 移動量x
+    ///   - dy: 移動量y
+    private func moveOffset(dx: CGFloat, dy: CGFloat){
+        // 極座標系に変換
+        let radius = sqrt(dx * dx + dy * dy)
+        let theta = atan2(dy, dx)
+        
+        // 現在の傾きの値を加算し、各軸増加量を決定
+        let newX = radius * cos(theta + currentTilt)
+        let newY = radius * sin(theta + currentTilt)
+        
+        // 移動
+        currentOffset = currentOffset.applying(.init(translationX: newX, y: newY))
+    }
+    
+    /// 座標軸情報を退避してリセットする
+    private func saveTranslationInfos(){
+        // 退避
+        pastOffset = currentOffset
+        pastTilt = currentTilt
+        
+        // 初期化
+        currentOffset = .zero
+        currentTilt = 0
+    }
+    
+    /// 退避していた座標軸情報を復帰する
+    private func restoreTranslationInfos(){
+        guard pastOffset != nil, pastTilt != nil else {return}
+        // 復帰
+        currentOffset = pastOffset!
+        currentTilt = pastTilt!
+        
+        // 消去
+        pastOffset = nil
+        pastTilt = nil
+    }
+    
+    // MARK: - Object rendering processes
+    
+    /// レンダリングオブジェクトを更新する
+    /// - Parameter objects: 設定する描画オブジェクト
+    func setObjects(_ objects: [RenderingObject]){
+        objectAccessQueue.async(flags: .barrier) {[weak self] in
+            guard let self = self else {return}
+            renderObjects = objects
+        }
     }
     
     /// オブジェクトを描画する
@@ -91,36 +161,44 @@ class CanvasView: NSView {
         case .stroke(color: let color):
             currentStrokeColor = color
             
-        case .strokeWidth(width: let width):
+        case .strokeWeight(weight: let width):
             currentStrokeWidth = width
             
-        case .line(from: let from, to: let to):
-            let path = NSBezierPath()
-            path.lineWidth = currentStrokeWidth
-            path.move(to: from)
-            path.line(to: to)
-            path.stroke()
+        case .path(let path):
+            // 変換行列を生成
+            var transform = AffineTransform()
+            transform.append(.init(rotationByRadians: currentTilt))
+            transform.append(.init(translationByX: currentOffset.x, byY: currentOffset.y))
             
-        case .rect(origin: let origin, size: let size):
-            let path = NSBezierPath(rect: .init(origin: origin, size: size))
-            path.lineWidth = currentStrokeWidth
-            path.fill()
-            path.stroke()
+            // パスをコピーし、変換を適用して描画
+            let _path: NSBezierPath = path.copy() as! NSBezierPath
+            _path.lineWidth = currentStrokeWidth
+            _path.transform(using: transform)
+            _path.fill()
+            _path.stroke()
             
-        case .ellipse(origin: let origin, size: let size):
-            let path = NSBezierPath(ovalIn: .init(origin: origin, size: size))
-            path.lineWidth = currentStrokeWidth
-            path.fill()
-            path.stroke()
-        }
-    }
-    
-    /// レンダリングオブジェクトを更新する
-    /// - Parameter objects: 設定する描画オブジェクト
-    func setObjects(_ objects: [RenderingObject]){
-        objectAccessQueue.async(flags: .barrier) {[weak self] in
-            guard let self = self else {return}
-            renderObjects = objects
+        case .text(origin: let origin, content: let content):
+            let attr: [NSAttributedString.Key: Any] = [
+                .font: NSFont.systemFont(ofSize: currentTextSize),
+                .foregroundColor: currentStrokeColor
+            ]
+            let string = NSAttributedString(string: content, attributes: attr)
+            string.draw(at: origin)
+            
+        case .textSize(point: let point):
+            currentTextSize = point
+        
+        case .rotate(angle: let angle):
+            currentTilt += angle
+            
+        case .translate(offset: let offset):
+            moveOffset(dx: offset.x, dy: offset.y)
+        
+        case .saveTransform:
+            saveTranslationInfos()
+
+        case .restoreTransform:
+            restoreTranslationInfos()
         }
     }
 }
