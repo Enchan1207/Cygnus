@@ -38,7 +38,7 @@ extension Lua {
             // 個数確認
             guard numberOfItems >= argTypes.count else {throw ArgumentError.Insufficient(expected: argTypes.count, actual: .init(numberOfItems))}
             
-            try argTypes.enumerated().forEach { arg in
+            try argTypes.reversed().enumerated().forEach { arg in
                 let expectedType = arg.element
                 let actualType = try getType(at: -.init(arg.offset + 1))
                 guard expectedType == actualType else {throw ArgumentError.TypeMismatch(at: arg.offset + 1, expected: expectedType, actual: actualType)}
