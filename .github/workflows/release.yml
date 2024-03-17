@@ -64,7 +64,7 @@ jobs:
 
   generate_documentation:
     name: Generate documentation at release branch
-    needs: catch_up_with_master
+    needs: fetch_lua_source
     runs-on: macos-latest
 
     steps:
@@ -87,7 +87,8 @@ jobs:
             --output-path docs \
             --transform-for-static-hosting \
             --target=Cygnus
-          tar czf docs.tar.gz docs
+          tar czvf docs.tar.gz docs
+          rm -rf docs
 
       - name: Switch to branch 'docs'
         run: |
