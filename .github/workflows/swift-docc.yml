@@ -37,6 +37,7 @@ jobs:
 
       - name: Switch to branch 'docs'
         run: |
+          git fetch
           git switch docs
           git pull origin docs
 
