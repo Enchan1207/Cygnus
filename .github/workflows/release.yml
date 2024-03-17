@@ -7,7 +7,8 @@ on:
   workflow_dispatch:
   workflow_run:
     workflows:
-      - Test swift package
+      - Tests on all supported platforms
+      - Simple and lightweight unittest
     branches:
       - master
     types:
