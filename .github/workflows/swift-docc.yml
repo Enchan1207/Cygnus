@@ -25,7 +25,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
 
-      - name: Generate documentation
+      - name: Generate and compress documentation
         run: |
           swift package \
             --allow-writing-to-directory docs \
@@ -34,6 +34,7 @@ jobs:
             --output-path docs \
             --transform-for-static-hosting \
             --target=Cygnus
+          tar czf docs.tar.gz
 
       - name: Switch to branch 'docs'
         run: |
@@ -41,8 +42,10 @@ jobs:
           git switch docs
           git pull origin docs
 
-      - name: Add, commit, and push documents
+      - name: Extract, add, commit, and push documents
         run: |
+          tar xzf docs.tar.gz
+          rm docs.tar.gz
           git add docs
           if [ ! -e .nojekyll ]; then
             touch .nojekyll
