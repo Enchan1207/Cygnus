@@ -86,7 +86,7 @@ jobs:
             --disable-indexing \
             --output-path docs \
             --transform-for-static-hosting \
-            --hosting-base-path docs \
+            --hosting-base-path Cygnus \
             --target=Cygnus
           tar czvf docs.tar.gz docs
           rm -rf docs
