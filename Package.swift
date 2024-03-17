@@ -13,9 +13,6 @@ let package = Package(
             name: "Cygnus",
             targets: ["Cygnus"]),
     ],
-    dependencies: [
-        .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
-    ],
     targets: [
         // ライブラリ
         .target(
