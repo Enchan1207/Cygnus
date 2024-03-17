@@ -44,5 +44,9 @@ jobs:
       - name: Add, commit, and push documents
         run: |
           git add docs
-          git commit -m "[Add] documents (automated) [no ci]"
+          if [ ! -e .nojekyll ]; then
+            touch .nojekyll
+            git add .nojekyll
+          fi
+          git diff --quiet && git diff --staged --quiet || git commit -m "[Add] documents (automated) [no ci]"
           git push origin docs
