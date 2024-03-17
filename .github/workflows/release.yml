@@ -87,7 +87,8 @@ jobs:
             --output-path docs \
             --transform-for-static-hosting \
             --target=Cygnus
-          tar czf docs.tar.gz docs
+          tar czvf docs.tar.gz docs
+          rm -rf docs
 
       - name: Switch to branch 'docs'
         run: |
