@@ -1,0 +1,47 @@
+#
+# ドキュメント自動生成
+#
+name: Autogenerate documentation
+
+on:
+  workflow_dispatch:
+  release:
+    types:
+      - published
+
+jobs:
+  generate_documentation:
+    name: Generate documentation at release branch
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout branch 'release'
+        uses: actions/checkout@v4
+        with:
+          ref: release
+
+      - name: Setup git
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+
+      - name: Generate documentation
+        run: |
+          swift package \
+            --allow-writing-to-directory docs \
+            generate-documentation \
+            --disable-indexing \
+            --output-path docs \
+            --transform-for-static-hosting \
+            --target=Cygnus
+
+      - name: Switch to branch 'docs'
+        run: |
+          git switch docs
+          git pull origin docs
+
+      - name: Add, commit, and push documents
+        run: |
+          git add docs
+          git commit -m "[Add] documents (automated) [no ci]"
+          git push origin docs
